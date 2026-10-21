@@ -1,0 +1,9 @@
+﻿=== 7. Errores de login (comprobación de enumeracion de usuarios) ===
+Fecha: 2026-10-21T00:54:24
+
+STATUS 401: {"status_code":401,"message":"Email o contraseña incorrectos","timestamp":"2026-10-21T05:54:24Z","path":"/api/v1/auth/login"}
+
+STATUS 401: {"status_code":401,"message":"Email o contraseña incorrectos","timestamp":"2026-10-21T05:54:24Z","path":"/api/v1/auth/login"}
+
+
+Resumen: ambos casos devuelven 401 con el mismo mensaje; el login corre bcrypt aunque el email no exista (mitiga timing/enumeracion).

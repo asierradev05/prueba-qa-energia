@@ -1,0 +1,44 @@
+# Evidencia UI · formato de fecha/hora de planta (DEF-04) · ejecución real
+
+Método: Playwright 1.64.1, Chromium, login real en http://localhost:5173, datos reales del backend.
+Se consultó el mismo elemento ("Detectada ...", que usa `formatPlantTime`) con el navegador en 4 zonas horarias.
+
+`GET /api/v1/meter/getById/M-109` devuelve `detected_at = 2026-09-12T14:00:00Z` (hora de planta, documentada como UTC en el dataset).
+
+| TZ del navegador | Texto mostrado "Detectada" | ¿Coincide con hora de planta (14:00)? |
+|---|---|---|
+| **UTC** | `12/09 14:00` | ✅ correcto |
+| **America/Bogota** | `12/09 09:00` | ❌ −5 h |
+| **America/New_York** | `12/09 10:00` | ❌ −4 h |
+| **Asia/Tokyo** | `12/09 23:00` | ❌ +9 h |
+
+El resto de textos (razón, acción, M-112/M-104/M-106) muestran `12/09 14:00`, `13/09 00:00`, `11/09 00:00`, `08/09 00:00` de forma **constante** en las 4 zonas → esos sí usan hora de planta (UTC). Solo el texto "Detectada" varía.
+
+Salida cruda (extracto):
+```
+--- TZ=UTC ---             fechas visibles: ["Detectada 12/09 14:00", ...]
+--- TZ=America/Bogota ---  fechas visibles: ["Detectada 12/09 09:00", ...]
+--- TZ=America/New_York -- fechas visibles: ["Detectada 12/09 10:00", ...]
+--- TZ=Asia/Tokyo ---      fechas visibles: ["Detectada 12/09 23:00", ...]
+```
+
+## Causa raíz
+
+`frontend/src/lib/format.ts:55-58`
+```ts
+export function formatPlantTime(iso: string): string {
+  const d = toDate(iso)
+  return `${pad(d.getDate())}/${pad(d.getMonth() + 1)} ${pad(d.getHours())}:${pad(d.getMinutes())}`
+}
+```
+Usa `getDate()` / `getHours()` (**hora local del navegador**) pese a que:
+- el comentario de la línea 51-52 dice "Se leen las partes UTC para NO convertirla a la zona del navegador";
+- `formatPlantDate` (línea 63) y `formatPlantDay` (línea 69) usan `getUTCDate()` / `getUTCMonth()`.
+
+Corrección esperada (referencia, sin aplicar): usar `getUTCDate()`, `getUTCHours()`, `getUTCMinutes()`.
+
+## Impacto
+
+- El producto promete "hora de planta" (`README.md`: "hora de planta"; `PRODUCT.md`).
+- El instante de detección de cada orden cambia según la máquina del operador → dos operadores ven horas distintas para la misma anomalía.
+- Incluso en `America/Bogota` (zona objetivo) muestra `09:00` en lugar de `14:00`.

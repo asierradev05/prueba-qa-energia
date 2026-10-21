@@ -1,0 +1,397 @@
+﻿[
+  {
+    "meter_id": "M-109",
+    "anomaly": true,
+    "type": "REAL_ANOMALY",
+    "severity": "HIGH",
+    "confidence": 0.95,
+    "priority": 1,
+    "detected_at": "2026-09-12T14:00:00Z",
+    "reason": "Consumo +110,5% frente al baseline durante 58 h (desde 12/09 14:00) sin evento operativo que lo explique. La corriente cambi├│ +109,9% en la misma ventana. El factor de potencia pas├│ de 0,94 a 0,74.",
+    "recommended_action": "Investigar en sitio la instalaci├│n de M-109: identificar qu├⌐ equipo empez├│ a consumir m├ís desde 12/09 14:00. El cambio del factor de potencia apunta a motores o cargas inductivas con falla o sobrecarga.",
+    "narrated_by": "engine",
+    "evidence": {
+      "baseline_daily_kwh": 1052.15,
+      "last_day_kwh": 2207.6,
+      "daily_change_pct": 109.817991731217,
+      "window_start": "2026-09-12T14:00:00Z",
+      "window_end": "2026-09-14T23:00:00Z",
+      "impact_kwh": 2824.950000000002,
+      "change": {
+        "start": "2026-09-12T14:00:00Z",
+        "end": "2026-09-14T23:00:00Z",
+        "hours": 58,
+        "direction": "UP",
+        "expected_kwh": 2555.85,
+        "actual_kwh": 5380.800000000002,
+        "change_pct": 110.52878690063979,
+        "max_abs_z": 49.44345856353604,
+        "ongoing": true
+      },
+      "variables": [
+        {
+          "variable": "consumption_kwh",
+          "baseline": 43.545,
+          "observed": 91.92,
+          "min": 62.17,
+          "max": 117.51,
+          "change_pct": 111.09197382018601,
+          "changed": true
+        },
+        {
+          "variable": "current_a",
+          "baseline": 195.88,
+          "observed": 411.07,
+          "min": 300.79,
+          "max": 507.43,
+          "change_pct": 109.85807637328978,
+          "changed": true
+        },
+        {
+          "variable": "voltage_v",
+          "baseline": 219.745,
+          "observed": 216.985,
+          "min": 213.43,
+          "max": 220.43,
+          "change_pct": -1.256001274204187,
+          "changed": false
+        },
+        {
+          "variable": "power_factor",
+          "baseline": 0.94,
+          "observed": 0.74,
+          "min": 0.708,
+          "max": 0.782,
+          "change_pct": -21.276595744680847,
+          "changed": true
+        }
+      ],
+      "related_events": [
+        {
+          "meter_id": "M-109",
+          "timestamp": "2026-09-12T14:00:00Z",
+          "type": "UNKNOWN",
+          "description": "No operational event reported"
+        }
+      ],
+      "checks": [
+        {
+          "description": "Desviaci├│n fuerte respecto al baseline (z m├íx 49,4)",
+          "weight": 0.3,
+          "strength": 1
+        },
+        {
+          "description": "Cambio sostenido durante 58 h",
+          "weight": 0.25,
+          "strength": 1
+        },
+        {
+          "description": "La corriente confirma el cambio (+109,9%)",
+          "weight": 0.25,
+          "strength": 0.9888930099586364
+        },
+        {
+          "description": "Ning├║n evento operativo registrado lo explica",
+          "weight": 0.2,
+          "strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "meter_id": "M-112",
+    "anomaly": true,
+    "type": "DATA_QUALITY",
+    "severity": "HIGH",
+    "confidence": 0.95,
+    "priority": 2,
+    "detected_at": "2026-09-13T00:00:00Z",
+    "reason": "El consumo se mantiene estable, pero hay 16 h con lecturas el├⌐ctricas incoherentes desde 13/09 00:00: voltaje entre 201,6 y 241,2 V (normal 221,0 V) y factor de potencia hasta 0,58.",
+    "recommended_action": "Validar el medidor M-112 en sitio (conexi├│n, sensores y calibraci├│n) antes de usar sus lecturas para tomar decisiones.",
+    "narrated_by": "engine",
+    "evidence": {
+      "baseline_daily_kwh": 662.84,
+      "last_day_kwh": 662.6500000000001,
+      "daily_change_pct": -0.02866453442760559,
+      "window_start": "2026-09-13T00:00:00Z",
+      "window_end": "2026-09-14T21:00:00Z",
+      "impact_kwh": 0,
+      "quality": {
+        "flagged_hours": 16,
+        "voltage_out_of_range": 16,
+        "power_factor_mismatch": 12,
+        "invalid_values": 0,
+        "missing_hours": 0,
+        "duplicate_readings": 0,
+        "first_flagged": "2026-09-13T00:00:00Z",
+        "last_flagged": "2026-09-14T21:00:00Z"
+      },
+      "variables": [
+        {
+          "variable": "consumption_kwh",
+          "baseline": 27.439999999999998,
+          "observed": 27.240000000000002,
+          "min": 20.27,
+          "max": 34.77,
+          "change_pct": -0.7288629737609175,
+          "changed": false
+        },
+        {
+          "variable": "current_a",
+          "baseline": 123.62,
+          "observed": 128.345,
+          "min": 46.64,
+          "max": 218.06,
+          "change_pct": 3.822197055492634,
+          "changed": false
+        },
+        {
+          "variable": "voltage_v",
+          "baseline": 221.01,
+          "observed": 221.485,
+          "min": 201.56,
+          "max": 241.23,
+          "change_pct": 0.2149224017012908,
+          "changed": true
+        },
+        {
+          "variable": "power_factor",
+          "baseline": 0.951,
+          "observed": 0.943,
+          "min": 0.58,
+          "max": 0.984,
+          "change_pct": -0.8412197686645645,
+          "changed": true
+        }
+      ],
+      "related_events": [
+        {
+          "meter_id": "M-112",
+          "timestamp": "2026-09-13T00:00:00Z",
+          "type": "DATA_QUALITY",
+          "description": "Intermittent readings and abnormal electrical jumps"
+        }
+      ],
+      "checks": [
+        {
+          "description": "El consumo se mantiene estable",
+          "weight": 0.3,
+          "strength": 1
+        },
+        {
+          "description": "Voltaje fuera de ┬▒5% de lo normal en 16 h",
+          "weight": 0.3,
+          "strength": 1
+        },
+        {
+          "description": "Factor de potencia incoherente con el consumo en 12 h",
+          "weight": 0.2,
+          "strength": 1
+        },
+        {
+          "description": "Existe un reporte de calidad de datos para el medidor",
+          "weight": 0.2,
+          "strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "meter_id": "M-104",
+    "anomaly": true,
+    "type": "EXPLAINABLE_ANOMALY",
+    "severity": "MEDIUM",
+    "confidence": 0.86,
+    "priority": 3,
+    "detected_at": "2026-09-11T00:00:00Z",
+    "reason": "Consumo +46,5% frente al baseline desde 11/09 00:00, coincide con el evento OPERATIONAL_CHANGE (New production line activated).",
+    "recommended_action": "Validar con operaci├│n que el cambio corresponde al evento registrado y actualizar el baseline de M-104.",
+    "narrated_by": "engine",
+    "evidence": {
+      "baseline_daily_kwh": 1171.7099999999998,
+      "last_day_kwh": 1725.63,
+      "daily_change_pct": 47.2744962490719,
+      "window_start": "2026-09-11T00:00:00Z",
+      "window_end": "2026-09-14T23:00:00Z",
+      "impact_kwh": 2177.579999999999,
+      "change": {
+        "start": "2026-09-11T00:00:00Z",
+        "end": "2026-09-14T23:00:00Z",
+        "hours": 96,
+        "direction": "UP",
+        "expected_kwh": 4681.28,
+        "actual_kwh": 6858.859999999999,
+        "change_pct": 46.51676464556701,
+        "max_abs_z": 25.630999999999922,
+        "ongoing": true
+      },
+      "variables": [
+        {
+          "variable": "consumption_kwh",
+          "baseline": 47.985,
+          "observed": 70.675,
+          "min": 50.09,
+          "max": 87.99,
+          "change_pct": 47.285610086485356,
+          "changed": true
+        },
+        {
+          "variable": "current_a",
+          "baseline": 213.195,
+          "observed": 315.45500000000004,
+          "min": 236.42,
+          "max": 387.69,
+          "change_pct": 47.96547761439061,
+          "changed": true
+        },
+        {
+          "variable": "voltage_v",
+          "baseline": 219.96,
+          "observed": 220.10500000000002,
+          "min": 217.46,
+          "max": 223.89,
+          "change_pct": 0.06592107655937908,
+          "changed": false
+        },
+        {
+          "variable": "power_factor",
+          "baseline": 0.909,
+          "observed": 0.889,
+          "min": 0.858,
+          "max": 0.935,
+          "change_pct": -2.200220022002202,
+          "changed": false
+        }
+      ],
+      "related_events": [
+        {
+          "meter_id": "M-104",
+          "timestamp": "2026-09-11T00:00:00Z",
+          "type": "OPERATIONAL_CHANGE",
+          "description": "New production line activated"
+        }
+      ],
+      "checks": [
+        {
+          "description": "Evento OPERATIONAL_CHANGE registrado al inicio del cambio",
+          "weight": 0.35,
+          "strength": 1
+        },
+        {
+          "description": "Un evento OPERATIONAL_CHANGE explica un cambio al alza",
+          "weight": 0.25,
+          "strength": 1
+        },
+        {
+          "description": "El nuevo nivel se mantiene (96 h)",
+          "weight": 0.2,
+          "strength": 1
+        },
+        {
+          "description": "La corriente confirma el cambio (+48,0%)",
+          "weight": 0.2,
+          "strength": 1
+        }
+      ]
+    }
+  },
+  {
+    "meter_id": "M-106",
+    "anomaly": false,
+    "type": "FALSE_POSITIVE",
+    "severity": "LOW",
+    "confidence": 0.86,
+    "priority": 4,
+    "detected_at": "2026-09-08T00:00:00Z",
+    "reason": "Consumo -79,8% durante 12 h desde 08/09 00:00, coincide con el evento SCHEDULED_OUTAGE (Scheduled maintenance outage for 12 hours) y luego volvi├│ a lo normal.",
+    "recommended_action": "No escalar: el cambio corresponde al evento registrado y el consumo ya se normaliz├│.",
+    "narrated_by": "engine",
+    "evidence": {
+      "baseline_daily_kwh": 1349.1200000000001,
+      "last_day_kwh": 1362.1100000000001,
+      "daily_change_pct": 0.9628498576850102,
+      "window_start": "2026-09-08T00:00:00Z",
+      "window_end": "2026-09-08T11:00:00Z",
+      "impact_kwh": -499.9,
+      "change": {
+        "start": "2026-09-08T00:00:00Z",
+        "end": "2026-09-08T11:00:00Z",
+        "hours": 12,
+        "direction": "DOWN",
+        "expected_kwh": 626.3,
+        "actual_kwh": 126.4,
+        "change_pct": -79.81797860450264,
+        "max_abs_z": 30.260141078838213,
+        "ongoing": false
+      },
+      "variables": [
+        {
+          "variable": "consumption_kwh",
+          "baseline": 47.65,
+          "observed": 10.19,
+          "min": 7.39,
+          "max": 13.79,
+          "change_pct": -78.61490031479539,
+          "changed": true
+        },
+        {
+          "variable": "current_a",
+          "baseline": 221.57,
+          "observed": 44.519999999999996,
+          "min": 38.72,
+          "max": 61.11,
+          "change_pct": -79.90702712461074,
+          "changed": true
+        },
+        {
+          "variable": "voltage_v",
+          "baseline": 219.775,
+          "observed": 219.09500000000003,
+          "min": 217.73,
+          "max": 220.97,
+          "change_pct": -0.3094073484245152,
+          "changed": false
+        },
+        {
+          "variable": "power_factor",
+          "baseline": 0.921,
+          "observed": 0.913,
+          "min": 0.887,
+          "max": 0.94,
+          "change_pct": -0.8686210640608042,
+          "changed": false
+        }
+      ],
+      "related_events": [
+        {
+          "meter_id": "M-106",
+          "timestamp": "2026-09-08T00:00:00Z",
+          "type": "SCHEDULED_OUTAGE",
+          "description": "Scheduled maintenance outage for 12 hours"
+        }
+      ],
+      "checks": [
+        {
+          "description": "Evento SCHEDULED_OUTAGE registrado al inicio del cambio",
+          "weight": 0.35,
+          "strength": 1
+        },
+        {
+          "description": "Un evento SCHEDULED_OUTAGE explica un cambio a la baja",
+          "weight": 0.25,
+          "strength": 1
+        },
+        {
+          "description": "El consumo volvi├│ a lo normal",
+          "weight": 0.25,
+          "strength": 1
+        },
+        {
+          "description": "La corriente confirma el cambio (-79,9%)",
+          "weight": 0.15,
+          "strength": 1
+        }
+      ]
+    }
+  }
+]

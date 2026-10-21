@@ -1,0 +1,102 @@
+# Evidencia API · EnergIA · ejecución real
+
+Entorno: backend `go run ./cmd/api` en http://localhost:8080 · commit `15765d9` · fecha 2026-10-21 · SO Windows 11.
+Auth: `POST /api/v1/auth/login` con `admin@energia.local` / `admin123`.
+El JWT completo no se almacena en el repo (se regenera con el login de arriba).
+Método usado: `Invoke-WebRequest`/`Invoke-RestMethod` (equivalente a curl).
+
+## 1. Login (OK)
+
+```
+POST /api/v1/auth/login
+{"email":"admin@energia.local","password":"admin123"}
+→ 200
+user=admin@energia.local name=Operador token_type=Bearer expires_in=28800
+```
+
+## 2. Autenticación (OK)
+
+```
+POST /api/v1/meter/getAll   (sin Authorization)
+→ 401
+```
+
+## 3. `getAll` sin body (default: page 1, size 10)
+
+```
+→ 200 · page=1 size=10 count=12 rows=10
+rows (status): M-101 NORMAL, M-102 NORMAL, M-103 NORMAL, M-104 ALERT,
+M-105 NORMAL, M-106 **ALERT**, M-107 NORMAL, M-108 NORMAL, M-109 CRITICAL, M-110 NORMAL
+```
+
+## 4. Búsqueda por `meter_id` — **DEFECTO #1**
+
+```
+filter.meter_id="109"   → 200 count=1 ids=M-109
+filter.meter_id="M-109" → 200 count=1 ids=M-109
+filter.meter_id="m-109" → 200 count=0 ids=        ← CONTRADICE la doc
+```
+
+Fuente del esperado: `backend/README.md:96` — "Búsqueda parcial, **sin importar mayúsculas** (`109` encuentra `M-109`)".
+Código: `backend/internal/meter/service.go:59` `strings.Contains(sm.MeterID, search)` sin `ToUpper`.
+
+## 5. Estado de M-106 (FALSE_POSITIVE) — **DEFECTO #2**
+
+```
+GET /api/v1/meter/getById/M-106
+→ 200 · status=**ALERT** severity=LOW type=FALSE_POSITIVE anomaly(bool)=**false**
+```
+
+Fuente del esperado: `backend/README.md:103-108` — "Sin anomalía, **o FALSE_POSITIVE** → NORMAL".
+`frontend/PRODUCT.md` §Operating Context — M-106 FALSE_POSITIVE "do not escalate".
+Código: `backend/internal/meter/enums.go:29-38` — `StatusOf` ignora `a.Anomaly` y mapea cualquier severidad ≠ HIGH a ALERT.
+
+Impacto en agregados:
+```
+GET /api/v1/dashboard/getSummary
+→ status_counts: normal=8 alert=2 critical=2   ← se espera normal=9 alert=1
+filter.status="NORMAL" → M-101,M-102,M-103,M-105,M-107,M-108,M-110,M-111 (8)
+   ← falta M-106, que el oráculo dice que es NORMAL
+```
+
+## 6. Paginación con `page` negativo — **DEFECTO #3**
+
+```
+{"pagination":{"page":-1,"size":10}} → 500
+{"pagination":{"page":-2,"size":10}} → 500
+Log del servidor: ERROR panic error="runtime error: slice bounds out of range [:-10]" path=/api/v1/meter/getAll
+Log del servidor: ERROR panic error="runtime error: slice bounds out of range [:-20]" path=/api/v1/meter/getAll
+```
+
+Código: `backend/internal/httpx/paging.go:48` `start := min((p.Page-1)*p.Size, len(items))` → negativo; `items[start:end]` hace panic. `Normalize()` no valida `page < 0` (`paging.go:23-35`). El middleware `Recover` responde 500.
+
+## 7. Otras validaciones (OK, 400)
+
+```
+{"pagination":{"page":0,"size":10}}  → 200 (page normalizado a 1)
+{"pagination":{"page":1,"size":101}} → 400
+{"pagination":{"page":1,"size":-5}}  → 400
+filter.status="FOO"                  → 400
+filter.sort_by="foo"                 → 400
+campo desconocido {"extra":1}        → 400
+body no-JSON "notjson"               → 400
+```
+
+## 8. Ordenamientos (OK)
+
+```
+sort_by=consumption DESC → M-109=2207.6, M-104=1725.63, M-106=1362.11
+sort_by=consumption ASC  → M-107=474.66, M-103=602.39, M-112=662.65
+sort_by=severity DESC    → M-109 HIGH, M-112 HIGH, M-104 MEDIUM, M-106 LOW, resto vacío
+sort_by=variation DESC   → M-109=109.82, M-104=47.27, M-103=1.24
+filter.status=CRITICAL   → M-109, M-112
+filter.status=NORMAL     → M-101,M-102,M-103,M-105,M-107,M-108,M-110,M-111 (8) ← ver defecto #2
+page=2 size=10 → rows=2 (M-111,M-112); page=3 → rows=0 (array vacío)
+```
+
+## 9. Detalle de M-109 / M-112 (OK)
+
+```
+GET /api/v1/meter/getById/M-109 → status=CRITICAL severity=HIGH type=REAL_ANOMALY conf=0.95 priority=1
+GET /api/v1/meter/getById/m-112 → status=CRITICAL (id sin distinguir mayúsculas: OK)
+```
