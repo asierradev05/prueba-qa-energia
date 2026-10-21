@@ -98,5 +98,28 @@ Fase 1 — Levantamiento del producto: construir matriz funcional, entidades, re
 - Evidencia: `qa/evidencias/e2e-run.txt`, reporte HTML en `e2e/playwright-report/`.
 - Playwright 1.64.1 + Chromium; zona fijada en America/Bogota.
 
-## Fase 9 — Revisión final
-- En curso: resumen ejecutivo y cierre.
+## Fase 9 — Revisión final (COMPLETADA)
+- Entregables: `qa/01-plan-de-pruebas.md §10` (resumen ejecutivo con veredicto), `qa/07-bitacora.md`, `qa/RESUMEN.md`.
+- Veredicto: **NO liberar a producción** (SEC-01 crítica, DEF-02 y DEF-04 P1).
+
+## Fase 10 — Seguridad de alto nivel (COMPLETADA)
+- Entregable: `qa/06-seguridad.md` (SEC-01..SEC-07 + matriz de 17 controles).
+- SEC-01 crítica confirmada: forja de JWT con `dev-secret-change-me` → 200.
+- Evidencias: `seguridad-probe.txt`, `seguridad-login-enum.txt`, `seguridad-govulncheck.txt` (10 vulns de stdlib), `forge-jwt.mjs`, `security-probe.ps1`.
+
+## Fase 11 — Endurecimiento E2E y CI (COMPLETADA)
+- Suite elevada: storageState + Page Objects + fixtures + `api.spec.ts` + `security.spec.ts` → **27 passed**.
+- `.github/workflows/e2e.yml` (levanta app, corre suite, `govulncheck`, sube reporte).
+
+## Fase 12 — Vault de Obsidian (COMPLETADA)
+- `qa/vault/`: MOC, canvas, notas por fase, una por defecto, índice de evidencias y meta.
+
+## Fase 13 — Verificación con skills de QA (COMPLETADA)
+- **Locales:** verification-loop (gate PASS), e2e-testing, browser-qa, ai-regression-testing, production-audit.
+- **Externas** (petrkindlmann/qa-skills): qa-project-context, release-readiness, bug-reproduction, qa-metrics, coverage-analysis, qa-report-humanizer.
+- Entregables: `.agents/qa-project-context.md`, `qa/08-produccion-readiness.md` (42/100 BLOCKED), `qa/09-verificacion-skills.md`, `qa/10-skills-externas.md`.
+- Pendiente reconocido: accesibilidad con axe-core (no ejecutada; decisión explícita de no instalar dependencias).
+
+## Estado final
+- **Commits locales (6):** plan/defectos, seguridad+bitácora, vault, e2e, CI, skills/verificación. `main` por delante de `origin/main`.
+- **Working tree:** limpio. Código de producción **intacto** (`backend/`/`frontend/` sin cambios).

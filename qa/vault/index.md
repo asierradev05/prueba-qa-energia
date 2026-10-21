@@ -18,6 +18,7 @@ Vault de Obsidian con **toda** la documentación de la prueba técnica de QA sob
 | 5 · Defectos | [[05-Defectos/Registro de defectos]] | `qa/05-defectos.md` |
 | 6 · Seguridad | [[06-Seguridad/Reporte de seguridad]] | `qa/06-seguridad.md` |
 | 7 · Automatización | [[07-Automatizacion/Playwright E2E]] | `e2e/` |
+| 8 · Producción y verificación | [[08-Evidencias/Producción y verificación]] | `qa/08-produccion-readiness.md`, `qa/09-verificacion-skills.md`, `qa/10-skills-externas.md` |
 
 ## 🔴 Defectos y hallazgos de un vistazo
 
