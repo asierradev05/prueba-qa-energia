@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "2739e556-492b-4b91-a288-079f19bfddbd",
+  "status": "current",
+  "command": "deliver",
+  "type": "tree",
+  "input": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\.archify\\architecture-energia-20261021-235213\\entregables.json",
+  "output": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\entregables-prueba-qa.html",
+  "specification": {
+    "sha256": "12b2e5e25cf73eecfbf6a74b72b1d6ffee5a56a805409c576d09d2e9e1a355a8",
+    "bytes": 6624
+  },
+  "artifact": {
+    "sha256": "b519d5b274b9a5d903ec92e120c3c11b8012ea611565b257b5afc219f0ac7353",
+    "bytes": 859740
+  }
+}

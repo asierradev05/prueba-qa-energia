@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\.archify\\architecture-energia-20261021-235213\\candidate.json",
+    "sha256": "4db51f90c8fb2ef3ce8cac88f7c6bc9cac62650cf3ebdbf492d5b963df1d027d",
+    "bytes": 6689
+  },
+  "artifact": {
+    "path": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\arquitectura-energia.html",
+    "sha256": "80eeed78c9da9d6cbe0b076e9618806b9360854c60de8237ed26d69e632fb0a3",
+    "bytes": 831806
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\arquitectura-energia.finalize.json",
+    "summaryReceipt": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\arquitectura-energia.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\arquitectura-energia.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-22T04:52:45.323Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4907,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "visualReviewRecommendation": {
+    "action": "inspect-route-readability",
+    "signals": {
+      "routesOverSuggestedBends": 1
+    },
+    "reason": "Automated gates passed, but crossings or detours still need perceptual review before claiming visual quality.",
+    "affectedRoutes": {
+      "crossings": [],
+      "detours": [
+        {
+          "relationship": {
+            "id": "narrator-openai",
+            "from": "narrator",
+            "to": "openai",
+            "label": "chat/completions",
+            "collectionIndex": 8,
+            "artifactIndex": 9
+          },
+          "bends": 3,
+          "stretch": 1.304
+        }
+      ],
+      "truncated": false
+    },
+    "hints": [
+      "narrator → openai needs 3 bends: move node narrator or openai so they share a row or column with matching centers, or sit diagonally with a clear corner."
+    ],
+    "repair": "Trace these relationships at the desktop viewport. For Architecture, use references/architecture-layout-repair.md: reflow a blocked main path or tangled connected scene, and repair an isolated defect locally only when the surrounding composition is accepted. Preserve all semantic content and user-fixed geometry. Rerun finalize once after the edit."
+  }
+}

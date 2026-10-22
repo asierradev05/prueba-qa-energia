@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "a707b97c-44fc-4383-9215-d9563f558039",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\.archify\\architecture-energia-20261021-235213\\candidate.json",
+  "output": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\arquitectura-energia.html",
+  "specification": {
+    "sha256": "ba2b0cb00cbd344b1fd31baf302468867cfc862b60efb1660ee97b8969bafb39",
+    "bytes": 6689
+  },
+  "artifact": {
+    "sha256": "6b006748909cb8bf1c60213fa7ed28c0579b19d366149db1ca01b7770cad1c5f",
+    "bytes": 831727
+  }
+}

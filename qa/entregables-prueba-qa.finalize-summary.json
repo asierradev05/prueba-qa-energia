@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "tree",
+  "quality": "showcase",
+  "specification": {
+    "path": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\.archify\\architecture-energia-20261021-235213\\entregables.json",
+    "sha256": "12b2e5e25cf73eecfbf6a74b72b1d6ffee5a56a805409c576d09d2e9e1a355a8",
+    "bytes": 6624
+  },
+  "artifact": {
+    "path": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\entregables-prueba-qa.html",
+    "sha256": "b519d5b274b9a5d903ec92e120c3c11b8012ea611565b257b5afc219f0ac7353",
+    "bytes": 859740
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\entregables-prueba-qa.finalize.json",
+    "summaryReceipt": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\entregables-prueba-qa.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\entregables-prueba-qa.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-22T04:52:45.323Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 4825,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}
