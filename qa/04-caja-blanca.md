@@ -1,83 +1,137 @@
-# Pruebas de caja blanca · EnergIA
+# Caja blanca · EnergIA
 
-Análisis estructural del código + ejecución de las suites existentes, orientado por los riesgos R1-R7 del plan. No modifica código de producción.
+Análisis estructural orientado por riesgos R1–R8 del plan. **No se modificó código de producción.**
 
-## 0. Suite de pruebas existente (ejecutada)
+## 0. Suites existentes (ejecutadas)
 
-| Suite | Comando | Resultado |
-|---|---|---|
-| Backend | `go test ./...` | **todos OK** (ai, analysis y subpaquetes, auth, config, data, meter, server) |
-| Frontend | `pnpm test` (`vitest run`) | **11/11 PASS** (3 archivos) |
+| Suite | Comando | Resultado | Confianza |
+|---|---|---|---|
+| Backend | `go test ./...` | OK (ai, analysis, auth, config, data, meter, server) | Media: cubre caminos felices; **no** los bordes que fallan en prod |
+| Frontend | `pnpm test` (vitest) | **11/11 PASS** (3 archivos) | Baja en fechas: `vite.config.ts` fuerza `TZ='UTC'`, así que DEF-04 no puede fallar |
 
-> Observación: los 11 tests del front pasan **incluso** con `TZ=America/Bogota`, lo que demuestra que la suite no cubre la conversión de zona horaria (ver DEF-04). El runner fija `TZ='UTC'` en `vite.config.ts:33`.
+Los tests existentes **pasan con el producto defectuoso**. No son un oráculo fiable para release; sirven como red de regresión parcial del motor y del formato es-CO.
 
-## 1. Rutas de decisión y valores límite
+---
 
-### 1.1 `meter.StatusOf` — `backend/internal/meter/enums.go:29-38`
+## 1. Módulos de riesgo revisados
+
+### 1.1 `meter.StatusOf` — `backend/internal/meter/enums.go:29-38` (R2 / DEF-02)
+
 ```
 switch {
-case a == nil:                       → NORMAL
-case a.Severity == SeverityHigh:     → CRITICAL
-default:                             → ALERT
+case a == nil:                   → NORMAL
+case a.Severity == SeverityHigh: → CRITICAL
+default:                         → ALERT
 }
 ```
-- DOC/COMENTARIO (línea 26): "sin anomalía, **o falso positivo** → NORMAL".
-- Solo hay 2 ramas por severidad; **nunca se consulta `a.Anomaly` ni `a.Type`**.
-- Entrada M-106 = `{Anomaly:false, Type:FALSE_POSITIVE, Severity:LOW}` cae en `default` → **ALERT**. Ruta no cubierta por tests. **Confirma DEF-02.**
-- Cobertura de caminos: la rama "FALSE_POSITIVE→NORMAL" del comentario **no existe en el código**.
 
-### 1.2 `httpx.Pagination.Normalize` + `Paginate` — `paging.go:23-36, 47-55`
-```
-Normalize: Page==0→1; Size==0→10; valida Size∈[1,100];             ← no valida Page<0
-Paginate:  start = min((Page-1)*Size, len); end = min(start+Size, len)
-           rows = items[start:end]
-```
-- Con `Page=-1, Size=10`: `(Page-1)*Size = -20` → `start=-20` → `items[-20:...]` → **panic** `slice bounds out of range [:-10]` (confirmado en el log del servidor).
-- El tag del struct declara `minimum:"1"` (línea 18) pero **no se aplica** en `Normalize`. **Confirma DEF-03.**
-- Análisis de valores límite de `Page`: `0`→OK (default), `1`→OK, `-1`→panic. Falta la rama negativa.
+- Comentario/doc: “sin anomalía, **o falso positivo** → NORMAL”.
+- El `switch` **nunca** consulta `a.Anomaly` ni `a.Type`.
+- M-106 `{Anomaly:false, Type:FALSE_POSITIVE, Severity:LOW}` → `default` → **ALERT**.
+- Tests existentes (`TestStatusOf`): nil, HIGH, MEDIUM, LOW con `Anomaly:true`. **Falta** FALSE_POSITIVE / `Anomaly:false`.
 
-> Nota positiva: la aritmética usa `min(...)` para acotar `start`/`end` contra `len(items)` (caso página fuera de rango hacia arriba → 0 filas, correcto). El hueco es solo el extremo inferior.
+### 1.2 `httpx.Pagination` — `paging.go:23-36, 47-55` (R5 / DEF-03)
 
-### 1.3 `meter.Service.GetAll` (búsqueda) — `service.go:53-70`
-```
-if search != "" && !strings.Contains(sm.MeterID, search) { continue }
-```
-- `strings.Contains` es **case-sensitive**; no se aplica `ToUpper`/`TrimSpace` a `search`.
-- Contraste: `GetByID` (service.go:74) **sí** normaliza `strings.ToUpper(strings.TrimSpace(id))`.
-- Inconsistencia interna + contra la doc (`backend/README.md:96`). **Confirma DEF-01.**
+- `Normalize` valida `size` ∈ [1,100]; **no** valida `Page < 0`.
+- `Paginate`: `start=(Page-1)*Size` con `Page=-1` → índice negativo → **panic** → middleware Recover → **500**.
+- `page=0` sí se normaliza a 1 (OK). Tag `minimum:"1"` no se aplica en runtime.
 
-### 1.4 `frontend/src/lib/format.ts` — `formatPlantTime` (55-58) vs `formatPlantDate/Day`
-```
-formatPlantTime  → getDate(), getHours(), getMinutes()   ← local del navegador
-formatPlantDate  → getUTCDate(), getUTCMonth()           ← UTC
-formatPlantDay   → getUTCDate(), getUTCMonth()           ← UTC
-```
-- El comentario 51-52 dice "se leen las partes UTC para NO convertirla a la zona del navegador", pero `formatPlantTime` usa API local. Inconsistente con el resto del módulo y con `frontend/README.md:75`. **Confirma DEF-04.**
-- Test `format.test.ts:17` verifica exactamente `14:00 → 14:00`, pero solo pasa por el `TZ='UTC'` forzado.
+### 1.3 `meter.Service.GetAll` búsqueda — `service.go:53-70` (R4 / DEF-01)
 
-### 1.5 `analysis/classify.realSeverity` — `classify.go:219-229` (R7)
-```
-p >= 50 && Ongoing → HIGH
-p >= 20            → MEDIUM
-else               → LOW
-```
-- DOC (backend/README.md:276): "**supera** 50%… **supera** 20%".
-- Código usa `>=` (inclusivo). Diferencia solo en el **valor exacto** 50.0 / 20.0.
-- Con el dataset actual ningún caso cae en el borde (M-109 +109,8% → HIGH; M-104 +47,3% → MEDIUM correcto). **Observación de severidad baja**; no reproducible con los datos actuales (lo reporto como inconsistencia doc↔código, no como fallo funcional).
+- `strings.Contains(sm.MeterID, search)` case-sensitive.
+- `GetByID` sí hace `ToUpper(TrimSpace(id))` → inconsistencia interna + vs doc.
 
-## 2. Cobertura de caminos de los módulos de riesgo
+### 1.4 `formatPlantTime` — `frontend/src/lib/format.ts:55-58` (R1 / DEF-04)
 
-| Módulo | Caminos | Cubiertos por tests | Hueco |
+| Función | API usada | Comportamiento |
+|---|---|---|
+| `formatPlantDate` / `Day` | `getUTC*` | Hora de planta (correcto) |
+| `formatPlantTime` | `getDate` / `getHours` / `getMinutes` | **Zona del navegador** |
+
+Comentario del archivo (L51-52) dice leer UTC; la implementación de time no lo hace. El test `format.test.ts` solo pasa porque el runner fuerza UTC.
+
+### 1.5 `realSeverity` — `classify.go:219-229` (R8 / OBS-01)
+
+Doc: “supera” (>); código: `>=`. Sin caso en el dataset en el borde exacto → observación, no defecto funcional reproducible.
+
+### 1.6 Robustez — `summarize` `service.go:104` (RIESGO-W1)
+
+Indexa `Readings[len-1]` sin guard de lista vacía. Hoy todas tienen 336 lecturas → no reproducible; riesgo de panic futuro.
+
+---
+
+## 2. Cobertura de caminos vs huecos
+
+| Módulo | Caminos relevantes | Cubiertos por tests | Hueco |
 |---|---|---|---|
-| `meter.StatusOf` | 3 (nil/HIGH/otra) | nil, HIGH | **FALSE_POSITIVE** |
-| `httpx.Pagination` | page<0, =0, >0 | =0, >0 | **page<0** |
-| `meter.GetAll` búsqueda | match/no match (exacto) | — | **case/trim** |
-| `formatPlantTime` | UTC/local | solo UTC (TZ forzado) | **local ≠ planta** |
+| `StatusOf` | nil / HIGH / otra / **FP** | nil, HIGH, MED, LOW | **FALSE_POSITIVE → NORMAL** |
+| `Pagination` | page&lt;0, =0, &gt;0 | =0, &gt;0, size inválido | **page&lt;0 → 400** |
+| `GetAll` search | match / case | parcial `"109"` | **`"m-109"`** |
+| `formatPlantTime` | UTC / Bogotá | solo UTC forzado | **TZ≠UTC** |
 
-## 3. Hallazgo de calidad de código (no defecto funcional)
+---
 
-- `summarize` (service.go:104) indexa `m.Readings[len(m.Readings)-1]` sin comprobar que `Readings` no esté vacío. Si un medidor llegara sin lecturas → **panic index out of range**. Con el dataset actual todas tienen 336 lecturas, por lo que **no es reproducible** hoy; se registra como **riesgo de robustez** (RIESGO-W1), no como defecto confirmado.
+## 3. Tests unitarios propuestos (no aplicados al código de la app)
+
+El enunciado permite proponer (y opcionalmente escribir) tests. Aquí el contrato que debería fallar **hoy** y pasar tras el fix. La detección E2E ya está en `e2e/` con `test.fail()`.
+
+### 3.1 Go — `StatusOf` (DEF-02)
+
+```go
+func TestStatusOf_FalsePositiveIsNormal(t *testing.T) {
+	a := &model.Anomaly{
+		Anomaly:  false,
+		Type:     model.TypeFalsePositive,
+		Severity: model.SeverityLow,
+	}
+	if got := StatusOf(a); got != StatusNormal {
+		t.Fatalf("StatusOf(FALSE_POSITIVE)=%s, want NORMAL", got)
+	}
+}
+```
+
+### 3.2 Go — paginación negativa (DEF-03)
+
+```go
+func TestNormalize_RejectsNegativePage(t *testing.T) {
+	p := httpx.Pagination{Page: -1, Size: 10}
+	errs := p.Normalize()
+	if len(errs) == 0 {
+		t.Fatal("esperaba error de validación para page < 1")
+	}
+}
+```
+
+### 3.3 Go — búsqueda case-insensitive (DEF-01)
+
+```go
+func TestGetAll_MeterIDCaseInsensitive(t *testing.T) {
+	svc := newTestService(t)
+	got := getAll(t, svc, PagedRequest{
+		Pagination: httpx.Pagination{Size: httpx.MaxPageSize},
+		Filter:     Filter{MeterID: "m-109"},
+	})
+	if !slices.Equal(got, []string{"M-109"}) {
+		t.Fatalf("got %v, want [M-109]", got)
+	}
+}
+```
+
+### 3.4 TypeScript — hora de planta con TZ Bogotá (DEF-04)
+
+Ejecutar el test **sin** forzar `TZ=UTC`, o con `process.env.TZ = 'America/Bogota'`:
+
+```ts
+it('mantiene la hora de planta en America/Bogota', () => {
+  // 14:00Z de planta no debe convertirse a 09:00 local
+  expect(formatPlantTime('2026-09-12T14:00:00Z')).toBe('12/09 14:00')
+})
+```
+
+Hoy, con `TZ=America/Bogota`, este expect **falla** (obtiene `12/09 09:00`) — evidencia de que el test actual solo “pasa” por el TZ forzado.
+
+---
 
 ## 4. Conclusión
 
-La caja blanca **explica la causa raíz** de los 4 defectos confirmados en caja negra (asignación directa de rama/campo faltante) y evidencia que la suite existente **no los detecta** por cobertura incompleta de caminos y por forzar `TZ=UTC`.
+La caja blanca **explica la causa raíz** de DEF-01…04 (rama o normalización faltante) y muestra por qué las suites verdes **no protegen el release**. Confianza en tests existentes: **parcial** (motor/oráculo sí; estado FP, paginación negativa, case search y TZ: no). Detección automática ya cubierta en E2E; los snippets de §3 cierran el hueco unitario.

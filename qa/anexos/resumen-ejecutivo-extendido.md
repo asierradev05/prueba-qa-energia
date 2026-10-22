@@ -1,4 +1,4 @@
-# Resumen ejecutivo · Prueba técnica QA · EnergIA
+﻿# Resumen ejecutivo · Prueba técnica QA · EnergIA
 
 Autor: QA técnico · Fecha: 2026-10-21 · Repo `biaenergy/prueba-qa` · commit `15765d9`.
 Alcance: backend (Go) + frontend (React/Vite) de EnergIA, ejecutados en modo dev (sin Docker).
@@ -37,7 +37,7 @@ El MVP **cumple la función central**: el motor reproduce exactamente el resulta
 
 ## 3. Hallazgos que bloquean el release
 
-**Seguridad — SEC-01 (Crítica):** bypass de autenticación. Si `JWT_SECRET` no se define en el entorno, el backend arranca con el secreto de desarrollo `dev-secret-change-me`; cualquiera que lo conozca puede **forjar un JWT válido y leer toda la API sin credenciales**. Verificado en vivo: `200 OK` con token forjado. Reporte completo en [`Seguridad.md`](../03_Defectos_y_Seguridad/Seguridad.md).
+**Seguridad — SEC-01 (Crítica):** bypass de autenticación. Si `JWT_SECRET` no se define en el entorno, el backend arranca con el secreto de desarrollo `dev-secret-change-me`; cualquiera que lo conozca puede **forjar un JWT válido y leer toda la API sin credenciales**. Verificado en vivo: `200 OK` con token forjado. Reporte completo en [`Seguridad.md`](seguridad.md).
 
 ## 4. Defectos confirmados
 
@@ -79,11 +79,11 @@ Sugerencias de proceso derivadas de la prueba:
 | Casos de caja negra | [`03-casos-caja-negra.md`](../03-casos-caja-negra.md) |
 | Caja blanca | [`04-caja-blanca.md`](../04-caja-blanca.md) |
 | Defectos | [`05-defectos.md`](../05-defectos.md) |
-| Seguridad | [`Seguridad.md`](../03_Defectos_y_Seguridad/Seguridad.md) |
-| Preparación para producción | [`Produccion_Readiness.md`](../03_Defectos_y_Seguridad/Produccion_Readiness.md) |
-| Bitácora de proceso | [`Bitacora.md`](../07_Anexos_Internos/Bitacora.md) |
-| Mapa funcional (soporte) | [`Mapa_Funcional.md`](../01_Plan_y_Estrategia/Mapa_Funcional.md) |
-| Evidencias | [`05_Evidencias/`](../05_Evidencias/) (API, UI/fechas, capturas, salida del motor, run E2E) + [`evidencias/`](../evidencias/) (logs de servidor) |
+| Seguridad | [`Seguridad.md`](seguridad.md) |
+| Preparación para producción | [`Produccion_Readiness.md`](produccion-readiness.md) |
+| Guion del video | [`guion-video.md`](guion-video.md) |
+| Mapa funcional (soporte) | [`Mapa_Funcional.md`](mapa-funcional.md) |
+| Evidencias | [`evidencias/`](../evidencias/) (API, UI/fechas, capturas, salida del motor, run E2E) + [`evidencias/`](../evidencias/) (logs de servidor) |
 | Automatización E2E | [`e2e/`](../../e2e/) (Playwright + TypeScript) |
 
 ## 8. Limitaciones y transparencia

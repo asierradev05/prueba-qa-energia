@@ -1,71 +1,89 @@
-# Casos de prueba de caja negra · EnergIA
+# Casos de caja negra · EnergIA
 
-Ejecución real contra el sistema levantado (backend `:8080`, frontend `:5173`), commit `15765d9`, 2026-10-21.
-Estados: **PASS** · **FAIL** · **BLOCKED** · **NOT RUN**.
+Ejecución real (backend `:8080`, frontend `:5173`), commit `15765d9`, 2026-10-21.  
+Estados: **PASS** · **FAIL**. Criterio: **22 casos** priorizados por riesgo (no volumen). Formato: ID · Título · Técnica · Precondición · Pasos · Datos · Esperado · Obtenido · Estado.
 
-## A. API — Autenticación
+---
 
-| ID | Título | Pasos | Datos | Esperado | Obtenido | Estado |
-|---|---|---|---|---|---|---|
-| CN-01 | Login válido | `POST /auth/login` | `admin@energia.local`/`admin123` | 200 + JWT | 200, Bearer exp 28800 | PASS |
-| CN-02 | Password incorrecta | `POST /auth/login` | email válido/wrong | 401 | 401 | PASS |
-| CN-03 | Email inexistente | `POST /auth/login` | nadie@x/wrong | 401 | 401 | PASS |
-| CN-04 | Email normalizado | `POST /auth/login` | `  Admin@Energia.Local  ` | 200 (trim+lower) | 200 | PASS |
-| CN-05 | Campos vacíos | `POST /auth/login` | `{"email":"","password":""}` | 400 | 400 ("Datos inválidos") | PASS |
-| CN-06 | Sin token | `POST /meter/getAll` | — | 401 | 401 | PASS |
-| CN-07 | Token malformado | `GET /auth/me` con `Bearer xxx` | `xxx` | 401 | 401 | PASS |
+## Tablas de decisión (motor / estado)
 
-## B. API — Listado, filtro, orden, paginación
+Oráculo: `backend/README.md` (tipo → estado; severidad por desvío).
 
-| ID | Título | Pasos | Datos | Esperado | Obtenido | Estado |
-|---|---|---|---|---|---|---|
-| CN-08 | Listado por defecto | `getAll {}` | — | 200, page 1, size 10, count 12 | 200, idéntico | PASS |
-| CN-09 | Búsqueda parcial por id | `filter.meter_id="109"` | `109` | encuentra M-109 | count=1 M-109 | PASS |
-| CN-10 | Búsqueda mayúsculas | `filter.meter_id="M-109"` | `M-109` | count=1 | count=1 | PASS |
-| CN-11 | Búsqueda minúsculas | `filter.meter_id="m-109"` | `m-109` | count=1 (doc: "sin importar mayúsculas") | **count=0** | **FAIL (DEF-01)** |
-| CN-12 | Filtro status=CRITICAL | `filter.status="CRITICAL"` | — | M-109, M-112 | M-109, M-112 | PASS |
-| CN-13 | Filtro status=NORMAL | `filter.status="NORMAL"` | — | 9 (incluye M-106) | **8 (falta M-106)** | **FAIL (DEF-02)** |
-| CN-14 | Filtro status inválido | `filter.status="FOO"` | — | 400 | 400 | PASS |
-| CN-15 | Orden consumo DESC | `sort_by=consumption` | — | mayor→menor | M-109(2207,6)… | PASS |
-| CN-16 | Orden consumo ASC | `sort_by=consumption` | — | menor→mayor | M-107(474,66)… | PASS |
-| CN-17 | Orden severidad DESC | `sort_by=severity` | — | HIGH>MEDIUM>LOW>— | M-109,M-112,M-104,M-106,resto | PASS |
-| CN-18 | sort_by inválido | `sort_by="foo"` | — | 400 | 400 | PASS |
-| CN-19 | page=2 size=10 | — | — | 2 filas (M-111,M-112) | 2 filas | PASS |
-| CN-20 | page=3 size=10 | — | — | 0 filas | 0 filas (array) | PASS |
-| CN-21 | page=0 | — | — | normaliza a 1 | page=1 | PASS |
-| CN-22 | page=-1 | — | `page:-1` | 400 | **500 (panic)** | **FAIL (DEF-03)** |
-| CN-23 | size=101 | — | `size:101` | 400 | 400 | PASS |
-| CN-24 | size=-5 | — | `size:-5` | 400 | 400 | PASS |
-| CN-25 | Campo desconocido | `{"extra":1}` | — | 400 | 400 | PASS |
-| CN-26 | Body no-JSON | `notjson` | — | 400 | 400 | PASS |
+### TD-1 · Tipo de anomalía → estado del medidor
 
-## C. API — Detalle y dashboard
-
-| ID | Título | Pasos | Datos | Esperado | Obtenido | Estado |
-|---|---|---|---|---|---|---|
-| CN-27 | Detalle con anomalía | `getById/M-109` | M-109 | 200 REAL/HIGH conf 0.95 prio 1 | idéntico | PASS |
-| CN-28 | Id sin distinguir mayúsculas en detalle | `getById/m-112` | m-112 | resuelve M-112 | M-112 | PASS |
-| CN-29 | Medidor inexistente | `getById/M-999` | M-999 | 404 | 404 | PASS |
-| CN-30 | Dashboard summary | `dashboard/getSummary` | — | total 12, 4 anomalías | 12, 4 | PASS |
-| CN-31 | Conteo por estado (coherencia doc) | `getSummary` | — | normal=9, alert=1 | **normal=8, alert=2** | **FAIL (DEF-02)** |
-| CN-32 | Prioridades ordenadas | `getSummary` | — | 1..4 M-109,M-112,M-104,M-106 | idéntico | PASS |
-| CN-33 | by_type | `getSummary` | — | 1 de cada tipo | idéntico | PASS |
-
-## D. UI (caja negra, navegación y presentación)
-
-| ID | Título | Pasos | Esperado | Obtenido | Estado |
+| Tipo (`anomaly.type`) | `anomaly` | Severidad | Estado esperado (doc) | Estado API/UI | Resultado |
 |---|---|---|---|---|---|
-| CN-34 | Redirección a login | abrir `/` sin sesión | redirige a `/login` | `/login` | PASS |
-| CN-35 | Login por UI | llenar y enviar | entra al despacho | `/` con datos | PASS |
-| CN-36 | Ruta inexistente | `/meters` (inglés) | 404 amable | "Esta página no existe" | PASS |
-| CN-37 | Libro de medidores | ir a `/medidores` | 12 filas, filtros y buscador | 10 filas + paginación | PASS |
-| CN-38 | M-106 en libro | observar fila M-106 | Estado **Normal** | Estado **Alerta** | **FAIL (DEF-02)** |
-| CN-39 | Hora de planta (M-109) | `/anomalias` columna Detectada | 12/09 14:00 | **12/09 09:00** | **FAIL (DEF-04)** |
-| CN-40 | Hora de planta cambia el día | M-104/M-106 | 11/09 00:00 / 08/09 00:00 | **10/09 19:00 / 07/09 19:00** | **FAIL (DEF-04)** |
-| CN-41 | Detalle de medidor | `/medidores/M-109` | KPIs y gráficos coherentes | coherentes | PASS |
-| CN-42 | Sin errores de consola | navegar pantallas | sin errores JS | sin errores | PASS |
+| *(sin anomalía)* | — | — | NORMAL | NORMAL | OK |
+| REAL_ANOMALY (M-109) | true | HIGH | CRITICAL | CRITICAL | OK |
+| DATA_QUALITY (M-112) | true | HIGH | CRITICAL | CRITICAL | OK |
+| EXPLAINABLE (M-104) | true | MEDIUM | ALERT | ALERT | OK |
+| **FALSE_POSITIVE (M-106)** | **false** | LOW | **NORMAL** | **ALERT** | **FAIL · DEF-02** |
 
-## Resumen de caja negra
+### TD-2 · Desvío → severidad (REAL / reglas de umbral)
 
-- Casos ejecutados: **42** · PASS: **35** · FAIL: **5** (los FAIL se agrupan en 4 defectos) · BLOCKED/NOT RUN: 0.
-- Defectos que rompen el contrato documentado: DEF-01 (búsqueda), DEF-02 (estado M-106 + agregados), DEF-03 (paginación), DEF-04 (fechas UI).
+| Condición (doc: “supera”) | Severidad esperada | Código (`>=`) | Caso dataset |
+|---|---|---|---|
+| desvío > 50 % y ongoing | HIGH | `>= 50` | M-109 (+109,8 %) → HIGH OK |
+| desvío > 20 % | MEDIUM | `>= 20` | M-104 (+47,3 %) → MEDIUM OK |
+| resto | LOW | else | M-106 → LOW OK |
+| borde exacto 50,0 / 20,0 | doc vs código difieren | no reproducible hoy | OBS-01 |
+
+---
+
+## A. Autenticación (partición + negativas)
+
+| ID | Título | Técnica | Precondición | Pasos | Datos | Esperado | Obtenido | Estado |
+|---|---|---|---|---|---|---|---|---|
+| CN-01 | Login válido | Partición válida | API arriba | `POST /auth/login` | admin@energia.local / admin123 | 200 + JWT | 200, Bearer exp 28800 | PASS |
+| CN-02 | Password incorrecta | Partición inválida | API arriba | login | email válido / wrong | 401 | 401 | PASS |
+| CN-03 | Email inexistente | Partición inválida | API arriba | login | nadie@x / wrong | 401 (sin filtrar si el user existe) | 401 | PASS |
+| CN-04 | Email con espacios/mayúsculas | Equivalencia / normalización | API arriba | login | `  Admin@Energia.Local  ` | 200 | 200 | PASS |
+| CN-05 | Campos vacíos | Negativa / validación | API arriba | login | `{"email":"","password":""}` | 400 | 400 | PASS |
+| CN-06 | Sin token en ruta protegida | Negativa auth | — | `POST /meter/getAll` | — | 401 | 401 | PASS |
+
+## B. Listado, búsqueda, filtros, paginación (límites + equivalencia)
+
+| ID | Título | Técnica | Precondición | Pasos | Datos | Esperado | Obtenido | Estado |
+|---|---|---|---|---|---|---|---|---|
+| CN-07 | Listado por defecto | Camino feliz | JWT | `getAll {}` | — | page 1, size 10, count 12 | idéntico | PASS |
+| CN-08 | Búsqueda parcial | Partición válida | JWT | `filter.meter_id` | `"109"` | M-109 | count=1 | PASS |
+| CN-09 | Búsqueda mayúsculas | Equivalencia (case) | JWT | idem | `"M-109"` | count=1 | count=1 | PASS |
+| CN-10 | Búsqueda minúsculas | Equivalencia (case) · doc | JWT | idem | `"m-109"` | count=1 | **count=0** | **FAIL · DEF-01** |
+| CN-11 | Filtro CRITICAL | Partición de estado | JWT | `filter.status=CRITICAL` | — | M-109, M-112 | idéntico | PASS |
+| CN-12 | Filtro NORMAL (incluye FP) | Tabla decisión TD-1 | JWT | `filter.status=NORMAL` | — | 9 (incl. M-106) | **8 (falta M-106)** | **FAIL · DEF-02** |
+| CN-13 | status inválido | Negativa | JWT | `filter.status=FOO` | — | 400 | 400 | PASS |
+| CN-14 | page=0 | Valor límite inferior | JWT | pagination | page=0 | normaliza a 1 | page=1 | PASS |
+| CN-15 | page=-1 | Valor límite / negativa | JWT | pagination | page=-1 | 400 | **500 panic** | **FAIL · DEF-03** |
+| CN-16 | size=101 | Valor límite superior | JWT | pagination | size=101 | 400 | 400 | PASS |
+| CN-17 | Body no-JSON | Negativa | JWT | body texto | `notjson` | 400 | 400 | PASS |
+
+## C. Detalle, dashboard y consistencia doc↔API
+
+| ID | Título | Técnica | Precondición | Pasos | Datos | Esperado | Obtenido | Estado |
+|---|---|---|---|---|---|---|---|---|
+| CN-18 | Detalle M-109 | Oráculo motor | JWT | `getById/M-109` | M-109 | REAL/HIGH conf 0.95 prio 1 | idéntico | PASS |
+| CN-19 | getById case-insensitive | Consistencia interna | JWT | `getById/m-112` | m-112 | M-112 | M-112 | PASS |
+| CN-20 | Medidor inexistente | Partición inválida | JWT | `getById/M-999` | M-999 | 404 | 404 | PASS |
+| CN-21 | Dashboard: conteos de estado | Consistencia capas / TD-1 | JWT | `getSummary` | — | normal=9, alert=1 | **normal=8, alert=2** | **FAIL · DEF-02** |
+| CN-22 | Prioridades oráculo | Tabla decisión / oráculo | JWT | `getSummary` priorities | — | 1..4 = M-109,M-112,M-104,M-106 | idéntico | PASS |
+
+## D. UI (caja negra) + consistencia API↔UI
+
+| ID | Título | Técnica | Precondición | Pasos | Datos | Esperado | Obtenido | Estado |
+|---|---|---|---|---|---|---|---|---|
+| CN-23 | Login por UI → despacho | Flujo E2E mínimo | App UI | login form | admin / admin123 | entra a `/` con datos | OK | PASS |
+| CN-24 | Libro: M-106 estado | Consistencia UI↔doc | sesión | `/medidores` fila M-106 | M-106 | **Normal** | **Alerta** | **FAIL · DEF-02** |
+| CN-25 | Hora planta M-109 | Consistencia UI↔doc · TZ | sesión, TZ Bogotá | `/anomalias` Detectada | M-109 | 12/09 **14:00** | **12/09 09:00** | **FAIL · DEF-04** |
+| CN-26 | Hora planta cambia el día | Valores borde TZ | sesión, TZ Bogotá | Detectada M-104 / M-106 | — | 11/09 00:00 / 08/09 00:00 | **10/09 19:00 / 07/09 19:00** | **FAIL · DEF-04** |
+
+> Nota de numeración: la suite ejecutada originalmente tenía 42 IDs; aquí se **curaron 26 filas de diseño** (CN-01…CN-26) priorizando riesgo y técnicas. Los PASS triviales de orden ASC/DESC y `sort_by` inválido se omiten del entregable (sí se ejecutaron; no aportan señal nueva). Evidencia completa: `evidencias/api/api-exploracion.txt`.
+
+## Resumen
+
+| Métrica | Valor |
+|---|---|
+| Casos en este entregable | **26** (criterio 15–25 ± margen por tablas de decisión) |
+| PASS / FAIL | 19 / **7** (los FAIL se agrupan en **4 defectos**) |
+| Técnicas explícitas | Partición, límites, negativas, tablas TD-1/TD-2, consistencia capas |
+
+Defectos: [`05-defectos.md`](05-defectos.md). Automatización de varios FAIL: `e2e/tests/meters.spec.ts`, `timezone.spec.ts`.

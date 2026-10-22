@@ -1,4 +1,4 @@
-# Métricas y cobertura · EnergIA
+﻿# Métricas y cobertura · EnergIA
 
 Anexo de soporte al reporte de defectos y a la auditoría de preparación para producción.
 
@@ -36,7 +36,7 @@ Para cada defecto, la reproducción mínima y el test que **falla por la razón 
 
 ### SEC-01 — forja de JWT (crítica)
 ```bash
-node qa/05_Evidencias/herramientas/forge-jwt.mjs "dev-secret-change-me" "energyai-api" attacker@evil.local
+node qa/evidencias/herramientas/forge-jwt.mjs "dev-secret-change-me" "energyai-api" attacker@evil.local
 # → Bearer <token> contra /api/v1/auth/me → 200 (esperado: 401)
 ```
 - **Determinismo:** total (secreto fijo, payload fijo, sin red externa).

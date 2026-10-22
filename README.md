@@ -115,56 +115,25 @@ El detalle de qué cubre cada suite está en el README de cada aplicación.
 
 # Entrega de la prueba técnica de QA
 
-Documentación completa de la prueba de QA sobre **EnergIA** (backend Go + frontend React/Vite). Todo ejecutado contra el sistema real en modo dev.
+Todo ejecutado contra el sistema real (modo dev). Índice limpio: [`qa/README.md`](qa/README.md).
 
-## Informes profesionales (BiaEnergy · QA)
+**Veredicto: no liberar a producción** — SEC-01 (crítica) + DEF-02 / DEF-04 (P1). Resumen en [`qa/01-plan-de-pruebas.md`](qa/01-plan-de-pruebas.md#10-resumen-ejecutivo).
 
-**[Abrir portal de informes HTML →](qa/reportes/index.html)**
+## Ruta del evaluador
 
-Los informes se han generado con la identidad visual de BiaEnergy (tema oscuro, acento menta) a partir del mismo contenido que los `.md`, listos para revisar con un aspecto corporativo.
-
-| Informe | Descripción |
-|---|---|
-| [Resumen ejecutivo](qa/reportes/resumen-ejecutivo.html) | Veredicto **No liberar a producción**, riesgos abiertos y recomendaciones. |
-| [Plan de pruebas](qa/reportes/plan-de-pruebas.html) | Alcance, riesgos, técnicas, criterios de entrada/salida. |
-| [Suite de humo](qa/reportes/suite-de-humo.html) | Comprobación rápida de salud del sistema. |
-| [Casos de caja negra](qa/reportes/casos-caja-negra.html) | 42 casos con técnicas (partición equivalente, valores límite). |
-| [Caja blanca](qa/reportes/caja-blanca.html) | Análisis estático, cobertura y propuesta de tests unitarios. |
-| [Registro de defectos](qa/reportes/registro-de-defectos.html) | 4 defectos confirmados con causa raíz, reproducción y propuesta de corrección. |
-| [Reporte de seguridad](qa/reportes/reporte-de-seguridad.html) | 7 hallazgos (SEC-01 **crítica**) con evidencia reproducible. |
-| [Preparación para producción](qa/reportes/produccion-readiness.html) | Evaluación 42/100 — bloqueado. |
-| [Métricas y cobertura](qa/reportes/metricas-y-cobertura.html) | Métricas, huecos y estado de ejecución. |
-
-> **Video de la entrega:** _(enlace pendiente de publicación)._ Guion en [`qa/07_Anexos_Internos/Guion_Video.md`](qa/07_Anexos_Internos/Guion_Video.md).
-
-## Empezar a revisar
-
-> **ÍNDICE DE ENTREGA (recomendado):** [`qa/00_Resumen_Ejecutivo/INDICE_ENTREGA.md`](qa/00_Resumen_Ejecutivo/INDICE_ENTREGA.md) — recorrido ordenado por secciones para revisión eficiente.
->
-> **Vista general interactiva:** [`qa/06_Reportes_Interactivos/video-entrega-qa.html`](qa/06_Reportes_Interactivos/video-entrega-qa.html) — página para el video: conclusión, recorrido, artefactos, defectos y checklist.
->
-> **Diagramas:** [Arquitectura del sistema](qa/06_Reportes_Interactivos/arquitectura-energia.html) · [Mapa de entregables](qa/06_Reportes_Interactivos/entregables-prueba-qa.html).
-
-1. **[`qa/00_Resumen_Ejecutivo/RESUMEN.md`](qa/00_Resumen_Ejecutivo/RESUMEN.md)** — resumen ejecutivo: qué se hizo, veredicto **No liberar** y riesgos abiertos.
-2. **[`qa/03_Defectos_y_Seguridad/Defectos.md`](qa/03_Defectos_y_Seguridad/Defectos.md)** — los 4 defectos confirmados (título, severidad/prioridad, pasos, evidencia, causa raíz `archivo:línea`).
-3. **[`qa/03_Defectos_y_Seguridad/Seguridad.md`](qa/03_Defectos_y_Seguridad/Seguridad.md)** — hallazgos de seguridad (SEC-01 crítica).
-4. **[`qa/vault/index.md`](qa/vault/index.md)** — vault de Obsidian que enlaza todo (mapa visual en `qa/vault/Mapa.canvas`).
-
-## Entregables
-
-| Parte | Entregable | Ubicación |
+| # | Entregable | Archivo |
 |---|---|---|
-| A · Plan | Estrategia, riesgos, técnicas, criterios | [`qa/01_Plan_y_Estrategia/Plan_de_Pruebas.md`](qa/01_Plan_y_Estrategia/Plan_de_Pruebas.md) |
-| B · Humo | 10 verificaciones mínimas (9 PASS / 1 FAIL) | [`qa/02_Pruebas_Funcionales/01_Smoke.md`](qa/02_Pruebas_Funcionales/01_Smoke.md) |
-| C · Caja negra | 42 casos sobre API y UI | [`qa/02_Pruebas_Funcionales/02_Caja_Negra.md`](qa/02_Pruebas_Funcionales/02_Caja_Negra.md) |
-| D · Caja blanca | Ramas/casos borde + análisis de tests existentes | [`qa/02_Pruebas_Funcionales/03_Caja_Blanca.md`](qa/02_Pruebas_Funcionales/03_Caja_Blanca.md) |
-| E · Defectos | 4 defectos confirmados | [`qa/03_Defectos_y_Seguridad/Defectos.md`](qa/03_Defectos_y_Seguridad/Defectos.md) |
-| F · Playwright | Suite E2E (27 tests) | [`e2e/`](e2e/), guía en [`e2e/README.md`](e2e/README.md) |
-| Extra · Seguridad | Probing propio + `govulncheck` | [`qa/03_Defectos_y_Seguridad/Seguridad.md`](qa/03_Defectos_y_Seguridad/Seguridad.md) |
-| Extra · Readiness | Auditoría de preparación para producción | [`qa/03_Defectos_y_Seguridad/Produccion_Readiness.md`](qa/03_Defectos_y_Seguridad/Produccion_Readiness.md) |
-| Evidencias | Logs, capturas, request/response, runs | [`qa/05_Evidencias/`](qa/05_Evidencias/) |
-| Reportes Interactivos | Diagramas navegables | [`qa/06_Reportes_Interactivos/`](qa/06_Reportes_Interactivos/) |
-| CI | Workflow que levanta la app y corre la suite | [`.github/workflows/e2e.yml`](.github/workflows/e2e.yml) |
+| A | Plan + resumen ejecutivo | [`qa/01-plan-de-pruebas.md`](qa/01-plan-de-pruebas.md) |
+| B | Smoke | [`qa/02-smoke.md`](qa/02-smoke.md) |
+| C | Caja negra (técnicas + tablas de decisión) | [`qa/03-casos-caja-negra.md`](qa/03-casos-caja-negra.md) |
+| D | Caja blanca + tests propuestos | [`qa/04-caja-blanca.md`](qa/04-caja-blanca.md) |
+| E | Defectos (DEF + SEC-01) | [`qa/05-defectos.md`](qa/05-defectos.md) |
+| — | Evidencias | [`qa/evidencias/`](qa/evidencias/) |
+| F | Playwright E2E | [`e2e/`](e2e/) · [`e2e/README.md`](e2e/README.md) |
+| Extra | Seguridad / readiness / guion video | [`qa/anexos/`](qa/anexos/) |
+| CI | Workflow E2E | [`.github/workflows/e2e.yml`](.github/workflows/e2e.yml) |
+
+> **Video:** _(pegar enlace)_. Guion: [`qa/anexos/guion-video.md`](qa/anexos/guion-video.md).
 
 ## Ejecutar la suite E2E
 
@@ -173,13 +142,7 @@ cd e2e
 pnpm install && pnpm exec playwright install chromium && pnpm test
 ```
 
-Requiere el backend (`:8080`) y el frontend (`:5173`) levantados. Guía completa en [`e2e/README.md`](e2e/README.md).
-
-## Anexos de proceso
-
-Notas de trazabilidad del proceso (bitácora, guion del video y progreso por fases):
-
-- [`qa/07_Anexos_Internos/`](qa/07_Anexos_Internos/) — bitácora, guion del video y progreso por fases.
+Requiere backend (`:8080`) y frontend (`:5173`). Guía: [`e2e/README.md`](e2e/README.md).
 
 ## Nota
 

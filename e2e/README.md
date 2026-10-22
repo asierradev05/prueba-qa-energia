@@ -64,7 +64,7 @@ tests/
 | SEC-02 (missing security headers) | `security.spec.ts › responses include security headers` |
 | SEC-03 (no login rate limiting) | `security.spec.ts › login applies rate limiting` |
 
-Full security detail: `qa/03_Defectos_y_Seguridad/Seguridad.md`.
+Full security detail: `qa/anexos/seguridad.md` · defect register: `qa/05-defectos.md`.
 
 ## Interpreting results
 

@@ -1,4 +1,4 @@
-# Auditoría de preparación para producción · EnergIA
+﻿# Auditoría de preparación para producción · EnergIA
 
 > Lente de "¿está listo para producción / qué se rompe en prod?". Evidencia recolectada localmente.
 
@@ -12,7 +12,7 @@ El tope de 69 se aplica porque **la autenticación es eludible** (SEC-01) y hay 
 
 1. **Auth eludible (SEC-01).** Se puede forjar un JWT válido con `dev-secret-change-me` y leer toda la API sin credenciales. Verificado: `200 OK`. → `backend/internal/config/config.go:14,55`, `backend/cmd/api/main.go:53-55`.
 2. **Secretos y credenciales por defecto (SEC-05).** `JWT_SECRET` y `AUTH_PASSWORD=admin123` vienen por defecto; el arranque solo emite un `WARN` y continúa. Debe ser **fail-closed** fuera de desarrollo.
-3. **Dependencias vulnerables (SEC-06).** `govulncheck`: **10 vulnerabilidades alcanzables** de la stdlib de Go (`crypto/x509`, `net/http`, `net/http/internal/http2`, `net/textproto`, `crypto/tls`), todas con fix en Go **1.27.2 / 1.27.3**. El repo usa go1.27.0. → `qa/05_Evidencias/logs/seguridad-govulncheck.txt`.
+3. **Dependencias vulnerables (SEC-06).** `govulncheck`: **10 vulnerabilidades alcanzables** de la stdlib de Go (`crypto/x509`, `net/http`, `net/http/internal/http2`, `net/textproto`, `crypto/tls`), todas con fix en Go **1.27.2 / 1.27.3**. El repo usa go1.27.0. → `qa/evidencias/logs/seguridad-govulncheck.txt`.
 
 ## Correcciones de alto valor (siguiente nivel)
 
@@ -29,8 +29,8 @@ El tope de 69 se aplica porque **la autenticación es eludible** (SEC-01) y hay 
 - `git ls-files` → ninguno de `node_modules`, reportes ni `.env` real. Solo `.env.example` versionado.
 - **Build:** `go build ./...` OK · `go vet ./...` OK · `go test ./...` OK (backend).
 - **Frontend:** `pnpm lint` OK · `pnpm typecheck` OK · `pnpm test` 11/11 OK.
-- **E2E:** Playwright **27 passed** (`qa/05_Evidencias/logs/e2e-run.txt`).
-- **Seguridad:** `qa/05_Evidencias/logs/seguridad-probe.txt`, `seguridad-login-enum.txt`, `seguridad-govulncheck.txt`.
+- **E2E:** Playwright **27 passed** (`qa/evidencias/logs/e2e-run.txt`).
+- **Seguridad:** `qa/evidencias/logs/seguridad-probe.txt`, `seguridad-login-enum.txt`, `seguridad-govulncheck.txt`.
 - **Deploy:** `docker-compose.yml`, `backend/Dockerfile`, `frontend/Dockerfile`, `frontend/nginx.conf` presentes.
 - Sin migraciones SQL (los datos son JSON embebido) → sin riesgo de migración.
 
