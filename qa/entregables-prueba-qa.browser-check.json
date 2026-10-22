@@ -6,11 +6,11 @@
   "status": "pass",
   "visualReview": "not-requested",
   "provenance": "current",
-  "deliveryReceiptId": "2739e556-492b-4b91-a288-079f19bfddbd",
+  "deliveryReceiptId": "5625adfc-07d2-4a5e-a615-b824a39d07ff",
   "artifact": {
     "path": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\entregables-prueba-qa.html",
-    "sha256": "b519d5b274b9a5d903ec92e120c3c11b8012ea611565b257b5afc219f0ac7353",
-    "bytes": 859740
+    "sha256": "4f98fd6c5f2df5ade39733556ee58b63f12bd46555e4b57972ac678149d1d4cf",
+    "bytes": 859732
   },
   "state": {
     "detail": "read",

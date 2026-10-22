@@ -5,16 +5,16 @@
   "status": "pass",
   "type": "tree",
   "quality": "showcase",
-  "startedAt": "2026-10-22T04:53:21.788Z",
+  "startedAt": "2026-10-22T05:15:03.503Z",
   "specification": {
     "path": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\.archify\\architecture-energia-20261021-235213\\entregables.json",
-    "sha256": "12b2e5e25cf73eecfbf6a74b72b1d6ffee5a56a805409c576d09d2e9e1a355a8",
-    "bytes": 6624
+    "sha256": "fabead93a678032c974c33f385d374c94d9cb03a52d20abc9fbbe3e0d9a99ca4",
+    "bytes": 6616
   },
   "artifact": {
     "path": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\entregables-prueba-qa.html",
-    "sha256": "b519d5b274b9a5d903ec92e120c3c11b8012ea611565b257b5afc219f0ac7353",
-    "bytes": 859740
+    "sha256": "4f98fd6c5f2df5ade39733556ee58b63f12bd46555e4b57972ac678149d1d4cf",
+    "bytes": 859732
   },
   "stages": {
     "validate": {
@@ -40,8 +40,8 @@
         "ok": true,
         "command": "validate",
         "specification": {
-          "sha256": "12b2e5e25cf73eecfbf6a74b72b1d6ffee5a56a805409c576d09d2e9e1a355a8",
-          "bytes": 6624
+          "sha256": "fabead93a678032c974c33f385d374c94d9cb03a52d20abc9fbbe3e0d9a99ca4",
+          "bytes": 6616
         },
         "validation": {
           "checksPassed": 9,
@@ -56,7 +56,7 @@
     "deliver": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 1017,
+      "durationMs": 2791,
       "command": [
         "C:\\Program Files\\nodejs\\node.exe",
         "C:\\Users\\angel\\AppData\\Local\\Temp\\opencode\\archify\\archify\\bin\\archify.mjs",
@@ -72,19 +72,19 @@
       ],
       "receipt": {
         "schemaVersion": 1,
-        "receiptId": "2739e556-492b-4b91-a288-079f19bfddbd",
+        "receiptId": "5625adfc-07d2-4a5e-a615-b824a39d07ff",
         "ok": true,
         "command": "deliver",
         "type": "tree",
         "input": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\.archify\\architecture-energia-20261021-235213\\entregables.json",
         "output": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\entregables-prueba-qa.html",
         "specification": {
-          "sha256": "12b2e5e25cf73eecfbf6a74b72b1d6ffee5a56a805409c576d09d2e9e1a355a8",
-          "bytes": 6624
+          "sha256": "fabead93a678032c974c33f385d374c94d9cb03a52d20abc9fbbe3e0d9a99ca4",
+          "bytes": 6616
         },
         "artifact": {
-          "sha256": "b519d5b274b9a5d903ec92e120c3c11b8012ea611565b257b5afc219f0ac7353",
-          "bytes": 859740
+          "sha256": "4f98fd6c5f2df5ade39733556ee58b63f12bd46555e4b57972ac678149d1d4cf",
+          "bytes": 859732
         },
         "validation": {
           "checksPassed": 9,
@@ -97,7 +97,7 @@
         "evidence": {
           "verified": true,
           "repository": "https://github.com/biaenergy/prueba-qa",
-          "revision": "520491bc8207253a58c5731f00d803eaa8160d4a",
+          "revision": "a8907e6660d74910c564f0fd6b00829dbe3175d9",
           "references": 29,
           "linkMode": "local-only"
         },
@@ -117,7 +117,7 @@
     "check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 291,
+      "durationMs": 562,
       "command": [
         "C:\\Program Files\\nodejs\\node.exe",
         "C:\\Users\\angel\\AppData\\Local\\Temp\\opencode\\archify\\archify\\bin\\archify.mjs",
@@ -129,8 +129,8 @@
         "ok": true,
         "file": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\entregables-prueba-qa.html",
         "artifact": {
-          "sha256": "b519d5b274b9a5d903ec92e120c3c11b8012ea611565b257b5afc219f0ac7353",
-          "bytes": 859740
+          "sha256": "4f98fd6c5f2df5ade39733556ee58b63f12bd46555e4b57972ac678149d1d4cf",
+          "bytes": 859732
         },
         "checks": [
           {
@@ -249,13 +249,13 @@
           "issues": []
         },
         "provenance": "current",
-        "deliveryReceiptId": "2739e556-492b-4b91-a288-079f19bfddbd"
+        "deliveryReceiptId": "5625adfc-07d2-4a5e-a615-b824a39d07ff"
       }
     },
     "browser-check": {
       "status": "pass",
       "exitCode": 0,
-      "durationMs": 2260,
+      "durationMs": 3563,
       "command": [
         "C:\\Program Files\\nodejs\\node.exe",
         "C:\\Users\\angel\\AppData\\Local\\Temp\\opencode\\archify\\archify\\bin\\archify.mjs",
@@ -273,11 +273,11 @@
         "status": "pass",
         "visualReview": "not-requested",
         "provenance": "current",
-        "deliveryReceiptId": "2739e556-492b-4b91-a288-079f19bfddbd",
+        "deliveryReceiptId": "5625adfc-07d2-4a5e-a615-b824a39d07ff",
         "artifact": {
           "path": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\entregables-prueba-qa.html",
-          "sha256": "b519d5b274b9a5d903ec92e120c3c11b8012ea611565b257b5afc219f0ac7353",
-          "bytes": 859740
+          "sha256": "4f98fd6c5f2df5ade39733556ee58b63f12bd46555e4b57972ac678149d1d4cf",
+          "bytes": 859732
         },
         "state": {
           "detail": "read",
@@ -975,8 +975,8 @@
     "browserCheckReceipt": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\entregables-prueba-qa.browser-check.json"
   },
   "visualReview": "not-requested",
-  "finishedAt": "2026-10-22T04:53:26.613Z",
-  "durationMs": 4825,
+  "finishedAt": "2026-10-22T05:15:12.351Z",
+  "durationMs": 8848,
   "update": {
     "status": "current",
     "installedVersion": "3.2.0",
