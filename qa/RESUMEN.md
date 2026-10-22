@@ -26,9 +26,10 @@ Prueba completa en 9 fases sobre el sistema **ejecutándose de verdad**:
 | Humo | 9/10 PASS, 1 FAIL |
 | Caja negra (casos) | 42 ejecutados · 35 PASS · 5 FAIL (agrupados en 4 defectos) |
 | Defectos confirmados | **4** (2 Alta/P1, 2 Alta-Media/P2) |
-| Suite E2E | **13 tests verdes** (`pnpm test`) sobre el estado actual |
-| Backend | `go build` OK · `go test ./...` OK |
-| Frontend | `pnpm build`/`pnpm test` OK (11/11) |
+| Suite E2E | **27 tests verdes** (`pnpm test`) sobre el estado actual (incluye API, seguridad y `test.fail`) |
+| Backend | `go build` OK · `go vet` OK · `go test ./...` OK |
+| Frontend | `pnpm build`/`pnpm test` OK (11/11) · `pnpm lint`/`typecheck` OK |
+| Seguridad | 7 hallazgos (SEC-01 crítica) + `govulncheck`: 10 vulnerabilidades de stdlib alcanzables |
 
 El MVP **cumple la función central**: el motor reproduce exactamente el resultado esperado del oráculo (M-109 #1, M-112 #2, M-104 #3, M-106 #4) y la UI presenta las órdenes con evidencia y acción. Los defectos están en **reglas de presentación/estado, validación de entrada y formato de fechas**, no en el núcleo de detección.
 
@@ -49,7 +50,7 @@ Extras no confirmados: `OBS-01` (doc "supera 50 %/20 %" vs código `>=`, borde n
 
 - Los 4 defectos se **reprodujeron por ejecución real** (no análisis estático): API con PowerShell/`Invoke-*`, UI con Playwright en 4 zonas horarias, log del servidor para el panic.
 - Cada defecto tiene su causa raíz localizada por archivo:línea (caja blanca).
-- Los 4 se **automatizaron** en `e2e/` con `test.fail()` y la suite pasa (13/13), de modo que quedan como pruebas de regresión: al corregir el defecto, el test correspondiente fallará y señalará que debe retirarse la anotación.
+- Los 4 se **automatizaron** en `e2e/` con `test.fail()` y la suite pasa (27/27), de modo que quedan como pruebas de regresión: al corregir el defecto, el test correspondiente fallará y señalará que debe retirarse la anotación.
 
 ## 5. Recomendación
 

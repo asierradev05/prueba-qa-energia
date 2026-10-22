@@ -93,8 +93,9 @@ Fase 1 — Levantamiento del producto: construir matriz funcional, entidades, re
 - Suites ejecutadas: `go test ./...` OK; `pnpm test` 11/11 PASS (no detecta DEF-04 por `TZ=UTC` forzado).
 
 ## Fase 8 — Automatización Playwright (COMPLETADA)
-- Entregable: `e2e/` (package.json, playwright.config.ts, tsconfig.json, README.md, tests/{helpers/auth.ts, smoke.spec.ts, meters.spec.ts, timezone.spec.ts}).
-- Resultado real: `pnpm test` → **13 passed** (7 de flujo + 6 con `test.fail` que reproduce cada defecto).
+- Entregable: `e2e/` (package.json, playwright.config.ts, tsconfig.json, README.md, `.gitignore`).
+- Estructura: `tests/{auth.setup,smoke,meters,timezone,api,security}.spec.ts`, `tests/pages/{LoginPage,DispatchPage,MetersPage}.ts`, `tests/fixtures/pages.ts`, `tests/helpers/auth.ts`.
+- Resultado real: `pnpm test` → **27 passed** (flujo de negocio + login reutilizable con storageState + API + seguridad + `test.fail` que reproduce cada defecto).
 - Evidencia: `qa/evidencias/e2e-run.txt`, reporte HTML en `e2e/playwright-report/`.
 - Playwright 1.64.1 + Chromium; zona fijada en America/Bogota.
 
@@ -123,3 +124,7 @@ Fase 1 — Levantamiento del producto: construir matriz funcional, entidades, re
 ## Estado final
 - **Commits locales (6):** plan/defectos, seguridad+bitácora, vault, e2e, CI, skills/verificación. `main` por delante de `origin/main`.
 - **Working tree:** limpio. Código de producción **intacto** (`backend/`/`frontend/` sin cambios).
+
+## Entrega
+- **Video:** pendiente por restricciones del entorno; imposible grabar aquí. Documentado en el README raíz; todo lo que el video debía explicar está desarrollado por escrito en los entregables.
+- **Repo:** publicación prevista en un repositorio nuevo de GitHub (el remoto original de la empresa no permite push).

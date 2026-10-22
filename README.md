@@ -110,3 +110,48 @@ pnpm test && pnpm lint && pnpm typecheck
 ```
 
 El detalle de qué cubre cada suite está en el README de cada aplicación.
+
+---
+
+# Entrega de la prueba técnica de QA
+
+Documentación completa del proceso de QA en **[`qa/`](qa/)** y suite de automatización en **[`e2e/`](e2e/)**.
+
+> **Video de la entrega:** pendiente. Por restricciones del entorno de trabajo no fue posible grabar el video de 15 min; la explicación completa (estrategia, casos, defectos reproducidos y ejecución de Playwright) está desarrollada por escrito en los entregables de abajo. Se puede grabar y enlazar aquí cuando se requiera.
+
+## Empezar a revisar
+
+1. **[`qa/RESUMEN.md`](qa/RESUMEN.md)** — resumen ejecutivo: qué se hizo, veredicto **No liberar** y riesgos abiertos.
+2. **[`qa/05-defectos.md`](qa/05-defectos.md)** — los 4 defectos confirmados (título, severidad/prioridad, pasos, evidencia, causa raíz `archivo:línea`).
+3. **[`qa/06-seguridad.md`](qa/06-seguridad.md)** — hallazgos de seguridad (SEC-01 crítica).
+4. **[`qa/vault/index.md`](qa/vault/index.md)** — vault de Obsidian que enlaza todo (mapa visual en `qa/vault/Mapa.canvas`).
+
+## Entregables
+
+| Parte | Entregable | Ubicación |
+|---|---|---|
+| A · Plan | Estrategia, riesgos, técnicas, criterios | [`qa/01-plan-de-pruebas.md`](qa/01-plan-de-pruebas.md) |
+| B · Humo | 10 verificaciones mínimas (9 PASS / 1 FAIL) | [`qa/02-smoke.md`](qa/02-smoke.md) |
+| C · Caja negra | 42 casos sobre API y UI | [`qa/03-casos-caja-negra.md`](qa/03-casos-caja-negra.md) |
+| D · Caja blanca | Ramas/casos borde + análisis de tests existentes | [`qa/04-caja-blanca.md`](qa/04-caja-blanca.md) |
+| E · Defectos | 4 defectos confirmados | [`qa/05-defectos.md`](qa/05-defectos.md) |
+| F · Playwright | Suite E2E (27 tests) | [`e2e/`](e2e/), guía en [`e2e/README.md`](e2e/README.md) |
+| Extra · Seguridad | Probing propio + `govulncheck` | [`qa/06-seguridad.md`](qa/06-seguridad.md) |
+| Extra · Readiness | Auditoría de preparación para producción | [`qa/08-produccion-readiness.md`](qa/08-produccion-readiness.md) |
+| Extra · Verificación | Gate con skills de QA (locales + externas) | [`qa/09-verificacion-skills.md`](qa/09-verificacion-skills.md), [`qa/10-skills-externas.md`](qa/10-skills-externas.md) |
+| Bitácora | Trabajo fase por fase | [`qa/07-bitacora.md`](qa/07-bitacora.md), [`qa/PROGRESO.md`](qa/PROGRESO.md) |
+| Evidencias | Logs, capturas, request/response, runs | [`qa/evidencias/`](qa/evidencias/) |
+| CI | Workflow que levanta la app y corre la suite | [`.github/workflows/e2e.yml`](.github/workflows/e2e.yml) |
+
+## Ejecutar la suite E2E
+
+```bash
+cd e2e
+pnpm install && pnpm exec playwright install chromium && pnpm test
+```
+
+Requiere el backend (`:8080`) y el frontend (`:5173`) levantados. Guía completa en [`e2e/README.md`](e2e/README.md).
+
+## Nota
+
+No se modificó código de producción (`backend/`, `frontend/`): la entrega **solo añade** `qa/`, `e2e/`, `.github/` y `.agents/`.

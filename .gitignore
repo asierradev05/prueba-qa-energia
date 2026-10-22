@@ -11,3 +11,6 @@ dist
 *.tsbuildinfo
 frontend/.impeccable/review
 frontend/.impeccable/questions
+
+# Obsidian (config local del vault de la entrega)
+qa/vault/.obsidian/
