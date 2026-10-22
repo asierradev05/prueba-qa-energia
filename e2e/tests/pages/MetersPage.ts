@@ -10,7 +10,7 @@ export class MetersPage {
 
   /** Search applies on form submit, not on each keystroke. */
   async searchByMeterId(meterId: string): Promise<void> {
-    await this.page.getByLabel('Medidor').fill(meterId)
+    await this.page.getByRole('combobox', { name: 'Medidor' }).fill(meterId)
     await this.page.getByRole('button', { name: 'Buscar medidor' }).click()
   }
 

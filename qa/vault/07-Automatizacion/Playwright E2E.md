@@ -27,6 +27,17 @@ e2e/
 - ✅ Locators semánticos · sin `waitForTimeout` · **storageState** · **Page Objects + fixtures**.
 - ✅ Extras: **tests de API**, **timezoneId**, **GitHub Actions**, reporte HTML/trazas/video.
 
+## Endurecimiento de la suite (quality pass)
+Refactor de limpieza sobre `e2e/` sin tocar código de producción:
+- Helpers muertos eliminados (`loginViaUI`, `seedSession`) → un único `injectToken`.
+- Constantes centralizadas en `helpers/auth.ts` (`API_URL`, `STORAGE_STATE`, `TOKEN_KEY`, `CREDENTIALS as const`).
+- Locators semánticos y comentarios en inglés; specs sin locators inline.
+
+> **Nota de corrección:** el refactor introdujo `getByLabel('Medidor')` para la búsqueda,
+> pero ese locator **rompe en strict mode** (colisiona con el botón `aria-label="Buscar medidor"`,
+> que contiene "Medidor"). Se corrigió a `getByRole('combobox', { name: 'Medidor' })`:
+> semántico, sin id de CSS y sin ambigüedad. Suite **27 passed** + `tsc --noEmit` exit 0.
+
 ## Cómo correr
 ```bash
 cd e2e

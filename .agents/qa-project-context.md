@@ -75,7 +75,7 @@
 ## Conventions
 - **Nombres de test:** `*.spec.ts` (E2E), `*_test.go` (Go), `*.test.ts` (Vitest).
 - **Estructura:** E2E separado en `e2e/`; unit co-localizado.
-- **Selectores:** semánticos (`getByRole`, `getByLabel`, ids estables como `#meter-search`); **sin** `data-testid` en prod (respeta "cero cambios en código de producción").
+- **Selectores:** semánticos (`getByRole` con nombre accesible, `getByText`); ids estables (`#email`, `#meter-search`) solo cuando no hay rol/nombre inequívoco. **Evitar** `getByLabel`/CSS frágil cuando el nombre colisiona con otro elemento; **sin** `data-testid` en prod (respeta "cero cambios en código de producción").
 - **Test data:** dataset JSON fijo (12 medidores); credenciales de dev en `.env.example`.
 - **Conventional Commits:** sí.
 

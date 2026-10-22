@@ -1,39 +1,36 @@
-pnpm.cmd : $ playwright test
-At line:1 char:223
-+ ... 2e"; $out = & "C:\Users\angel\AppData\Roaming\npm\pnpm.cmd" test 2>&1 ...
-+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: ($ playwright test:String) [], RemoteException
-    + FullyQualifiedErrorId : NativeCommandError
- 
+# Suite Playwright E2E - EnergIA
+# Ejecutado: 2026-10-22 | Post refactor de calidad (ec9e6e5) + correccion de locator
+# Comando: pnpm test (playwright test --reporter=list)
+
 
 Running 27 tests using 6 workers
 
-  Γ£ô   1 [setup] ΓÇ║ tests\auth.setup.ts:13:1 ΓÇ║ autenticar y guardar estado de sesi├│n (1.0s)
-  Γ£ô   3 [chromium] ΓÇ║ tests\api.spec.ts:16:3 ΓÇ║ Contratos de API ΓÇ║ la ruta protegida sin token responde 401 (52ms)
-  Γ£ô   2 [chromium] ΓÇ║ tests\api.spec.ts:21:3 ΓÇ║ Contratos de API ΓÇ║ getById de un medidor inexistente responde 404 (149ms)
-  Γ£ô   4 [chromium] ΓÇ║ tests\api.spec.ts:9:3 ΓÇ║ Contratos de API ΓÇ║ rechaza credenciales inv├ílidas con 401 (143ms)
-  Γ£ô   6 [chromium] ΓÇ║ tests\api.spec.ts:38:3 ΓÇ║ Contratos de API ΓÇ║ el listado por defecto devuelve los 12 medidores (165ms)
-  Γ£ô   7 [chromium] ΓÇ║ tests\api.spec.ts:29:3 ΓÇ║ Contratos de API ΓÇ║ paginaci├│n con size fuera de rango responde 400 (189ms)
-  Γ£ÿ  10 [chromium] ΓÇ║ tests\meters.spec.ts:30:3 ΓÇ║ API de medidores ΓÇ║ b├║squeda por id no ignora may├║sculas ΓÇö DEF-01 (150ms)
-  Γ£ÿ  11 [chromium] ΓÇ║ tests\meters.spec.ts:49:3 ΓÇ║ API de medidores ΓÇ║ el estado de M-106 es NORMAL en la API ΓÇö DEF-02 (168ms)
-  Γ£ÿ  12 [chromium] ΓÇ║ tests\meters.spec.ts:60:3 ΓÇ║ API de medidores ΓÇ║ paginaci├│n con page negativo responde 400, no 500 ΓÇö DEF-03 (156ms)
-  Γ£ô  14 [chromium] ΓÇ║ tests\security.spec.ts:39:3 ΓÇ║ Seguridad ┬╖ autenticaci├│n ΓÇ║ token con alg=none es rechazado (17ms)
-  Γ£ÿ  15 [chromium] ΓÇ║ tests\security.spec.ts:25:3 ΓÇ║ Seguridad ┬╖ autenticaci├│n ΓÇ║ un token firmado con el secreto por defecto NO autentica ΓÇö SEC-01 (18ms)
-  Γ£ÿ  13 [chromium] ΓÇ║ tests\meters.spec.ts:71:3 ΓÇ║ API de medidores ΓÇ║ resumen del dashboard con conteos coherentes con la doc ΓÇö DEF-02 (147ms)
-  Γ£ô  16 [chromium] ΓÇ║ tests\security.spec.ts:49:3 ΓÇ║ Seguridad ┬╖ autenticaci├│n ΓÇ║ token malformado es rechazado (19ms)
-  Γ£ÿ  19 [chromium] ΓÇ║ tests\security.spec.ts:70:3 ΓÇ║ Seguridad ┬╖ endurecimiento ΓÇ║ las respuestas incluyen cabeceras de seguridad ΓÇö SEC-02 (15ms)
-  Γ£ô  20 [chromium] ΓÇ║ tests\security.spec.ts:94:3 ΓÇ║ Seguridad ┬╖ entrada de datos ΓÇ║ la inyecci├│n en filtros no tiene efecto (118ms)
-  Γ£ô  17 [chromium] ΓÇ║ tests\security.spec.ts:56:3 ΓÇ║ Seguridad ┬╖ autenticaci├│n ΓÇ║ el login no revela si el email existe (234ms)
-  Γ£ô  21 [chromium] ΓÇ║ tests\security.spec.ts:106:3 ΓÇ║ Seguridad ┬╖ entrada de datos ΓÇ║ un body mayor de 1 MB es rechazado (141ms)
-  Γ£ô   5 [chromium] ΓÇ║ tests\meters.spec.ts:5:3 ΓÇ║ Libro de medidores ΓÇ║ lista los medidores con su estado, consumo y variaci├│n (1.6s)
-  Γ£ô   9 [chromium] ΓÇ║ tests\meters.spec.ts:21:3 ΓÇ║ Libro de medidores ΓÇ║ buscar "M-109" filtra a un solo medidor (1.9s)
-  Γ£ô  25 [chromium] ΓÇ║ tests\smoke.spec.ts:30:3 ΓÇ║ Humo ┬╖ EnergIA ΓÇ║ la API responde y la ruta protegida exige token (34ms)
-  Γ£ô  22 [chromium] ΓÇ║ tests\smoke.spec.ts:12:5 ΓÇ║ Humo ┬╖ EnergIA ΓÇ║ sin sesi├│n ΓÇ║ la ra├¡z sin sesi├│n redirige al login (1.4s)
-  Γ£ô  23 [chromium] ΓÇ║ tests\smoke.spec.ts:18:5 ΓÇ║ Humo ┬╖ EnergIA ΓÇ║ sin sesi├│n ΓÇ║ login v├ílido entra al despacho (1.8s)
-  Γ£ô  24 [chromium] ΓÇ║ tests\smoke.spec.ts:23:5 ΓÇ║ Humo ┬╖ EnergIA ΓÇ║ sin sesi├│n ΓÇ║ credenciales inv├ílidas muestran error y no entran (1.2s)
-  Γ£ÿ  18 [chromium] ΓÇ║ tests\security.spec.ts:79:3 ΓÇ║ Seguridad ┬╖ endurecimiento ΓÇ║ el login aplica rate limiting ΓÇö SEC-03 (2.5s)
-  Γ£ô  26 [chromium] ΓÇ║ tests\smoke.spec.ts:38:3 ΓÇ║ Humo ┬╖ EnergIA ΓÇ║ el despacho muestra las ├│rdenes priorizadas del motor (1.2s)
-  Γ£ÿ  27 [chromium] ΓÇ║ tests\timezone.spec.ts:12:3 ΓÇ║ Hora de planta ΓÇ║ el instante "Detectada" no depende de la zona del navegador ΓÇö DEF-04 (1.9s)
-  Γ£ÿ   8 [chromium] ΓÇ║ tests\meters.spec.ts:14:3 ΓÇ║ Libro de medidores ΓÇ║ fila M-106 se muestra como Normal y no como alerta (6.7s)
+  Γ£ô   1 [setup] ΓÇ║ tests\auth.setup.ts:5:1 ΓÇ║ authenticate and persist storage state (915ms)
+  Γ£ô   4 [chromium] ΓÇ║ tests\api.spec.ts:12:3 ΓÇ║ API contracts ΓÇ║ protected route without token returns 401 (52ms)
+  Γ£ô   3 [chromium] ΓÇ║ tests\api.spec.ts:5:3 ΓÇ║ API contracts ΓÇ║ rejects invalid credentials with 401 (114ms)
+  Γ£ô   2 [chromium] ΓÇ║ tests\api.spec.ts:25:3 ΓÇ║ API contracts ΓÇ║ pagination with out-of-range size returns 400 (120ms)
+  Γ£ô   5 [chromium] ΓÇ║ tests\api.spec.ts:17:3 ΓÇ║ API contracts ΓÇ║ getById for unknown meter returns 404 (124ms)
+  Γ£ô   6 [chromium] ΓÇ║ tests\api.spec.ts:34:3 ΓÇ║ API contracts ΓÇ║ default listing returns 12 meters (121ms)
+  Γ£ÿ  10 [chromium] ΓÇ║ tests\meters.spec.ts:29:3 ΓÇ║ Meters API ΓÇ║ meter_id filter is case-insensitive ΓÇö DEF-01 (228ms)
+  Γ£ÿ  11 [chromium] ΓÇ║ tests\meters.spec.ts:47:3 ΓÇ║ Meters API ΓÇ║ M-106 status is NORMAL in the API ΓÇö DEF-02 (196ms)
+  Γ£ÿ  12 [chromium] ΓÇ║ tests\meters.spec.ts:57:3 ΓÇ║ Meters API ΓÇ║ negative page returns 400, not 500 ΓÇö DEF-03 (239ms)
+  Γ£ÿ  14 [chromium] ΓÇ║ tests\security.spec.ts:29:3 ΓÇ║ Security ┬╖ authentication ΓÇ║ JWT signed with default secret must not authenticate ΓÇö SEC-01 (31ms)
+  Γ£ô  16 [chromium] ΓÇ║ tests\security.spec.ts:49:3 ΓÇ║ Security ┬╖ authentication ΓÇ║ malformed token is rejected (14ms)
+  Γ£ô  15 [chromium] ΓÇ║ tests\security.spec.ts:41:3 ΓÇ║ Security ┬╖ authentication ΓÇ║ alg=none token is rejected (19ms)
+  Γ£ÿ  13 [chromium] ΓÇ║ tests\meters.spec.ts:67:3 ΓÇ║ Meters API ΓÇ║ dashboard summary counts match expected NORMAL mapping ΓÇö DEF-02 (106ms)
+  Γ£ÿ  18 [chromium] ΓÇ║ tests\security.spec.ts:70:3 ΓÇ║ Security ┬╖ hardening ΓÇ║ responses include security headers ΓÇö SEC-02 (20ms)
+  Γ£ô  20 [chromium] ΓÇ║ tests\security.spec.ts:92:3 ΓÇ║ Security ┬╖ input handling ΓÇ║ injection payloads in filters have no effect (126ms)
+  Γ£ô  17 [chromium] ΓÇ║ tests\security.spec.ts:56:3 ΓÇ║ Security ┬╖ authentication ΓÇ║ login does not reveal whether the email exists (185ms)
+  Γ£ô  21 [chromium] ΓÇ║ tests\security.spec.ts:104:3 ΓÇ║ Security ┬╖ input handling ΓÇ║ body larger than 1 MB is rejected (124ms)
+  Γ£ô   7 [chromium] ΓÇ║ tests\meters.spec.ts:5:3 ΓÇ║ Meter book ΓÇ║ lists meters with status, consumption, and variation (1.6s)
+  Γ£ô   9 [chromium] ΓÇ║ tests\meters.spec.ts:20:3 ΓÇ║ Meter book ΓÇ║ search "M-109" filters to a single meter (1.6s)
+  Γ£ô  25 [chromium] ΓÇ║ tests\smoke.spec.ts:26:3 ΓÇ║ Smoke ┬╖ EnergIA ΓÇ║ API health is up and protected route requires token (62ms)
+  Γ£ô  22 [chromium] ΓÇ║ tests\smoke.spec.ts:8:5 ΓÇ║ Smoke ┬╖ EnergIA ΓÇ║ unauthenticated ΓÇ║ root redirects to login (1.2s)
+  Γ£ô  23 [chromium] ΓÇ║ tests\smoke.spec.ts:14:5 ΓÇ║ Smoke ┬╖ EnergIA ΓÇ║ unauthenticated ΓÇ║ valid login reaches dispatch (1.7s)
+  Γ£ÿ  19 [chromium] ΓÇ║ tests\security.spec.ts:78:3 ΓÇ║ Security ┬╖ hardening ΓÇ║ login applies rate limiting ΓÇö SEC-03 (2.3s)
+  Γ£ô  24 [chromium] ΓÇ║ tests\smoke.spec.ts:19:5 ΓÇ║ Smoke ┬╖ EnergIA ΓÇ║ unauthenticated ΓÇ║ invalid credentials show error and stay on login (1.1s)
+  Γ£ô  26 [chromium] ΓÇ║ tests\smoke.spec.ts:34:3 ΓÇ║ Smoke ┬╖ EnergIA ΓÇ║ dispatch shows engine-prioritized work orders (1.1s)
+  Γ£ÿ  27 [chromium] ΓÇ║ tests\timezone.spec.ts:9:3 ΓÇ║ Plant time ΓÇ║ "Detectada" instant does not depend on browser timezone ΓÇö DEF-04 (1.8s)
+  Γ£ÿ   8 [chromium] ΓÇ║ tests\meters.spec.ts:14:3 ΓÇ║ Meter book ΓÇ║ M-106 row shows Normal, not alert ΓÇö DEF-02 (6.6s)
 
-  27 passed (9.8s)
+  27 passed (9.4s)
