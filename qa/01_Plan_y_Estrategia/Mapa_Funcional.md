@@ -114,7 +114,7 @@ Otros 8 NORMAL. Fuente: `backend/README.md` §Resultado, `README.md:9-14`.
 
 ### Paginación (`httpx/paging.go`)
 - Defaults page=1,size=10; MaxPageSize=100. `count` es total sin paginar. Página vacía ⇒ `rows: []`. `paging.go:9-56`.
-- **Nota:** `Normalize` no valida `page < 0`. Con page negativo, `start=min((page-1)*size,len)` puede ser negativo y `items[start:end]` haría panic → posible 500. `paging.go:23-35,48-49`. **Pendiente de verificar** (ver Fase 5).
+- **Nota:** `Normalize` no valida `page < 0`. Con page negativo, `start=min((page-1)*size,len)` puede ser negativo y `items[start:end]` haría panic → posible 500. `paging.go:23-35,48-49`. **Confirmado como DEF-03** en [`05-defectos.md`](../05-defectos.md).
 
 ### Ordenamientos (`meter/service.go:116-134`)
 - `sort_by=severity`: rank HIGH=3,MEDIUM=2,LOW=1, sin anomalía=0. `model/anomaly.go:37-48`.

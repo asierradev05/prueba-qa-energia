@@ -23,7 +23,7 @@ Severidades: **Crítica · Alta · Media · Baja**.
 
 **Causa raíz:** `strings.Contains(sm.MeterID, search)` compara sin normalizar. `GetByID` (service.go:74) sí usa `strings.ToUpper(strings.TrimSpace(id))` → inconsistencia interna.
 **Corrección propuesta (referencia):** normalizar `search = strings.ToUpper(strings.TrimSpace(f.MeterID))` y comparar `strings.Contains(strings.ToUpper(sm.MeterID), search)`.
-**Evidencia:** `evidencias/api-exploracion.txt` §4; caso CN-11.
+**Evidencia:** `../05_Evidencias/api/api-exploracion.txt` §4; caso CN-11.
 
 ---
 
@@ -51,7 +51,7 @@ Severidades: **Crítica · Alta · Media · Baja**.
 **Causa raíz:** `StatusOf` documenta "falso positivo → NORMAL" pero el `switch` ignora `a.Anomaly`/`a.Type`; un FALSE_POSITIVE (LOW) cae en `default` → ALERT.
 **Corrección propuesta (referencia):** añadir rama `case !a.Anomaly || a.Type == model.TypeFalsePositive: return StatusNormal` antes de la de severidad (constantes reales: `model.Anomaly` bool en `model/anomaly.go:80`, `model.TypeFalsePositive = "FALSE_POSITIVE"` en `model/anomaly.go:21`).
 **Impacto:** el operador ve una alerta que el oráculo dice no escalar; infla el conteo de "requieren atención" y contradice el mensaje de la propia UI ("Falso positivo · No escalar").
-**Evidencia:** `evidencias/api-exploracion.txt` §5; casos CN-13, CN-31, CN-38.
+**Evidencia:** `../05_Evidencias/api/api-exploracion.txt` §5; casos CN-13, CN-31, CN-38.
 
 ---
 
@@ -75,7 +75,7 @@ ERROR panic error="runtime error: slice bounds out of range [:-20]" path=/api/v1
 **Causa raíz:** `Normalize()` valida `size` pero **no** valida `Page < 0`; `Paginate` calcula `start=(Page-1)*Size` negativo y hace `items[start:end]`. El middleware `Recover` lo convierte en 500 (se evita la caída del proceso, pero expone un 500 al cliente).
 **Nota:** `page=0` sí se normaliza a 1 (correcto).
 **Corrección propuesta (referencia):** en `Normalize`, `if p.Page < 1 { errs = append(errs, "pagination.page debe ser >= 1") }`.
-**Evidencia:** `evidencias/api-exploracion.txt` §6; `evidencias/backend-server.err.log`; caso CN-22.
+**Evidencia:** `../05_Evidencias/api/api-exploracion.txt` §6; `../evidencias/backend-server.err.log`; caso CN-22.
 
 ---
 
@@ -106,7 +106,7 @@ En Bogotá (zona objetivo) muestra `09:00` en vez de `14:00`; en M-104/M-106 **c
 **Causa raíz:** `formatPlantTime` usa `getDate()/getHours()/getMinutes()` (hora local del navegador) mientras `formatPlantDate/Day` usan `getUTC*()`. El propio comentario (líneas 51-52) dice que deben leerse las partes UTC.
 **Por qué los tests no lo detectan:** `vite.config.ts:33` fuerza `env: { TZ: 'UTC' }`; el test `format.test.ts:17` (`14:00 → 14:00`) pasa solo por ese forzado.
 **Corrección propuesta (referencia):** usar `getUTCDate()/getUTCHours()/getUTCMinutes()` en `formatPlantTime`.
-**Evidencia:** `evidencias/ui-fechas-timezone.txt` (4 zonas horarias); casos CN-39, CN-40.
+**Evidencia:** `../05_Evidencias/api/ui-fechas-timezone.txt` (4 zonas horarias); casos CN-39, CN-40.
 
 ---
 

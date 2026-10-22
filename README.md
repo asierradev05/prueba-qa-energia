@@ -115,9 +115,27 @@ El detalle de qué cubre cada suite está en el README de cada aplicación.
 
 # Entrega de la prueba técnica de QA
 
-Documentación completa del proceso de QA en **[`qa/`](qa/)** y suite de automatización en **[`e2e/`](e2e/)**.
+Documentación completa de la prueba de QA sobre **EnergIA** (backend Go + frontend React/Vite). Todo ejecutado contra el sistema real en modo dev.
 
-> **Video de la entrega:** pendiente. Por restricciones del entorno de trabajo no fue posible grabar el video de 15 min; la explicación completa (estrategia, casos, defectos reproducidos y ejecución de Playwright) está desarrollada por escrito en los entregables de abajo. Se puede grabar y enlazar aquí cuando se requiera.
+## Informes profesionales (BiaEnergy · QA)
+
+**[Abrir portal de informes HTML →](qa/reportes/index.html)**
+
+Los informes se han generado con la identidad visual de BiaEnergy (tema oscuro, acento menta) a partir del mismo contenido que los `.md`, listos para revisar con un aspecto corporativo.
+
+| Informe | Descripción |
+|---|---|
+| [Resumen ejecutivo](qa/reportes/resumen-ejecutivo.html) | Veredicto **No liberar a producción**, riesgos abiertos y recomendaciones. |
+| [Plan de pruebas](qa/reportes/plan-de-pruebas.html) | Alcance, riesgos, técnicas, criterios de entrada/salida. |
+| [Suite de humo](qa/reportes/suite-de-humo.html) | Comprobación rápida de salud del sistema. |
+| [Casos de caja negra](qa/reportes/casos-caja-negra.html) | 42 casos con técnicas (partición equivalente, valores límite). |
+| [Caja blanca](qa/reportes/caja-blanca.html) | Análisis estático, cobertura y propuesta de tests unitarios. |
+| [Registro de defectos](qa/reportes/registro-de-defectos.html) | 4 defectos confirmados con causa raíz, reproducción y propuesta de corrección. |
+| [Reporte de seguridad](qa/reportes/reporte-de-seguridad.html) | 7 hallazgos (SEC-01 **crítica**) con evidencia reproducible. |
+| [Preparación para producción](qa/reportes/produccion-readiness.html) | Evaluación 42/100 — bloqueado. |
+| [Métricas y cobertura](qa/reportes/metricas-y-cobertura.html) | Métricas, huecos y estado de ejecución. |
+
+> **Video de la entrega:** _(enlace pendiente de publicación)._ Guion en [`qa/07_Anexos_Internos/Guion_Video.md`](qa/07_Anexos_Internos/Guion_Video.md).
 
 ## Empezar a revisar
 
@@ -157,12 +175,12 @@ pnpm install && pnpm exec playwright install chromium && pnpm test
 
 Requiere el backend (`:8080`) y el frontend (`:5173`) levantados. Guía completa en [`e2e/README.md`](e2e/README.md).
 
-## Material de trabajo interno (no es entregable)
+## Anexos de proceso
 
-Notas de proceso que se conservan por trazabilidad, fuera de los entregables evaluados:
+Notas de trazabilidad del proceso (bitácora, guion del video y progreso por fases):
 
-- [`qa/07_Anexos_Internos/`](qa/07_Anexos_Internos/) — Bitácora, Guion del video, verificaciones de skills, progreso y mapa funcional inicial.
+- [`qa/07_Anexos_Internos/`](qa/07_Anexos_Internos/) — bitácora, guion del video y progreso por fases.
 
 ## Nota
 
-No se modificó código de producción (`backend/`, `frontend/`): la entrega **solo añade** `qa/`, `e2e/`, `.github/` y `.agents/`.
+No se modificó código de producción (`backend/`, `frontend/`): la entrega **solo añade** `qa/`, `e2e/` y `.github/`.

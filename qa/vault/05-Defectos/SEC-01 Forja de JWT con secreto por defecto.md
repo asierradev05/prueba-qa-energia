@@ -10,7 +10,7 @@ El backend firma y valida JWT con el secreto por defecto público `dev-secret-ch
 
 ## Reproducción
 ```bash
-node qa/evidencias/forge-jwt.mjs "dev-secret-change-me" "energyai-api" "attacker@evil.local"
+node qa/05_Evidencias/herramientas/forge-jwt.mjs "dev-secret-change-me" "energyai-api" "attacker@evil.local"
 curl -s -H "Authorization: Bearer <token>" http://localhost:8080/api/v1/auth/me
 ```
 
@@ -19,7 +19,7 @@ curl -s -H "Authorization: Bearer <token>" http://localhost:8080/api/v1/auth/me
 - Obtenido: `200 {"email":"attacker@evil.local","name":"Atacante"}`
 - Y `200` en `meter/getAll`, `meter/getById/M-109`, `dashboard/getSummary`, `anomaly/getAll`.
 
-Evidencia: `qa/evidencias/seguridad-probe.txt` §2.
+Evidencia: `qa/05_Evidencias/logs/seguridad-probe.txt` §2.
 
 ## Causa raíz
 `config.go` pone secreto por defecto; `main.go:53-55` solo hace `slog.Warn` y **arranca igual**.

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumen ejecutivo · QA EnergIA · BiaEnergy</title>
+<meta name="author" content="Equipo de QA">
+<style>
+:root {
+  color-scheme: dark;
+  --paper: #0f0f0f;
+  --paper-soft: #121212;
+  --sheet: #1a1a1a;
+  --sheet-alt: #181818;
+  --ink: #fafafa;
+  --ink-muted: #a1a1aa;
+  --ink-faint: #71717a;
+  --form: #08ddbc;
+  --form-strong: #17ffdb;
+  --form-wash: #16302b;
+  --rule: #27272a;
+  --rule-strong: #3f3f46;
+  --greenbar: #202023;
+  --critical: #f87171;
+  --critical-wash: #2c1717;
+  --alert: #fbbf24;
+  --alert-wash: #2d2410;
+  --ok: #4ade80;
+  --ok-wash: #12291b;
+  --info: #60a5fa;
+  --info-wash: #152238;
+  --sidebar-w: 292px;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  background-image: radial-gradient(70rem 28rem at 70% -10rem, rgb(8 221 188 / 0.07), transparent 70%);
+  background-repeat: no-repeat;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  line-height: 1.65;
+}
+a { color: var(--form); text-decoration: none; text-underline-offset: 3px; }
+a:hover { text-decoration: underline; text-decoration-color: var(--form-strong); }
+:focus-visible { outline: 2px solid var(--form); outline-offset: 2px; border-radius: 6px; }
+::selection { background: var(--form); color: var(--paper); }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--rule-strong); border-radius: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- Layout ---------- */
+.layout { display: grid; grid-template-columns: var(--sidebar-w) minmax(0, 1fr); min-height: 100vh; }
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  background: linear-gradient(180deg, var(--sheet-alt), var(--paper));
+  border-right: 1px solid var(--rule);
+  padding: 22px 18px 40px;
+}
+.brand { display: flex; align-items: center; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid var(--rule); }
+.brand-mark { flex: none; border-radius: 9px; box-shadow: 0 6px 20px rgb(8 221 188 / 0.18); }
+.brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+.brand-text b { font-size: 15px; letter-spacing: -0.01em; }
+.brand-text span { font-size: 11.5px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.14em; }
+.nav { margin-top: 20px; }
+.nav h4 { margin: 18px 0 8px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--ink-faint); font-weight: 600; }
+.nav a {
+  display: block; padding: 7px 11px; margin: 2px 0; border-radius: 9px;
+  color: var(--ink-muted); font-size: 13.5px; border-left: 2px solid transparent;
+}
+.nav a:hover { background: var(--sheet); color: var(--ink); text-decoration: none; }
+.nav a.active { background: var(--form-wash); color: var(--form-strong); border-left-color: var(--form); font-weight: 600; }
+.nav a .n { display: inline-block; width: 20px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+
+/* ---------- Main ---------- */
+.main { min-width: 0; }
+.doc { max-width: 960px; margin: 0 auto; padding: 0 40px 120px; }
+
+/* ---------- Report header ---------- */
+.report-head { padding: 46px 0 26px; border-bottom: 1px solid var(--rule); }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--form); font-weight: 600; }
+.eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--form); }
+.report-head h1 { margin: 14px 0 6px; font-size: 34px; line-height: 1.15; letter-spacing: -0.02em; }
+.report-head .lede { color: var(--ink-muted); font-size: 15px; max-width: 70ch; }
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; margin-top: 26px; background: var(--rule); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
+.meta-cell { background: var(--sheet); padding: 12px 14px; }
+.meta-cell .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-faint); }
+.meta-cell .v { font-size: 14px; font-weight: 600; margin-top: 3px; }
+
+/* ---------- Verdict banner ---------- */
+.verdict { display: flex; align-items: center; gap: 14px; margin-top: 22px; padding: 16px 18px; border-radius: 12px; border: 1px solid; }
+.verdict--blocked { background: var(--critical-wash); border-color: rgb(248 113 113 / 0.4); }
+.verdict--go { background: var(--ok-wash); border-color: rgb(74 222 128 / 0.4); }
+.verdict__dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.verdict--blocked .verdict__dot { background: var(--critical); box-shadow: 0 0 0 5px rgb(248 113 113 / 0.16); }
+.verdict--go .verdict__dot { background: var(--ok); box-shadow: 0 0 0 5px rgb(74 222 128 / 0.16); }
+.verdict__text b { display: block; font-size: 15px; }
+.verdict__text span { color: var(--ink-muted); font-size: 13px; }
+
+/* ---------- Content ---------- */
+.content { padding-top: 8px; }
+.content h1 { font-size: 30px; margin: 40px 0 12px; letter-spacing: -0.02em; }
+.content h2 { font-size: 23px; margin: 44px 0 12px; padding-top: 20px; border-top: 1px solid var(--rule); letter-spacing: -0.01em; }
+.content h2:first-child { border-top: none; padding-top: 6px; margin-top: 20px; }
+.content h3 { font-size: 17.5px; margin: 30px 0 10px; color: var(--form-strong); }
+.content h4 { font-size: 14px; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+.content p { margin: 11px 0; }
+.content strong { color: #fff; font-weight: 650; }
+.content em { color: var(--ink); }
+.content code {
+  font-family: var(--font-mono); font-size: 0.86em; background: var(--sheet);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 1.5px 6px; color: var(--form-strong);
+}
+.content .rule { border: none; border-top: 1px solid var(--rule); margin: 34px 0; }
+.content blockquote {
+  margin: 16px 0; padding: 6px 18px; border-left: 3px solid var(--rule-strong);
+  color: var(--ink-muted); background: var(--sheet-alt); border-radius: 0 10px 10px 0;
+}
+.content ul.list, .content ol.list { margin: 11px 0; padding-left: 22px; }
+.content .list li { margin: 5px 0; }
+.content li.task { list-style: none; position: relative; padding-left: 4px; }
+.content li.task .task__box {
+  display: inline-grid; place-items: center; width: 17px; height: 17px; margin-right: 8px;
+  border: 1.5px solid var(--rule-strong); border-radius: 5px; font-size: 11px; vertical-align: -3px; color: var(--paper);
+}
+.content li.task--done .task__box { background: var(--form); border-color: var(--form); color: var(--paper); }
+.content li.task--done { color: var(--ink-muted); }
+
+/* ---------- Code block ---------- */
+pre.codeblock {
+  background: #0b0b0b; border: 1px solid var(--rule); border-radius: 12px;
+  padding: 16px 18px; overflow-x: auto; margin: 16px 0; position: relative;
+}
+pre.codeblock code { background: none; border: none; padding: 0; color: #e4e4e7; font-size: 12.5px; line-height: 1.6; }
+pre.codeblock[data-lang]::before {
+  content: attr(data-lang); position: absolute; top: 8px; right: 12px;
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint);
+}
+
+/* ---------- Tables ---------- */
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--rule); border-radius: 12px; }
+table.data-table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+table.data-table thead th {
+  background: var(--sheet-alt); text-align: left; padding: 11px 14px; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); font-weight: 600;
+  border-bottom: 1px solid var(--rule-strong); white-space: nowrap;
+}
+table.data-table td { padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+table.data-table tbody tr:last-child td { border-bottom: none; }
+table.data-table tbody tr:nth-child(even) { background: var(--greenbar); }
+table.data-table td .badge { white-space: nowrap; }
+
+/* ---------- Badges ---------- */
+.badge {
+  display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11.5px;
+  font-weight: 650; letter-spacing: 0.02em; border: 1px solid transparent; line-height: 1.5;
+}
+.badge--critical { background: var(--critical-wash); color: var(--critical); border-color: rgb(248 113 113 / 0.35); }
+.badge--alert { background: var(--alert-wash); color: var(--alert); border-color: rgb(251 191 36 / 0.35); }
+.badge--info { background: var(--info-wash); color: var(--info); border-color: rgb(96 165 250 / 0.35); }
+.badge--ok { background: var(--ok-wash); color: var(--ok); border-color: rgb(74 222 128 / 0.35); }
+
+/* ---------- Callouts ---------- */
+.callout { margin: 20px 0; padding: 14px 18px; border-radius: 12px; border: 1px solid var(--rule-strong); border-left-width: 4px; background: var(--sheet-alt); }
+.callout__title { font-weight: 650; margin-bottom: 4px; }
+.callout__body p { margin: 4px 0; color: var(--ink-muted); }
+.callout--critical { border-left-color: var(--critical); background: var(--critical-wash); }
+.callout--critical .callout__title { color: var(--critical); }
+.callout--alert { border-left-color: var(--alert); background: var(--alert-wash); }
+.callout--alert .callout__title { color: var(--alert); }
+.callout--info { border-left-color: var(--info); background: var(--info-wash); }
+.callout--info .callout__title { color: var(--info); }
+.callout--ok { border-left-color: var(--ok); background: var(--ok-wash); }
+.callout--ok .callout__title { color: var(--ok); }
+
+/* ---------- Footer ---------- */
+.foot { margin-top: 60px; padding-top: 22px; border-top: 1px solid var(--rule); color: var(--ink-faint); font-size: 12.5px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 920px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--rule); }
+  .doc { padding: 0 20px 90px; }
+  .report-head h1 { font-size: 26px; }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  :root { color-scheme: light; }
+  body { background: #fff; color: #111; }
+  .sidebar { display: none; }
+  .layout { grid-template-columns: 1fr; }
+  .doc { max-width: none; padding: 0 0 40px; }
+  .report-head h1, .content h1, .content h2, .content h3 { color: #111; }
+  .content h3, .brand-text span { color: #0a7a68; }
+  a { color: #0a7a68; }
+  .meta-cell, .callout, .table-wrap, pre.codeblock { border-color: #ddd; background: #fafafa; }
+  .badge { border: 1px solid #999; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html" style="text-decoration:none;color:inherit"><svg class="brand-mark" viewBox="0 0 32 32" width="40" height="40" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#08ddbc"/><path d="M18 5 9 18h6l-2 9 10-14h-6l1-8z" fill="#0f0f0f"/></svg><span class="brand-text"><b>BiaEnergy</b><span>QA · EnergIA</span></span></a>
+    <nav class="nav">
+      <h4>Informes</h4>
+      <h4>Dirección</h4><a href="resumen-ejecutivo.html" class="active">Resumen ejecutivo</a><h4>Planificación</h4><a href="plan-de-pruebas.html">Plan de pruebas y estrategia</a><h4>Ejecución</h4><a href="suite-de-humo.html">Suite de humo</a><a href="casos-caja-negra.html">Casos de caja negra</a><a href="caja-blanca.html">Análisis de caja blanca</a><h4>Hallazgos</h4><a href="registro-de-defectos.html">Registro de defectos</a><a href="reporte-de-seguridad.html">Reporte de seguridad</a><a href="produccion-readiness.html">Preparación para producción</a><a href="metricas-y-cobertura.html">Métricas y cobertura</a>
+      <h4>En esta página</h4><a href="#1-qué-se-hizo"><span class="n">·</span>1. Qué se hizo</a><a href="#2-resultado-global"><span class="n">·</span>2. Resultado global</a><a href="#3-hallazgos-que-bloquean-el-release"><span class="n">·</span>3. Hallazgos que bloquean el release</a><a href="#4-defectos-confirmados"><span class="n">·</span>4. Defectos confirmados</a><a href="#5-calidad-de-la-evidencia"><span class="n">·</span>5. Calidad de la evidencia</a><a href="#6-recomendación"><span class="n">·</span>6. Recomendación</a><a href="#7-entregables"><span class="n">·</span>7. Entregables</a><a href="#8-limitaciones-y-transparencia"><span class="n">·</span>8. Limitaciones y transparencia</a>
+    </nav>
+  </aside>
+  <main class="main">
+    <div class="doc">
+      <header class="report-head">
+        <span class="eyebrow">Informe de QA · BiaEnergy</span>
+        <h1>Resumen ejecutivo</h1>
+        <p class="lede">Autor: QA técnico · Fecha: 2026-10-21 · Repo <code>biaenergy/prueba-qa</code> · commit <code>15765d9</code>.</p>
+        <div class="meta-grid"><div class="meta-cell"><div class="k">Proyecto</div><div class="v">EnergIA · prueba técnica</div></div><div class="meta-cell"><div class="k">Cliente</div><div class="v">BiaEnergy</div></div><div class="meta-cell"><div class="k">Tipo</div><div class="v">Informe de QA</div></div><div class="meta-cell"><div class="k">Fecha</div><div class="v">2026-10-21</div></div><div class="meta-cell"><div class="k">Commit</div><div class="v">15765d9</div></div></div>
+        <div class="verdict verdict--blocked"><span class="verdict__dot"></span><div class="verdict__text"><b>NO liberar a producción</b><span>1 vulnerabilidad crítica (SEC-01) y 2 defectos P1 abiertos</span></div></div>
+      </header>
+      <article class="content">
+        <p>Autor: QA técnico · Fecha: 2026-10-21 · Repo <code>biaenergy/prueba-qa</code> · commit <code>15765d9</code>. Alcance: backend (Go) + frontend (React/Vite) de EnergIA, ejecutados en modo dev (sin Docker).</p>
+<blockquote><p><strong>Veredicto: NO liberar a producción.</strong> Bloquean el release <strong>una vulnerabilidad crítica de seguridad (SEC-01)</strong> y <strong>dos defectos P1 (DEF-02, DEF-04)</strong> que alteran la información con la que el operador decide. Detalle en las secciones 3 y 5.</p></blockquote>
+<h2 id="1-qué-se-hizo">1. Qué se hizo</h2>
+<p>Prueba completa en 9 fases sobre el sistema <strong>ejecutándose de verdad</strong>:</p>
+<ol class="list"><li>Reconocimiento y entorno (Go, pnpm, Playwright).</li><li>Plan y estrategia de pruebas.</li><li>Levantamiento y exploración (API + UI).</li><li>Suite de humo.</li><li>Caja negra (42 casos).</li><li>Registro de defectos.</li><li>Caja blanca (causa raíz por ramas/límites).</li><li>Automatización E2E con Playwright + TypeScript.</li><li>Revisión final y este resumen.</li></ol>
+<p><strong>No se modificó código de producción.</strong> Solo se añadieron artefactos en <code>qa/</code> y la suite en <code>e2e/</code>.</p>
+<h2 id="2-resultado-global">2. Resultado global</h2>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Métrica</th><th>Valor</th></tr></thead><tbody><tr><td>Humo</td><td>9/10 PASS, 1 FAIL</td></tr><tr><td>Caja negra (casos)</td><td>42 ejecutados · 35 PASS · <strong>5 FAIL agrupados en 4 defectos</strong> (2 de los FAIL son dos manifestaciones de DEF-02: filtro <code>status=NORMAL</code> y KPIs del dashboard)</td></tr><tr><td>Defectos confirmados</td><td><strong>4</strong> (2 Alta/P1, 2 Alta-Media/P2)</td></tr><tr><td>Suite E2E</td><td><strong>27 passed</strong>: la suite está verde con los defectos abiertos documentados como <em>expected failure</em> (<code>test.fail()</code>), de modo que pasa hoy y <strong>fallará por diseño</strong> cuando cada defecto se corrija, señalando que debe quitarse la anotación</td></tr><tr><td>Backend</td><td><code>go build</code> OK · <code>go vet</code> OK · <code>go test ./...</code> OK</td></tr><tr><td>Frontend</td><td><code>pnpm build</code>/<code>pnpm test</code> OK (11/11) · <code>pnpm lint</code>/<code>typecheck</code> OK</td></tr><tr><td>Seguridad</td><td><strong>7 hallazgos, SEC-01 crítica</strong> (bypass de autenticación) + <code>govulncheck</code>: 10 vulnerabilidades de stdlib alcanzables</td></tr></tbody></table></div>
+<p>El MVP <strong>cumple la función central</strong>: el motor reproduce exactamente el resultado esperado del oráculo (M-109 #1, M-112 #2, M-104 #3, M-106 #4) y la UI presenta las órdenes con evidencia y acción. Los defectos están en <strong>reglas de presentación/estado, validación de entrada y formato de fechas</strong>, no en el núcleo de detección.</p>
+<h2 id="3-hallazgos-que-bloquean-el-release">3. Hallazgos que bloquean el release</h2>
+<p><strong>Seguridad — SEC-01 (Crítica):</strong> bypass de autenticación. Si <code>JWT_SECRET</code> no se define en el entorno, el backend arranca con el secreto de desarrollo <code>dev-secret-change-me</code>; cualquiera que lo conozca puede <strong>forjar un JWT válido y leer toda la API sin credenciales</strong>. Verificado en vivo: <code>200 OK</code> con token forjado. Reporte completo en <a href="../03_Defectos_y_Seguridad/Seguridad.md"><code>Seguridad.md</code></a>.</p>
+<h2 id="4-defectos-confirmados">4. Defectos confirmados</h2>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>ID</th><th>Título</th><th>Severidad</th><th>Prioridad</th><th>Superficie</th></tr></thead><tbody><tr><td><strong>DEF-02</strong></td><td>Medidor con falso positivo (M-106) mostrado como &quot;Alerta&quot; (debe ser &quot;Normal&quot;): afecta API, KPIs del dashboard y el libro UI</td><td><strong>Alta</strong></td><td><strong>P1</strong></td><td>API + UI</td></tr><tr><td><strong>DEF-04</strong></td><td>Las horas &quot;Detectada&quot; usan la zona del navegador, no la hora de planta: en Bogotá muestra 09:00 en vez de 14:00 y cambia el día en M-104/M-106</td><td><strong>Alta</strong></td><td><strong>P1</strong></td><td>UI</td></tr><tr><td><strong>DEF-03</strong></td><td><code>pagination.page</code> negativo devuelve HTTP 500 (panic por slice fuera de rango) en vez de 400</td><td><span class="badge badge--alert">Alta</span></td><td><span class="badge badge--info">P2</span></td><td>API</td></tr><tr><td><strong>DEF-01</strong></td><td>La búsqueda de medidores no ignora mayúsculas pese a que la doc lo promete (<code>m-109</code> → 0 resultados)</td><td><span class="badge badge--info">Media</span></td><td><span class="badge badge--info">P2</span></td><td>API</td></tr></tbody></table></div>
+<p>Detalle completo (contrato violado, pasos, causa raíz, corrección propuesta, evidencia) en <a href="../05-defectos.md"><code>05-defectos.md</code></a>.</p>
+<p>Extras no confirmados: <code>OBS-01</code> (doc &quot;supera 50 %/20 %&quot; vs código <code>&amp;gt;=</code>, borde no reproducible) y <code>RIESGO-W1</code> (indexación sin comprobar lista vacía en <code>summarize</code>).</p>
+<h2 id="5-calidad-de-la-evidencia">5. Calidad de la evidencia</h2>
+<ul class="list"><li>Los 4 defectos y SEC-01 se <strong>reprodujeron por ejecución real</strong> (no análisis estático): API con PowerShell/<code>Invoke-*</code>, forja de JWT con script propio, UI con Playwright en 4 zonas horarias, log del servidor para el panic.</li><li>Cada defecto tiene su causa raíz localizada por archivo:línea (caja blanca).</li><li>Los 4 se <strong>automatizaron</strong> en <code>e2e/</code> con <code>test.fail()</code> y la suite pasa (27/27), de modo que quedan como pruebas de regresión: al corregir el defecto, el test correspondiente fallará y señalará que debe retirarse la anotación.</li></ul>
+<h2 id="6-recomendación">6. Recomendación</h2>
+<p><strong>No liberar a producción.</strong> Prioridad de corrección:</p>
+<ol class="list"><li><strong>P0 — SEC-01:</strong> el backend debe regirse por <em>fail-closed</em> cuando el secreto es el de desarrollo (o no está definido), y exigir un <code>JWT_SECRET</code> real de ≥32 bytes.</li><li><strong>P1 — DEF-02 y DEF-04:</strong> alteran información que el operador usa para decidir (qué está en alerta y en qué momento ocurrió).</li><li><strong>P2 — DEF-03 (500 no controlado), DEF-01 (búsqueda), SEC-02..SEC-07</strong> (cabeceras, rate limiting, JWT en <code>localStorage</code>, secretos por defecto, dependencias Go vulnerables, nginx sin endurecer) en la misma iteración, por su bajo costo.</li></ol>
+<p>Sugerencias de proceso derivadas de la prueba:</p>
+<ul class="list"><li>Ampliar cobertura de caminos en <code>meter.StatusOf</code> (caso FALSE_POSITIVE), <code>httpx.Pagination</code> (page&lt;0) y la búsqueda (<code>ToUpper</code>/<code>TrimSpace</code>).</li><li><strong>No</strong> forzar <code>TZ=UTC</code> en los tests de fechas, o añadir una prueba con <code>TZ=America/Bogota</code>; el <code>TZ</code> forzado (vite.config.ts:33) ocultó DEF-04.</li></ul>
+<h2 id="7-entregables">7. Entregables</h2>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Artefacto</th><th>Ubicación</th></tr></thead><tbody><tr><td>Plan de pruebas</td><td><a href="../01-plan-de-pruebas.md"><code>01-plan-de-pruebas.md</code></a></td></tr><tr><td>Suite de humo</td><td><a href="../02-smoke.md"><code>02-smoke.md</code></a></td></tr><tr><td>Casos de caja negra</td><td><a href="../03-casos-caja-negra.md"><code>03-casos-caja-negra.md</code></a></td></tr><tr><td>Caja blanca</td><td><a href="../04-caja-blanca.md"><code>04-caja-blanca.md</code></a></td></tr><tr><td>Defectos</td><td><a href="../05-defectos.md"><code>05-defectos.md</code></a></td></tr><tr><td>Seguridad</td><td><a href="../03_Defectos_y_Seguridad/Seguridad.md"><code>Seguridad.md</code></a></td></tr><tr><td>Preparación para producción</td><td><a href="../03_Defectos_y_Seguridad/Produccion_Readiness.md"><code>Produccion_Readiness.md</code></a></td></tr><tr><td>Bitácora de proceso</td><td><a href="../07_Anexos_Internos/Bitacora.md"><code>Bitacora.md</code></a></td></tr><tr><td>Mapa funcional (soporte)</td><td><a href="../01_Plan_y_Estrategia/Mapa_Funcional.md"><code>Mapa_Funcional.md</code></a></td></tr><tr><td>Evidencias</td><td><a href="../05_Evidencias/"><code>05_Evidencias/</code></a> (API, UI/fechas, capturas, salida del motor, run E2E) + <a href="../evidencias/"><code>evidencias/</code></a> (logs de servidor)</td></tr><tr><td>Automatización E2E</td><td><a href="../../e2e/"><code>e2e/</code></a> (Playwright + TypeScript)</td></tr></tbody></table></div>
+<h2 id="8-limitaciones-y-transparencia">8. Limitaciones y transparencia</h2>
+<ul class="list"><li>Sin <code>OPENAI_API_KEY</code>: la narración con OpenAI no se cubrió; sí la determinista del motor.</li><li>Sin Docker: se usó el modo dev equivalente.</li><li>Dataset fijo y determinista (resultados reproducibles).</li><li>Se usó IA como <strong>acelerador</strong> para análisis, diseño de casos y redacción; <strong>todo resultado fue verificado ejecutando el sistema</strong> y contrastado con la documentación. Ningún hallazgo, código HTTP o causa raíz es especulativo.</li></ul>
+      </article>
+      <footer class="foot">
+        <span>BiaEnergy · Informe de QA · EnergIA</span>
+        <span>2026-10-21 · commit 15765d9 · <a href="index.html">Índice de informes</a></span>
+      </footer>
+    </div>
+  </main>
+</div>
+<script>
+// Resalta el enlace activo y el encabezado visible durante el scroll.
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav a[href^="#"]'));
+  var heads = links.map(function (a) { return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1))); });
+  function onScroll() {
+    var pos = window.scrollY + 140, best = -1;
+    heads.forEach(function (h, i) { if (h && h.offsetTop <= pos) best = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === best); });
+  }
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>

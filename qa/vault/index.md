@@ -16,9 +16,9 @@ Vault de Obsidian con **toda** la documentación de la prueba técnica de QA sob
 | 3 · Caja negra | [[03-Caja-Negra/Casos de caja negra]] | `qa/03-casos-caja-negra.md` |
 | 4 · Caja blanca | [[04-Caja-Blanca/Caja blanca]] | `qa/04-caja-blanca.md` |
 | 5 · Defectos | [[05-Defectos/Registro de defectos]] | `qa/05-defectos.md` |
-| 6 · Seguridad | [[06-Seguridad/Reporte de seguridad]] | `qa/06-seguridad.md` |
+| 6 · Seguridad | [[06-Seguridad/Reporte de seguridad]] | `qa/03_Defectos_y_Seguridad/Seguridad.md` |
 | 7 · Automatización | [[07-Automatizacion/Playwright E2E]] | `e2e/` |
-| 8 · Producción y verificación | [[08-Evidencias/Producción y verificación]] | `qa/08-produccion-readiness.md`, `qa/09-verificacion-skills.md`, `qa/10-skills-externas.md` |
+| 8 · Producción y verificación | [[08-Evidencias/Producción y verificación]] | `qa/03_Defectos_y_Seguridad/Produccion_Readiness.md` |
 
 ## 🔴 Defectos y hallazgos de un vistazo
 

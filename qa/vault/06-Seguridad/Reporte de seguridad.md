@@ -1,6 +1,6 @@
 # Reporte de seguridad
 
-> Fuente completa: `qa/06-seguridad.md`. 7 hallazgos + 17 controles probados.
+> Fuente completa: `qa/03_Defectos_y_Seguridad/Seguridad.md`. 7 hallazgos + 17 controles probados.
 
 Ver también: [[05-Defectos/SEC-01 Forja de JWT con secreto por defecto]] · [[00-Inicio/Resumen ejecutivo]]
 
@@ -19,10 +19,10 @@ Ver también: [[05-Defectos/SEC-01 Forja de JWT con secreto por defecto]] · [[0
 `alg=none` → 401 · tokens malformados → 401 · login no enumera usuarios · CORS sin reflejo indebido · sin inyección SQL/NoSQL/path traversal/XSS · métodos no soportados → 404 · body >1 MB → 400 · JSON estricto → 400 · `go vet` limpio · sin `innerHTML`/`eval`.
 
 ## Evidencias
-- `qa/evidencias/seguridad-probe.txt`
-- `qa/evidencias/seguridad-login-enum.txt`
-- `qa/evidencias/seguridad-govulncheck.txt`
-- `qa/evidencias/forge-jwt.mjs`, `security-probe.ps1`
+- `qa/05_Evidencias/logs/seguridad-probe.txt`
+- `qa/05_Evidencias/logs/seguridad-login-enum.txt`
+- `qa/05_Evidencias/logs/seguridad-govulncheck.txt`
+- `qa/05_Evidencias/herramientas/forge-jwt.mjs`, `security-probe.ps1`
 
 ## Metodología
 OWASP Top 10 (2021) · análisis de cabeceras · forja de tokens · fuerza bruta · inyección · path traversal · análisis estático (`go vet`) · dependencias (`govulncheck`).

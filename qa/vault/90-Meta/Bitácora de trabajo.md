@@ -1,6 +1,6 @@
 # Bitácora de trabajo
 
-> Registro cronológico de la prueba. Fuente también en `qa/07-bitacora.md`.
+> Registro cronológico de la prueba. Fuente también en `qa/07_Anexos_Internos/Bitacora.md`.
 
 ## Resumen por fase
 [[01-Plan/Plan de pruebas|Fase 1]] · [[02-Humo/Suite de humo|2]] · [[03-Caja-Negra/Casos de caja negra|3]] · [[04-Caja-Blanca/Caja blanca|4]] · [[05-Defectos/Registro de defectos|5]] · [[06-Seguridad/Reporte de seguridad|6]] · [[07-Automatizacion/Playwright E2E|7]]

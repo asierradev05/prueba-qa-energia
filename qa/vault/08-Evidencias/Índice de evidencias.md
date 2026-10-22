@@ -1,6 +1,6 @@
 # Índice de evidencias
 
-Todas las pruebas fueron **ejecutadas de verdad**; las salidas se guardan verbatim en `qa/evidencias/`.
+Todas las pruebas fueron **ejecutadas de verdad**; las salidas se guardan verbatim en `qa/05_Evidencias/`.
 
 | Archivo | Qué contiene |
 |---|---|

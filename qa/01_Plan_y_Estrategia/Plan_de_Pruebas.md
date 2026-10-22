@@ -59,7 +59,7 @@ Suite de humo ejecutada con resultado; casos de caja negra ejecutados; ≥2 defe
 
 ## 9. Uso de IA y control de validación
 
-Se usó IA (asistente) para acelerar el análisis estático, proponer casos y redactar. **Todos** los resultados aquí registrados se obtuvieron ejecutando realmente la app; ningún resultado, código HTTP o causa raíz se inventó. Cada defecto se contrastó contra el oráculo documental y se reprodujo.
+El enunciado valora contar cómo se usó la IA. Se usó como **acelerador** para análisis estático, propuesta de casos y redacción. El control de validación es lo que la vuelve fiable: **todos** los resultados aquí registrados se obtuvieron ejecutando realmente la app; ningún resultado, código HTTP ni causa raíz proviene de suposición. Cada defecto se contrastó contra el oráculo documental y se reprodujo en vivo.
 
 ## 10. Resumen ejecutivo
 
@@ -87,4 +87,4 @@ Login que no enumera usuarios, validación estricta de JSON, límite de body, CO
 2. **P1:** DEF-02 y DEF-04.
 3. **P2:** DEF-03, DEF-01, SEC-02/03/04/05/06.
 
-Detalle en `qa/05-defectos.md`, `qa/06-seguridad.md` y `qa/RESUMEN.md`.
+Detalle en [`Defectos.md`](../03_Defectos_y_Seguridad/Defectos.md), [`Seguridad.md`](../03_Defectos_y_Seguridad/Seguridad.md) y [`RESUMEN.md`](../00_Resumen_Ejecutivo/RESUMEN.md).

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporte de seguridad · QA EnergIA · BiaEnergy</title>
+<meta name="author" content="Equipo de QA">
+<style>
+:root {
+  color-scheme: dark;
+  --paper: #0f0f0f;
+  --paper-soft: #121212;
+  --sheet: #1a1a1a;
+  --sheet-alt: #181818;
+  --ink: #fafafa;
+  --ink-muted: #a1a1aa;
+  --ink-faint: #71717a;
+  --form: #08ddbc;
+  --form-strong: #17ffdb;
+  --form-wash: #16302b;
+  --rule: #27272a;
+  --rule-strong: #3f3f46;
+  --greenbar: #202023;
+  --critical: #f87171;
+  --critical-wash: #2c1717;
+  --alert: #fbbf24;
+  --alert-wash: #2d2410;
+  --ok: #4ade80;
+  --ok-wash: #12291b;
+  --info: #60a5fa;
+  --info-wash: #152238;
+  --sidebar-w: 292px;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  background-image: radial-gradient(70rem 28rem at 70% -10rem, rgb(8 221 188 / 0.07), transparent 70%);
+  background-repeat: no-repeat;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  line-height: 1.65;
+}
+a { color: var(--form); text-decoration: none; text-underline-offset: 3px; }
+a:hover { text-decoration: underline; text-decoration-color: var(--form-strong); }
+:focus-visible { outline: 2px solid var(--form); outline-offset: 2px; border-radius: 6px; }
+::selection { background: var(--form); color: var(--paper); }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--rule-strong); border-radius: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- Layout ---------- */
+.layout { display: grid; grid-template-columns: var(--sidebar-w) minmax(0, 1fr); min-height: 100vh; }
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  background: linear-gradient(180deg, var(--sheet-alt), var(--paper));
+  border-right: 1px solid var(--rule);
+  padding: 22px 18px 40px;
+}
+.brand { display: flex; align-items: center; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid var(--rule); }
+.brand-mark { flex: none; border-radius: 9px; box-shadow: 0 6px 20px rgb(8 221 188 / 0.18); }
+.brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+.brand-text b { font-size: 15px; letter-spacing: -0.01em; }
+.brand-text span { font-size: 11.5px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.14em; }
+.nav { margin-top: 20px; }
+.nav h4 { margin: 18px 0 8px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--ink-faint); font-weight: 600; }
+.nav a {
+  display: block; padding: 7px 11px; margin: 2px 0; border-radius: 9px;
+  color: var(--ink-muted); font-size: 13.5px; border-left: 2px solid transparent;
+}
+.nav a:hover { background: var(--sheet); color: var(--ink); text-decoration: none; }
+.nav a.active { background: var(--form-wash); color: var(--form-strong); border-left-color: var(--form); font-weight: 600; }
+.nav a .n { display: inline-block; width: 20px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+
+/* ---------- Main ---------- */
+.main { min-width: 0; }
+.doc { max-width: 960px; margin: 0 auto; padding: 0 40px 120px; }
+
+/* ---------- Report header ---------- */
+.report-head { padding: 46px 0 26px; border-bottom: 1px solid var(--rule); }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--form); font-weight: 600; }
+.eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--form); }
+.report-head h1 { margin: 14px 0 6px; font-size: 34px; line-height: 1.15; letter-spacing: -0.02em; }
+.report-head .lede { color: var(--ink-muted); font-size: 15px; max-width: 70ch; }
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; margin-top: 26px; background: var(--rule); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
+.meta-cell { background: var(--sheet); padding: 12px 14px; }
+.meta-cell .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-faint); }
+.meta-cell .v { font-size: 14px; font-weight: 600; margin-top: 3px; }
+
+/* ---------- Verdict banner ---------- */
+.verdict { display: flex; align-items: center; gap: 14px; margin-top: 22px; padding: 16px 18px; border-radius: 12px; border: 1px solid; }
+.verdict--blocked { background: var(--critical-wash); border-color: rgb(248 113 113 / 0.4); }
+.verdict--go { background: var(--ok-wash); border-color: rgb(74 222 128 / 0.4); }
+.verdict__dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.verdict--blocked .verdict__dot { background: var(--critical); box-shadow: 0 0 0 5px rgb(248 113 113 / 0.16); }
+.verdict--go .verdict__dot { background: var(--ok); box-shadow: 0 0 0 5px rgb(74 222 128 / 0.16); }
+.verdict__text b { display: block; font-size: 15px; }
+.verdict__text span { color: var(--ink-muted); font-size: 13px; }
+
+/* ---------- Content ---------- */
+.content { padding-top: 8px; }
+.content h1 { font-size: 30px; margin: 40px 0 12px; letter-spacing: -0.02em; }
+.content h2 { font-size: 23px; margin: 44px 0 12px; padding-top: 20px; border-top: 1px solid var(--rule); letter-spacing: -0.01em; }
+.content h2:first-child { border-top: none; padding-top: 6px; margin-top: 20px; }
+.content h3 { font-size: 17.5px; margin: 30px 0 10px; color: var(--form-strong); }
+.content h4 { font-size: 14px; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+.content p { margin: 11px 0; }
+.content strong { color: #fff; font-weight: 650; }
+.content em { color: var(--ink); }
+.content code {
+  font-family: var(--font-mono); font-size: 0.86em; background: var(--sheet);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 1.5px 6px; color: var(--form-strong);
+}
+.content .rule { border: none; border-top: 1px solid var(--rule); margin: 34px 0; }
+.content blockquote {
+  margin: 16px 0; padding: 6px 18px; border-left: 3px solid var(--rule-strong);
+  color: var(--ink-muted); background: var(--sheet-alt); border-radius: 0 10px 10px 0;
+}
+.content ul.list, .content ol.list { margin: 11px 0; padding-left: 22px; }
+.content .list li { margin: 5px 0; }
+.content li.task { list-style: none; position: relative; padding-left: 4px; }
+.content li.task .task__box {
+  display: inline-grid; place-items: center; width: 17px; height: 17px; margin-right: 8px;
+  border: 1.5px solid var(--rule-strong); border-radius: 5px; font-size: 11px; vertical-align: -3px; color: var(--paper);
+}
+.content li.task--done .task__box { background: var(--form); border-color: var(--form); color: var(--paper); }
+.content li.task--done { color: var(--ink-muted); }
+
+/* ---------- Code block ---------- */
+pre.codeblock {
+  background: #0b0b0b; border: 1px solid var(--rule); border-radius: 12px;
+  padding: 16px 18px; overflow-x: auto; margin: 16px 0; position: relative;
+}
+pre.codeblock code { background: none; border: none; padding: 0; color: #e4e4e7; font-size: 12.5px; line-height: 1.6; }
+pre.codeblock[data-lang]::before {
+  content: attr(data-lang); position: absolute; top: 8px; right: 12px;
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint);
+}
+
+/* ---------- Tables ---------- */
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--rule); border-radius: 12px; }
+table.data-table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+table.data-table thead th {
+  background: var(--sheet-alt); text-align: left; padding: 11px 14px; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); font-weight: 600;
+  border-bottom: 1px solid var(--rule-strong); white-space: nowrap;
+}
+table.data-table td { padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+table.data-table tbody tr:last-child td { border-bottom: none; }
+table.data-table tbody tr:nth-child(even) { background: var(--greenbar); }
+table.data-table td .badge { white-space: nowrap; }
+
+/* ---------- Badges ---------- */
+.badge {
+  display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11.5px;
+  font-weight: 650; letter-spacing: 0.02em; border: 1px solid transparent; line-height: 1.5;
+}
+.badge--critical { background: var(--critical-wash); color: var(--critical); border-color: rgb(248 113 113 / 0.35); }
+.badge--alert { background: var(--alert-wash); color: var(--alert); border-color: rgb(251 191 36 / 0.35); }
+.badge--info { background: var(--info-wash); color: var(--info); border-color: rgb(96 165 250 / 0.35); }
+.badge--ok { background: var(--ok-wash); color: var(--ok); border-color: rgb(74 222 128 / 0.35); }
+
+/* ---------- Callouts ---------- */
+.callout { margin: 20px 0; padding: 14px 18px; border-radius: 12px; border: 1px solid var(--rule-strong); border-left-width: 4px; background: var(--sheet-alt); }
+.callout__title { font-weight: 650; margin-bottom: 4px; }
+.callout__body p { margin: 4px 0; color: var(--ink-muted); }
+.callout--critical { border-left-color: var(--critical); background: var(--critical-wash); }
+.callout--critical .callout__title { color: var(--critical); }
+.callout--alert { border-left-color: var(--alert); background: var(--alert-wash); }
+.callout--alert .callout__title { color: var(--alert); }
+.callout--info { border-left-color: var(--info); background: var(--info-wash); }
+.callout--info .callout__title { color: var(--info); }
+.callout--ok { border-left-color: var(--ok); background: var(--ok-wash); }
+.callout--ok .callout__title { color: var(--ok); }
+
+/* ---------- Footer ---------- */
+.foot { margin-top: 60px; padding-top: 22px; border-top: 1px solid var(--rule); color: var(--ink-faint); font-size: 12.5px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 920px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--rule); }
+  .doc { padding: 0 20px 90px; }
+  .report-head h1 { font-size: 26px; }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  :root { color-scheme: light; }
+  body { background: #fff; color: #111; }
+  .sidebar { display: none; }
+  .layout { grid-template-columns: 1fr; }
+  .doc { max-width: none; padding: 0 0 40px; }
+  .report-head h1, .content h1, .content h2, .content h3 { color: #111; }
+  .content h3, .brand-text span { color: #0a7a68; }
+  a { color: #0a7a68; }
+  .meta-cell, .callout, .table-wrap, pre.codeblock { border-color: #ddd; background: #fafafa; }
+  .badge { border: 1px solid #999; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html" style="text-decoration:none;color:inherit"><svg class="brand-mark" viewBox="0 0 32 32" width="40" height="40" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#08ddbc"/><path d="M18 5 9 18h6l-2 9 10-14h-6l1-8z" fill="#0f0f0f"/></svg><span class="brand-text"><b>BiaEnergy</b><span>QA · EnergIA</span></span></a>
+    <nav class="nav">
+      <h4>Informes</h4>
+      <h4>Dirección</h4><a href="resumen-ejecutivo.html">Resumen ejecutivo</a><h4>Planificación</h4><a href="plan-de-pruebas.html">Plan de pruebas y estrategia</a><h4>Ejecución</h4><a href="suite-de-humo.html">Suite de humo</a><a href="casos-caja-negra.html">Casos de caja negra</a><a href="caja-blanca.html">Análisis de caja blanca</a><h4>Hallazgos</h4><a href="registro-de-defectos.html">Registro de defectos</a><a href="reporte-de-seguridad.html" class="active">Reporte de seguridad</a><a href="produccion-readiness.html">Preparación para producción</a><a href="metricas-y-cobertura.html">Métricas y cobertura</a>
+      <h4>En esta página</h4><a href="#0-entorno-y-metodología"><span class="n">·</span>0. Entorno y metodología</a><a href="#1-resumen-ejecutivo-de-seguridad"><span class="n">·</span>1. Resumen ejecutivo de seguridad</a><a href="#sec-01-forja-de-jwt-con-el-secreto-por-defecto-crítica"><span class="n">·</span>SEC-01 · Forja de JWT con el secreto por…</a><a href="#sec-02-ausencia-de-cabeceras-de-seguridad-http-media"><span class="n">·</span>SEC-02 · Ausencia de cabeceras de seguri…</a><a href="#sec-03-sin-rate-limiting-en-el-login-media"><span class="n">·</span>SEC-03 · Sin rate limiting en el login (…</a><a href="#sec-04-jwt-en-localstorage-media"><span class="n">·</span>SEC-04 · JWT en localStorage (MEDIA)</a><a href="#sec-05-secretos-y-credenciales-por-defecto-media"><span class="n">·</span>SEC-05 · Secretos y credenciales por def…</a><a href="#sec-06-dependencias-vulnerables-media"><span class="n">·</span>SEC-06 · Dependencias vulnerables (MEDIA)</a><a href="#sec-07-nginx-sin-cabeceras-de-seguridad-ni-https-baja"><span class="n">·</span>SEC-07 · nginx sin cabeceras de segurida…</a><a href="#2-matriz-de-pruebas-de-seguridad-ejecutadas"><span class="n">·</span>2. Matriz de pruebas de seguridad ejecut…</a><a href="#3-recomendaciones-priorizadas"><span class="n">·</span>3. Recomendaciones priorizadas</a><a href="#4-cómo-se-automatiza"><span class="n">·</span>4. Cómo se automatiza</a>
+    </nav>
+  </aside>
+  <main class="main">
+    <div class="doc">
+      <header class="report-head">
+        <span class="eyebrow">Informe de QA · BiaEnergy</span>
+        <h1>Reporte de seguridad</h1>
+        <p class="lede">El backend arranca con <code>JWT_SECRET</code> por defecto si no se define uno. Ese valor (<code>dev-secret-change-me</code>) está en el código fuente (<code>backend/internal/config/config.go:14</code>) y en <code>.env.example</code>. Cualquiera que conozca ese valor puede <strong>firmar tokens válidos</strong> sin credenciales, porque <code>ParseToken</code> valida con el mismo secreto con el que se firman (<code>backend/internal/auth/service.go:98</code>).</p>
+        <div class="meta-grid"><div class="meta-cell"><div class="k">Proyecto</div><div class="v">EnergIA · prueba técnica</div></div><div class="meta-cell"><div class="k">Cliente</div><div class="v">BiaEnergy</div></div><div class="meta-cell"><div class="k">Tipo</div><div class="v">Informe de QA</div></div><div class="meta-cell"><div class="k">Fecha</div><div class="v">2026-10-21</div></div><div class="meta-cell"><div class="k">Commit</div><div class="v">15765d9</div></div></div>
+        
+      </header>
+      <article class="content">
+        <blockquote><p>Complemento del reporte funcional. Aquí se documenta la <strong>revisión de seguridad</strong> de la API y el frontend: qué se probó, qué se encontró y cómo se verifica. Todo lo aquí reportado fue <strong>reproducido por ejecución real</strong> contra el backend en <code>http://localhost:8080</code> (modo dev, commit base <code>15765d9</code>).</p><p></p><p>Alcance: análisis de seguridad ofensivo/defensivo sobre el MVP. <strong>No sustituye</strong> una auditoría formal ni una prueba de penetración completa; se hizo sin herramientas comerciales (sin Burp/Nessus) y sin autenticación destructiva.</p></blockquote>
+<h2 id="0-entorno-y-metodología">0. Entorno y metodología</h2>
+<ul class="list"><li><strong>Entorno:</strong> Windows 11, PowerShell 5.1, Go 1.27.0, Node v25.9.0, backend <code>go run ./cmd/api</code> (:8080), frontend <code>pnpm dev</code> (:5173).</li><li><strong>Config:</strong> <code>.env</code> copiado de <code>.env.example</code> (valores por defecto). <code>JWT_SECRET=dev-secret-change-me</code>, <code>AUTH_PASSWORD=admin123</code>.</li><li><strong>Técnicas aplicadas:</strong> OWASP Top 10 (2021), análisis de cabeceras, forja de tokens, fuerza bruta, inyección, path traversal, validación de entrada, análisis estático (<code>go vet</code>, revisión de código) y de dependencias (<code>govulncheck</code>).</li><li><strong>Evidencias:</strong> <code>qa/05_Evidencias/logs/seguridad-probe.txt</code>, <code>seguridad-login-enum.txt</code>, <code>seguridad-govulncheck.txt</code>, <code>forge-jwt.mjs</code>, <code>security-probe.ps1</code>.</li><li><strong>Regla de compromiso:</strong> solo lectura sobre los datos; ninguna prueba destruye información. La forja de token es no destructiva (el usuario final no existe en el sistema, que es de un solo usuario).</li></ul>
+<h2 id="1-resumen-ejecutivo-de-seguridad">1. Resumen ejecutivo de seguridad</h2>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>#</th><th>Hallazgo</th><th>Severidad</th><th>OWASP 2021</th><th>Estado</th></tr></thead><tbody><tr><td><strong>SEC-01</strong></td><td>Forja de JWT con el secreto por defecto → bypass total de autenticación</td><td><strong>Crítica</strong></td><td>A07 / A02</td><td>Confirmado por ejecución</td></tr><tr><td><strong>SEC-02</strong></td><td>Sin cabeceras de seguridad HTTP (CSP, X-Content-Type-Options, X-Frame-Options, HSTS…)</td><td><strong>Media</strong></td><td>A05</td><td>Confirmado por ejecución</td></tr><tr><td><strong>SEC-03</strong></td><td>Sin rate limiting en <code>/auth/login</code> → fuerza bruta viable</td><td><strong>Media</strong></td><td>A07</td><td>Confirmado por ejecución</td></tr><tr><td><strong>SEC-04</strong></td><td>JWT almacenado en <code>localStorage</code> (expuesto a XSS)</td><td><strong>Media</strong></td><td>A07 / A03</td><td>Confirmado por código</td></tr><tr><td><strong>SEC-05</strong></td><td>Credenciales y secreto por defecto en <code>.env.example</code> / valores por defecto del código</td><td><strong>Media</strong></td><td>A05 / A07</td><td>Confirmado por código/config</td></tr><tr><td><strong>SEC-06</strong></td><td>Dependencias con vulnerabilidades conocidas (stdlib de Go)</td><td><strong>Media</strong></td><td>A06</td><td>Confirmado por <code>govulncheck</code></td></tr><tr><td><strong>SEC-07</strong></td><td>Ausencia de cabeceras de seguridad y HTTPS en <code>nginx.conf</code></td><td><strong>Baja</strong></td><td>A05</td><td>Confirmado por código</td></tr></tbody></table></div>
+<p><strong>Controles positivos</strong> (probados y correctos): <code>alg=none</code> y tokens malformados rechazados (401); validación estricta de JSON; límite de tamaño de body (1 MB); mensaje de login uniforme (no enumera usuarios); CORS sin reflejo de orígenes no permitidos; sin inyección SQL/NoSQL/path traversal; métodos HTTP no soportados rechazados; <code>go vet</code> limpio; sin <code>dangerouslySetInnerHTML</code>/<code>eval</code> en el frontend.</p>
+<hr class="rule" />
+<h2 id="sec-01-forja-de-jwt-con-el-secreto-por-defecto-crítica">SEC-01 · Forja de JWT con el secreto por defecto (CRÍTICA)</h2>
+<p><strong>Título:</strong> Un atacante puede firmar un JWT válido porque el backend usa el secreto por defecto público <code>dev-secret-change-me</code>, obteniendo acceso total a la API.</p>
+<p><strong>Severidad:</strong> Crítica · <strong>Prioridad:</strong> P0 <strong>Categoría:</strong> A07:2021 Identification and Authentication Failures · A02:2021 Cryptographic Failures (CWE-798: Use of Hard-coded Credentials).</p>
+<h3 id="descripción">Descripción</h3>
+<p>El backend arranca con <code>JWT_SECRET</code> por defecto si no se define uno. Ese valor (<code>dev-secret-change-me</code>) está en el código fuente (<code>backend/internal/config/config.go:14</code>) y en <code>.env.example</code>. Cualquiera que conozca ese valor puede <strong>firmar tokens válidos</strong> sin credenciales, porque <code>ParseToken</code> valida con el mismo secreto con el que se firman (<code>backend/internal/auth/service.go:98</code>).</p>
+<p>El código <strong>avisa</strong> del problema pero <strong>no lo impide</strong>:</p>
+<pre class="codeblock" data-lang="go"><code>// backend/cmd/api/main.go:53-55
+if cfg.JWTSecret == config.DefaultJWTSecret {
+    slog.Warn(&quot;usando el JWT_SECRET de desarrollo: defínelo en producción&quot;)
+}</code></pre>
+<p>La advertencia aparece en el log (evidencia: <code>backend-server.err.log:1</code>) y el servidor continúa arrancando.</p>
+<h3 id="pasos-para-reproducir">Pasos para reproducir</h3>
+<ol class="list"><li>Generar un JWT HS256 con <code>sub</code> arbitrario, <code>iss=energyai-api</code> y firma con <code>dev-secret-change-me</code>: ``<code>bash node qa/05_Evidencias/herramientas/forge-jwt.mjs &amp;quot;dev-secret-change-me&amp;quot; &amp;quot;energyai-api&amp;quot; &amp;quot;attacker@evil.local&amp;quot; </code>``</li><li>Usarlo contra <code>GET /api/v1/auth/me</code>: ``<code>bash curl -s -H &amp;quot;Authorization: Bearer &amp;lt;token_forjado&amp;gt;&amp;quot; http://localhost:8080/api/v1/auth/me </code>``</li></ol>
+<h3 id="resultado-esperado-vs-obtenido">Resultado esperado vs obtenido</h3>
+<ul class="list"><li><strong>Esperado (sentido común + README “Cámbialo fuera de local”):</strong> el token forjado debe ser <strong>rechazado con 401</strong>.</li><li><strong>Obtenido:</strong> <code>200 OK</code> con <code>{&amp;quot;email&amp;quot;:&amp;quot;attacker@evil.local&amp;quot;,&amp;quot;name&amp;quot;:&amp;quot;Atacante&amp;quot;}</code>. Con el mismo token, <strong>todos</strong> los endpoints protegidos responden <strong>200</strong>: <code>meter/getAll</code>, <code>meter/getById/M-109</code>, <code>dashboard/getSummary</code>, <code>anomaly/getAll</code>.</li></ul>
+<pre class="codeblock"><code>=== 2. Forja de JWT con el secreto por defecto (dev-secret-change-me) ===
+GET /auth/me con token forjado -&gt; 200
+cuerpo: {&quot;email&quot;:&quot;attacker@evil.local&quot;,&quot;name&quot;:&quot;Atacante&quot;}</code></pre>
+<p>Y con el token forjado:</p>
+<pre class="codeblock"><code>POST /api/v1/meter/getAll        -&gt; 200 (2094 bytes)
+GET  /api/v1/meter/getById/M-109 -&gt; 200 (50909 bytes)
+GET  /api/v1/dashboard/getSummary-&gt; 200 (2523 bytes)
+GET  /api/v1/anomaly/getAll      -&gt; 200 (8136 bytes)</code></pre>
+<h3 id="impacto">Impacto</h3>
+<p>Compromiso total: lectura de inventario de medidores, lecturas horarias, anomalías y resumen del dashboard <strong>sin credenciales</strong>. En un despliegue real, este único fallo anula el login. Escalada a escritura si se añaden endpoints mutadores (hoy solo hay uno: <code>POST /ai/analyze</code>).</p>
+<h3 id="causa-raíz">Causa raíz</h3>
+<p><code>JWT_SECRET</code> con valor por defecto público (<code>config.go:14,55</code>) + ausencia de <strong>fail-closed</strong> al arrancar. El <code>Warn</code> no protege.</p>
+<h3 id="remediación-propuesta">Remediación propuesta</h3>
+<ol class="list"><li><strong>Fail-closed:</strong> si <code>JWT_SECRET</code> está vacío o es el valor por defecto <strong>y</strong> el entorno no es explícitamente de desarrollo, <strong>abortar el arranque</strong> (no solo <code>Warn</code>). ``<code>go if cfg.JWTSecret == config.DefaultJWTSecret &amp;amp;&amp;amp; cfg.Env != &amp;quot;dev&amp;quot; { return errors.New(&amp;quot;JWT_SECRET no configurado: defínelo antes de arrancar&amp;quot;) } </code>``</li><li>Exigir un secreto con entropía mínima (p. ej. ≥ 32 bytes aleatorios) y rotarlo.</li><li>En <code>docker-compose.yml</code>, generar el secreto en el despliegue (no dejarlo al valor por defecto).</li><li>Considerar <code>RS256</code> (clave pública/privada) para no compartir el material de firma con los validadores.</li></ol>
+<h3 id="detección-automatizada">Detección automatizada</h3>
+<ul class="list"><li><strong>Test de regresión (añadido):</strong> <code>e2e/tests/security.spec.ts</code> verifica que un token firmado con el secreto por defecto <strong>no</strong> autentica. Hoy se marca como defecto (falla) y pasará cuando se use un secreto real en CI.</li><li><strong>CI:</strong> <code>govulncheck</code> + un guard “no arrancar con secreto por defecto”.</li></ul>
+<hr class="rule" />
+<h2 id="sec-02-ausencia-de-cabeceras-de-seguridad-http-media">SEC-02 · Ausencia de cabeceras de seguridad HTTP (MEDIA)</h2>
+<p><strong>Título:</strong> Las respuestas de la API no incluyen cabeceras de seguridad (CSP, <code>X-Content-Type-Options</code>, <code>X-Frame-Options</code>, <code>Strict-Transport-Security</code>, <code>Referrer-Policy</code>, <code>Permissions-Policy</code>).</p>
+<p><strong>Severidad:</strong> Media · <strong>Prioridad:</strong> P2 · <strong>Categoría:</strong> A05:2021 Security Misconfiguration (CWE-693).</p>
+<h3 id="pasos-y-evidencia">Pasos y evidencia</h3>
+<p><code>GET /health</code> no devuelve ninguna cabecera de seguridad:</p>
+<pre class="codeblock"><code>AUSENTE   Content-Security-Policy
+AUSENTE   X-Content-Type-Options
+AUSENTE   X-Frame-Options
+AUSENTE   Strict-Transport-Security
+AUSENTE   Referrer-Policy
+AUSENTE   Permissions-Policy</code></pre>
+<p>(evidencia: <code>qa/05_Evidencias/logs/seguridad-probe.txt</code>, §1)</p>
+<h3 id="impacto">Impacto</h3>
+<p>Sin <code>X-Content-Type-Options: nosniff</code> hay riesgo de <em>MIME sniffing</em>; sin <code>X-Frame-Options</code>/<code>frame-ancestors</code>, <em>clickjacking</em>; sin CSP, mayor superficie si algún día entra contenido inyectable.</p>
+<h3 id="remediación">Remediación</h3>
+<p>Añadir un middleware <code>SecurityHeaders</code> en la cadena (<code>backend/internal/httpx/middleware.go</code>), junto a <code>Recover</code>/<code>Logger</code>/<code>CORS</code>:</p>
+<pre class="codeblock" data-lang="go"><code>h.Set(&quot;X-Content-Type-Options&quot;, &quot;nosniff&quot;)
+h.Set(&quot;X-Frame-Options&quot;, &quot;DENY&quot;)
+h.Set(&quot;Referrer-Policy&quot;, &quot;no-referrer&quot;)
+h.Set(&quot;Content-Security-Policy&quot;, &quot;default-src 'none'; frame-ancestors 'none'&quot;)
+// HSTS solo cuando se sirva por HTTPS:
+// h.Set(&quot;Strict-Transport-Security&quot;, &quot;max-age=63072000; includeSubDomains&quot;)</code></pre>
+<p>Y lo mismo en <code>frontend/nginx.conf</code> (<code>add_header ... always;</code>) para el HTML/asset.</p>
+<hr class="rule" />
+<h2 id="sec-03-sin-rate-limiting-en-el-login-media">SEC-03 · Sin rate limiting en el login (MEDIA)</h2>
+<p><strong>Título:</strong> No hay límite de intentos en <code>POST /auth/login</code>; es viable la fuerza bruta de credenciales.</p>
+<p><strong>Severidad:</strong> Media · <strong>Prioridad:</strong> P2 · <strong>Categoría:</strong> A07 (CWE-307).</p>
+<h3 id="pasos-y-evidencia">Pasos y evidencia</h3>
+<p>20 intentos fallidos consecutivos devuelven siempre <code>401</code>, <strong>nunca <code>429</code></strong>:</p>
+<pre class="codeblock"><code>=== 5. Rate limiting / fuerza bruta en /auth/login (20 intentos) ===
+statuses: 401x20  (si no hay 429, no hay rate limiting)</code></pre>
+<p>(evidencia: <code>qa/05_Evidencias/logs/seguridad-probe.txt</code>, §5)</p>
+<h3 id="agravante">Agravante</h3>
+<p>El usuario y la contraseña por defecto son conocidos (<code>admin@energia.local</code> / <code>admin123</code>) y están en <code>.env.example</code>. Con fuerza bruta no hace falta siquiera adivinar.</p>
+<h3 id="impacto">Impacto</h3>
+<p>Un atacante puede probar diccionarios de contraseñas sin freno. Mitigado parcialmente por bcrypt (coste default) pero no bloqueado.</p>
+<h3 id="remediación">Remediación</h3>
+<ul class="list"><li>Middleware de rate limiting por IP + por cuenta (p. ej. token bucket; <code>golang.org/x/time/rate</code> o un limiter propio) aplicado a <code>/auth/login</code>.</li><li>Backoff exponencial y bloqueo temporal tras N fallos.</li><li>Alertas en el log ante ráfagas de 401.</li></ul>
+<hr class="rule" />
+<h2 id="sec-04-jwt-en-localstorage-media">SEC-04 · JWT en localStorage (MEDIA)</h2>
+<p><strong>Título:</strong> El token se guarda en <code>localStorage</code>, legible por cualquier script; un XSS exfiltra la sesión.</p>
+<p><strong>Severidad:</strong> Media · <strong>Prioridad:</strong> P2 · <strong>Categoría:</strong> A07 / A03 (CWE-522).</p>
+<h3 id="evidencia-código">Evidencia (código)</h3>
+<p><code>frontend/src/lib/token-storage.ts</code> usa <code>localStorage</code> (<code>energyai.token</code>) y <code>api-client.ts:15-18</code> lo inyecta en cada request. Diagnóstico: hoy <strong>no</strong> hay <code>dangerouslySetInnerHTML</code>/<code>eval</code>/<code>innerHTML</code> en <code>frontend/src</code> (verificado por búsqueda), así que no hay vector XSS conocido — pero <code>localStorage</code> elimina la defensa en profundidad.</p>
+<h3 id="remediación">Remediación</h3>
+<ul class="list"><li>Preferir cookie <code>HttpOnly; Secure; SameSite=Strict</code> gestionada por el backend (requiere cambiar el flujo de login a set-cookie y protección CSRF).</li><li>Si se mantiene el Bearer en memoria, reducir la ventana: no persistir en <code>localStorage</code>, o usar <code>sessionStorage</code> + CSP estricta.</li><li>Endurecer la CSP para que un XSS no pueda exfiltrar (SEC-02).</li></ul>
+<hr class="rule" />
+<h2 id="sec-05-secretos-y-credenciales-por-defecto-media">SEC-05 · Secretos y credenciales por defecto (MEDIA)</h2>
+<p><strong>Título:</strong> <code>.env.example</code> y los valores por defecto del código distribuyen <code>JWT_SECRET=dev-secret-change-me</code> y <code>AUTH_PASSWORD=admin123</code>.</p>
+<p><strong>Severidad:</strong> Media · <strong>Prioridad:</strong> P2 · <strong>Categoría:</strong> A05 / A07 (CWE-1188: Insecure Default).</p>
+<h3 id="evidencia">Evidencia</h3>
+<ul class="list"><li><code>backend/internal/config/config.go:14,55,58</code> — por defecto secreto y contraseña.</li><li><code>.env.example</code> — mismas credenciales, con comentarios <code>Cámbialo fuera de local</code>.</li><li><code>.env</code> local efectivamente usa esos valores.</li></ul>
+<h3 id="impacto">Impacto</h3>
+<p>Se combina con SEC-01 y SEC-03: un despliegue “rápido” queda con credenciales públicas y secreto forjable.</p>
+<h3 id="remediación">Remediación</h3>
+<ul class="list"><li><code>.env.example</code> sin valores válidos (<code>JWT_SECRET=</code> vacío, <code>AUTH_PASSWORD=</code> vacío) y <code>docker-compose</code> que <strong>exija</strong> que estén definidos.</li><li>Documentar/forzar cambio en el primer arranque de producción.</li><li>No loguear valores de configuración sensibles.</li></ul>
+<hr class="rule" />
+<h2 id="sec-06-dependencias-vulnerables-media">SEC-06 · Dependencias vulnerables (MEDIA)</h2>
+<p><strong>Título:</strong> <code>govulncheck</code> reporta 10 vulnerabilidades <strong>alcanzables</strong> en la biblioteca estándar de Go (más 2 en paquetes importados y 3 en módulos no llamados).</p>
+<p><strong>Severidad:</strong> Media · <strong>Prioridad:</strong> P2 · <strong>Categoría:</strong> A06:2021 Vulnerable and Outdated Components.</p>
+<h3 id="evidencia">Evidencia</h3>
+<p><code>qa/05_Evidencias/logs/seguridad-govulncheck.txt</code> (resumen final):</p>
+<pre class="codeblock"><code>Your code is affected by 10 vulnerabilities from the Go standard library.
+This scan also found 2 vulnerabilities in packages you import and 3
+vulnerabilities in modules you require, but your code doesn't appear to call
+these vulnerabilities.</code></pre>
+<p>Ejemplos alcanzables: <code>GO-2026-6809</code> (crypto/x509), <code>GO-2026-6617</code> (HTTP/2 HPACK race → crash del servidor), <code>GO-2026-6613</code> (desincronización HTTP/1), <code>GO-2026-6603</code> (agotamiento de memoria HTTP/2), <code>GO-2026-6608</code> (MIME). Todas <strong>corregidas en Go 1.27.2/1.27.3</strong>.</p>
+<p><strong>Matiz importante:</strong> son vulnerabilidades de la <strong>versión del runtime de Go</strong>, no del código de la aplicación. Se resuelven actualizando el toolchain y la imagen base.</p>
+<h3 id="remediación">Remediación</h3>
+<ul class="list"><li>Compilar con <strong>Go ≥ 1.27.3</strong> (subir <code>go.mod</code> y la imagen Docker a la última 1.27.x/1.28).</li><li>Añadir <code>govulncheck</code> al CI como puerta (falla si hay vulnerabilidades alcanzables).</li><li><code>pnpm audit</code> en el frontend (revisar en cada actualización de dependencias).</li></ul>
+<hr class="rule" />
+<h2 id="sec-07-nginx-sin-cabeceras-de-seguridad-ni-https-baja">SEC-07 · nginx sin cabeceras de seguridad ni HTTPS (BAJA)</h2>
+<p><strong>Título:</strong> <code>frontend/nginx.conf</code> sirve la SPA sin cabeceras de seguridad ni redirección a HTTPS.</p>
+<p><strong>Severidad:</strong> Baja · <strong>Prioridad:</strong> P3 · <strong>Categoría:</strong> A05.</p>
+<h3 id="evidencia-código">Evidencia (código)</h3>
+<p><code>frontend/nginx.conf:1-26</code> — <code>add_header</code> solo para caché de assets; sin CSP/X-Frame-Options/HSTS. No hay término TLS (se asume un proxy delante).</p>
+<h3 id="remediación">Remediación</h3>
+<ul class="list"><li><code>add_header</code> de seguridad con <code>always</code>; terminar TLS y <code>HSTS</code> en el proxy/ingress; <code>server_tokens off;</code>.</li></ul>
+<hr class="rule" />
+<h2 id="2-matriz-de-pruebas-de-seguridad-ejecutadas">2. Matriz de pruebas de seguridad ejecutadas</h2>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Prueba</th><th>Resultado</th><th>Evidencia</th></tr></thead><tbody><tr><td>Forja de JWT (secreto por defecto)</td><td><strong>VULNERABLE (200)</strong></td><td><code>seguridad-probe.txt</code> §2</td></tr><tr><td>JWT <code>alg=none</code></td><td>Correcto (401)</td><td>§3</td></tr><tr><td>Tokens malformados / sin firma</td><td>Correcto (401)</td><td>§4</td></tr><tr><td>Rate limiting en login (20×)</td><td><strong>VULNERABLE (sin 429)</strong></td><td>§5</td></tr><tr><td>CORS origen no permitido</td><td>Correcto (sin ACAO)</td><td>§6</td></tr><tr><td>CORS origen permitido</td><td>Correcto (refleja el permitido)</td><td>§6</td></tr><tr><td>Enumeración de usuarios en login</td><td>Correcto (mismo 401/mensaje)</td><td><code>seguridad-login-enum.txt</code></td></tr><tr><td>Inyección SQL/NoSQL en <code>meter_id</code></td><td>Correcto (sin efecto, count=0)</td><td>§8</td></tr><tr><td>Path traversal en <code>getById</code></td><td>Correcto (404)</td><td>§8</td></tr><tr><td>XSS en <code>getById</code></td><td>Correcto (404)</td><td>§8</td></tr><tr><td>Métodos HTTP no soportados</td><td>Correcto (404)</td><td>§9</td></tr><tr><td>Límite de body (~2 MB)</td><td>Correcto (400)</td><td>§10</td></tr><tr><td>JSON con campos desconocidos</td><td>Correcto (400)</td><td>§11</td></tr><tr><td>Rutas protegidas sin token</td><td>Correcto (401)</td><td>§12</td></tr><tr><td>Cabeceras de seguridad</td><td><strong>AUSENTES</strong></td><td>§1</td></tr><tr><td>Análisis estático <code>go vet</code></td><td>Limpio (exit 0)</td><td>run en sesión</td></tr><tr><td>XSS en frontend (<code>innerHTML</code>/<code>eval</code>)</td><td>No encontrado</td><td>búsqueda en <code>frontend/src</code></td></tr><tr><td>Dependencias (<code>govulncheck</code>)</td><td>10 alcanzables (stdlib)</td><td><code>seguridad-govulncheck.txt</code></td></tr></tbody></table></div>
+<h2 id="3-recomendaciones-priorizadas">3. Recomendaciones priorizadas</h2>
+<ol class="list"><li><strong>P0 — SEC-01:</strong> fail-closed con secreto por defecto + secreto real en despliegue. <strong>Bloqueante.</strong></li><li><strong>P2 — SEC-05/SEC-03:</strong> quitar credenciales de <code>.env.example</code>, exigirlas en compose, rate limiting en login.</li><li><strong>P2 — SEC-02/SEC-07:</strong> middleware de cabeceras de seguridad en back y front.</li><li><strong>P2 — SEC-06:</strong> actualizar Go a ≥ 1.27.3 y <code>govulncheck</code> en CI.</li><li><strong>P2 — SEC-04:</strong> sacar el JWT de <code>localStorage</code> (cookie HttpOnly) o CSP estricta.</li></ol>
+<h2 id="4-cómo-se-automatiza">4. Cómo se automatiza</h2>
+<ul class="list"><li><code>e2e/tests/security.spec.ts</code>: regresiones de seguridad (token forjado rechazado, <code>alg=none</code>, sin cabeceras → documented, etc.).</li><li><code>qa/05_Evidencias/herramientas/security-probe.ps1</code>: batería reproducible de extremo a extremo (este reporte).</li><li><code>.github/workflows/e2e.yml</code>: puerta de CI; se propone añadir <code>govulncheck</code> y un guard de secreto.</li></ul>
+<hr class="rule" />
+<h3 id="nota-sobre-uso-de-ia">Nota sobre uso de IA</h3>
+<p>La batería <code>security-probe.ps1</code> y el forjador <code>forge-jwt.mjs</code> se escribieron con asistencia de IA como acelerador; <strong>todas</strong> las salidas aquí citadas provienen de ejecución real contra el backend local, capturadas verbatim en <code>qa/05_Evidencias/</code>. No se incluyó ningún hallazgo no reproducido.</p>
+      </article>
+      <footer class="foot">
+        <span>BiaEnergy · Informe de QA · EnergIA</span>
+        <span>2026-10-21 · commit 15765d9 · <a href="index.html">Índice de informes</a></span>
+      </footer>
+    </div>
+  </main>
+</div>
+<script>
+// Resalta el enlace activo y el encabezado visible durante el scroll.
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav a[href^="#"]'));
+  var heads = links.map(function (a) { return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1))); });
+  function onScroll() {
+    var pos = window.scrollY + 140, best = -1;
+    heads.forEach(function (h, i) { if (h && h.offsetTop <= pos) best = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === best); });
+  }
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>

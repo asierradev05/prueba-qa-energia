@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis de caja blanca · QA EnergIA · BiaEnergy</title>
+<meta name="author" content="Equipo de QA">
+<style>
+:root {
+  color-scheme: dark;
+  --paper: #0f0f0f;
+  --paper-soft: #121212;
+  --sheet: #1a1a1a;
+  --sheet-alt: #181818;
+  --ink: #fafafa;
+  --ink-muted: #a1a1aa;
+  --ink-faint: #71717a;
+  --form: #08ddbc;
+  --form-strong: #17ffdb;
+  --form-wash: #16302b;
+  --rule: #27272a;
+  --rule-strong: #3f3f46;
+  --greenbar: #202023;
+  --critical: #f87171;
+  --critical-wash: #2c1717;
+  --alert: #fbbf24;
+  --alert-wash: #2d2410;
+  --ok: #4ade80;
+  --ok-wash: #12291b;
+  --info: #60a5fa;
+  --info-wash: #152238;
+  --sidebar-w: 292px;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', 'Cascadia Code', Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  background-image: radial-gradient(70rem 28rem at 70% -10rem, rgb(8 221 188 / 0.07), transparent 70%);
+  background-repeat: no-repeat;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  line-height: 1.65;
+}
+a { color: var(--form); text-decoration: none; text-underline-offset: 3px; }
+a:hover { text-decoration: underline; text-decoration-color: var(--form-strong); }
+:focus-visible { outline: 2px solid var(--form); outline-offset: 2px; border-radius: 6px; }
+::selection { background: var(--form); color: var(--paper); }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--rule-strong); border-radius: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- Layout ---------- */
+.layout { display: grid; grid-template-columns: var(--sidebar-w) minmax(0, 1fr); min-height: 100vh; }
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  background: linear-gradient(180deg, var(--sheet-alt), var(--paper));
+  border-right: 1px solid var(--rule);
+  padding: 22px 18px 40px;
+}
+.brand { display: flex; align-items: center; gap: 12px; padding-bottom: 18px; border-bottom: 1px solid var(--rule); }
+.brand-mark { flex: none; border-radius: 9px; box-shadow: 0 6px 20px rgb(8 221 188 / 0.18); }
+.brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+.brand-text b { font-size: 15px; letter-spacing: -0.01em; }
+.brand-text span { font-size: 11.5px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.14em; }
+.nav { margin-top: 20px; }
+.nav h4 { margin: 18px 0 8px; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--ink-faint); font-weight: 600; }
+.nav a {
+  display: block; padding: 7px 11px; margin: 2px 0; border-radius: 9px;
+  color: var(--ink-muted); font-size: 13.5px; border-left: 2px solid transparent;
+}
+.nav a:hover { background: var(--sheet); color: var(--ink); text-decoration: none; }
+.nav a.active { background: var(--form-wash); color: var(--form-strong); border-left-color: var(--form); font-weight: 600; }
+.nav a .n { display: inline-block; width: 20px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+
+/* ---------- Main ---------- */
+.main { min-width: 0; }
+.doc { max-width: 960px; margin: 0 auto; padding: 0 40px 120px; }
+
+/* ---------- Report header ---------- */
+.report-head { padding: 46px 0 26px; border-bottom: 1px solid var(--rule); }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--form); font-weight: 600; }
+.eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--form); }
+.report-head h1 { margin: 14px 0 6px; font-size: 34px; line-height: 1.15; letter-spacing: -0.02em; }
+.report-head .lede { color: var(--ink-muted); font-size: 15px; max-width: 70ch; }
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; margin-top: 26px; background: var(--rule); border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; }
+.meta-cell { background: var(--sheet); padding: 12px 14px; }
+.meta-cell .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-faint); }
+.meta-cell .v { font-size: 14px; font-weight: 600; margin-top: 3px; }
+
+/* ---------- Verdict banner ---------- */
+.verdict { display: flex; align-items: center; gap: 14px; margin-top: 22px; padding: 16px 18px; border-radius: 12px; border: 1px solid; }
+.verdict--blocked { background: var(--critical-wash); border-color: rgb(248 113 113 / 0.4); }
+.verdict--go { background: var(--ok-wash); border-color: rgb(74 222 128 / 0.4); }
+.verdict__dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+.verdict--blocked .verdict__dot { background: var(--critical); box-shadow: 0 0 0 5px rgb(248 113 113 / 0.16); }
+.verdict--go .verdict__dot { background: var(--ok); box-shadow: 0 0 0 5px rgb(74 222 128 / 0.16); }
+.verdict__text b { display: block; font-size: 15px; }
+.verdict__text span { color: var(--ink-muted); font-size: 13px; }
+
+/* ---------- Content ---------- */
+.content { padding-top: 8px; }
+.content h1 { font-size: 30px; margin: 40px 0 12px; letter-spacing: -0.02em; }
+.content h2 { font-size: 23px; margin: 44px 0 12px; padding-top: 20px; border-top: 1px solid var(--rule); letter-spacing: -0.01em; }
+.content h2:first-child { border-top: none; padding-top: 6px; margin-top: 20px; }
+.content h3 { font-size: 17.5px; margin: 30px 0 10px; color: var(--form-strong); }
+.content h4 { font-size: 14px; margin: 22px 0 8px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); }
+.content p { margin: 11px 0; }
+.content strong { color: #fff; font-weight: 650; }
+.content em { color: var(--ink); }
+.content code {
+  font-family: var(--font-mono); font-size: 0.86em; background: var(--sheet);
+  border: 1px solid var(--rule); border-radius: 6px; padding: 1.5px 6px; color: var(--form-strong);
+}
+.content .rule { border: none; border-top: 1px solid var(--rule); margin: 34px 0; }
+.content blockquote {
+  margin: 16px 0; padding: 6px 18px; border-left: 3px solid var(--rule-strong);
+  color: var(--ink-muted); background: var(--sheet-alt); border-radius: 0 10px 10px 0;
+}
+.content ul.list, .content ol.list { margin: 11px 0; padding-left: 22px; }
+.content .list li { margin: 5px 0; }
+.content li.task { list-style: none; position: relative; padding-left: 4px; }
+.content li.task .task__box {
+  display: inline-grid; place-items: center; width: 17px; height: 17px; margin-right: 8px;
+  border: 1.5px solid var(--rule-strong); border-radius: 5px; font-size: 11px; vertical-align: -3px; color: var(--paper);
+}
+.content li.task--done .task__box { background: var(--form); border-color: var(--form); color: var(--paper); }
+.content li.task--done { color: var(--ink-muted); }
+
+/* ---------- Code block ---------- */
+pre.codeblock {
+  background: #0b0b0b; border: 1px solid var(--rule); border-radius: 12px;
+  padding: 16px 18px; overflow-x: auto; margin: 16px 0; position: relative;
+}
+pre.codeblock code { background: none; border: none; padding: 0; color: #e4e4e7; font-size: 12.5px; line-height: 1.6; }
+pre.codeblock[data-lang]::before {
+  content: attr(data-lang); position: absolute; top: 8px; right: 12px;
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint);
+}
+
+/* ---------- Tables ---------- */
+.table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid var(--rule); border-radius: 12px; }
+table.data-table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+table.data-table thead th {
+  background: var(--sheet-alt); text-align: left; padding: 11px 14px; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink-muted); font-weight: 600;
+  border-bottom: 1px solid var(--rule-strong); white-space: nowrap;
+}
+table.data-table td { padding: 10px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+table.data-table tbody tr:last-child td { border-bottom: none; }
+table.data-table tbody tr:nth-child(even) { background: var(--greenbar); }
+table.data-table td .badge { white-space: nowrap; }
+
+/* ---------- Badges ---------- */
+.badge {
+  display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 11.5px;
+  font-weight: 650; letter-spacing: 0.02em; border: 1px solid transparent; line-height: 1.5;
+}
+.badge--critical { background: var(--critical-wash); color: var(--critical); border-color: rgb(248 113 113 / 0.35); }
+.badge--alert { background: var(--alert-wash); color: var(--alert); border-color: rgb(251 191 36 / 0.35); }
+.badge--info { background: var(--info-wash); color: var(--info); border-color: rgb(96 165 250 / 0.35); }
+.badge--ok { background: var(--ok-wash); color: var(--ok); border-color: rgb(74 222 128 / 0.35); }
+
+/* ---------- Callouts ---------- */
+.callout { margin: 20px 0; padding: 14px 18px; border-radius: 12px; border: 1px solid var(--rule-strong); border-left-width: 4px; background: var(--sheet-alt); }
+.callout__title { font-weight: 650; margin-bottom: 4px; }
+.callout__body p { margin: 4px 0; color: var(--ink-muted); }
+.callout--critical { border-left-color: var(--critical); background: var(--critical-wash); }
+.callout--critical .callout__title { color: var(--critical); }
+.callout--alert { border-left-color: var(--alert); background: var(--alert-wash); }
+.callout--alert .callout__title { color: var(--alert); }
+.callout--info { border-left-color: var(--info); background: var(--info-wash); }
+.callout--info .callout__title { color: var(--info); }
+.callout--ok { border-left-color: var(--ok); background: var(--ok-wash); }
+.callout--ok .callout__title { color: var(--ok); }
+
+/* ---------- Footer ---------- */
+.foot { margin-top: 60px; padding-top: 22px; border-top: 1px solid var(--rule); color: var(--ink-faint); font-size: 12.5px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 920px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--rule); }
+  .doc { padding: 0 20px 90px; }
+  .report-head h1 { font-size: 26px; }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  :root { color-scheme: light; }
+  body { background: #fff; color: #111; }
+  .sidebar { display: none; }
+  .layout { grid-template-columns: 1fr; }
+  .doc { max-width: none; padding: 0 0 40px; }
+  .report-head h1, .content h1, .content h2, .content h3 { color: #111; }
+  .content h3, .brand-text span { color: #0a7a68; }
+  a { color: #0a7a68; }
+  .meta-cell, .callout, .table-wrap, pre.codeblock { border-color: #ddd; background: #fafafa; }
+  .badge { border: 1px solid #999; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html" style="text-decoration:none;color:inherit"><svg class="brand-mark" viewBox="0 0 32 32" width="40" height="40" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#08ddbc"/><path d="M18 5 9 18h6l-2 9 10-14h-6l1-8z" fill="#0f0f0f"/></svg><span class="brand-text"><b>BiaEnergy</b><span>QA · EnergIA</span></span></a>
+    <nav class="nav">
+      <h4>Informes</h4>
+      <h4>Dirección</h4><a href="resumen-ejecutivo.html">Resumen ejecutivo</a><h4>Planificación</h4><a href="plan-de-pruebas.html">Plan de pruebas y estrategia</a><h4>Ejecución</h4><a href="suite-de-humo.html">Suite de humo</a><a href="casos-caja-negra.html">Casos de caja negra</a><a href="caja-blanca.html" class="active">Análisis de caja blanca</a><h4>Hallazgos</h4><a href="registro-de-defectos.html">Registro de defectos</a><a href="reporte-de-seguridad.html">Reporte de seguridad</a><a href="produccion-readiness.html">Preparación para producción</a><a href="metricas-y-cobertura.html">Métricas y cobertura</a>
+      <h4>En esta página</h4><a href="#0-suite-de-pruebas-existente-ejecutada"><span class="n">·</span>0. Suite de pruebas existente (ejecutada)</a><a href="#1-rutas-de-decisión-y-valores-límite"><span class="n">·</span>1. Rutas de decisión y valores límite</a><a href="#2-cobertura-de-caminos-de-los-módulos-de-riesgo"><span class="n">·</span>2. Cobertura de caminos de los módulos d…</a><a href="#3-hallazgo-de-calidad-de-código-no-defecto-funcional"><span class="n">·</span>3. Hallazgo de calidad de código (no def…</a><a href="#4-conclusión"><span class="n">·</span>4. Conclusión</a>
+    </nav>
+  </aside>
+  <main class="main">
+    <div class="doc">
+      <header class="report-head">
+        <span class="eyebrow">Informe de QA · BiaEnergy</span>
+        <h1>Análisis de caja blanca</h1>
+        <p class="lede">Análisis estructural del código + ejecución de las suites existentes, orientado por los riesgos R1-R7 del plan. No modifica código de producción.</p>
+        <div class="meta-grid"><div class="meta-cell"><div class="k">Proyecto</div><div class="v">EnergIA · prueba técnica</div></div><div class="meta-cell"><div class="k">Cliente</div><div class="v">BiaEnergy</div></div><div class="meta-cell"><div class="k">Tipo</div><div class="v">Informe de QA</div></div><div class="meta-cell"><div class="k">Fecha</div><div class="v">2026-10-21</div></div><div class="meta-cell"><div class="k">Commit</div><div class="v">15765d9</div></div></div>
+        
+      </header>
+      <article class="content">
+        <p>Análisis estructural del código + ejecución de las suites existentes, orientado por los riesgos R1-R7 del plan. No modifica código de producción.</p>
+<h2 id="0-suite-de-pruebas-existente-ejecutada">0. Suite de pruebas existente (ejecutada)</h2>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Suite</th><th>Comando</th><th>Resultado</th></tr></thead><tbody><tr><td>Backend</td><td><code>go test ./...</code></td><td><strong>todos OK</strong> (ai, analysis y subpaquetes, auth, config, data, meter, server)</td></tr><tr><td>Frontend</td><td><code>pnpm test</code> (<code>vitest run</code>)</td><td><strong>11/11 PASS</strong> (3 archivos)</td></tr></tbody></table></div>
+<blockquote><p>Observación: los 11 tests del front pasan <strong>incluso</strong> con <code>TZ=America/Bogota</code>, lo que demuestra que la suite no cubre la conversión de zona horaria (ver DEF-04). El runner fija <code>TZ='UTC'</code> en <code>vite.config.ts:33</code>.</p></blockquote>
+<h2 id="1-rutas-de-decisión-y-valores-límite">1. Rutas de decisión y valores límite</h2>
+<h3 id="1-1-meter-statusof-backend-internal-meter-enums-go-29-38">1.1 <code>meter.StatusOf</code> — <code>backend/internal/meter/enums.go:29-38</code></h3>
+<pre class="codeblock"><code>switch {
+case a == nil:                       → NORMAL
+case a.Severity == SeverityHigh:     → CRITICAL
+default:                             → ALERT
+}</code></pre>
+<ul class="list"><li>DOC/COMENTARIO (línea 26): &quot;sin anomalía, <strong>o falso positivo</strong> → NORMAL&quot;.</li><li>Solo hay 2 ramas por severidad; <strong>nunca se consulta <code>a.Anomaly</code> ni <code>a.Type</code></strong>.</li><li>Entrada M-106 = <code>{Anomaly:false, Type:FALSE_POSITIVE, Severity:LOW}</code> cae en <code>default</code> → <strong>ALERT</strong>. Ruta no cubierta por tests. <strong>Confirma DEF-02.</strong></li><li>Cobertura de caminos: la rama &quot;FALSE_POSITIVE→NORMAL&quot; del comentario <strong>no existe en el código</strong>.</li></ul>
+<h3 id="1-2-httpx-pagination-normalize-paginate-paging-go-23-36-47-5">1.2 <code>httpx.Pagination.Normalize</code> + <code>Paginate</code> — <code>paging.go:23-36, 47-55</code></h3>
+<pre class="codeblock"><code>Normalize: Page==0→1; Size==0→10; valida Size∈[1,100];             ← no valida Page&lt;0
+Paginate:  start = min((Page-1)*Size, len); end = min(start+Size, len)
+           rows = items[start:end]</code></pre>
+<ul class="list"><li>Con <code>Page=-1, Size=10</code>: <code>(Page-1)*Size = -20</code> → <code>start=-20</code> → <code>items[-20:...]</code> → <strong>panic</strong> <code>slice bounds out of range [:-10]</code> (confirmado en el log del servidor).</li><li>El tag del struct declara <code>minimum:&amp;quot;1&amp;quot;</code> (línea 18) pero <strong>no se aplica</strong> en <code>Normalize</code>. <strong>Confirma DEF-03.</strong></li><li>Análisis de valores límite de <code>Page</code>: <code>0</code>→OK (default), <code>1</code>→OK, <code>-1</code>→panic. Falta la rama negativa.</li></ul>
+<blockquote><p>Nota positiva: la aritmética usa <code>min(...)</code> para acotar <code>start</code>/<code>end</code> contra <code>len(items)</code> (caso página fuera de rango hacia arriba → 0 filas, correcto). El hueco es solo el extremo inferior.</p></blockquote>
+<h3 id="1-3-meter-service-getall-búsqueda-service-go-53-70">1.3 <code>meter.Service.GetAll</code> (búsqueda) — <code>service.go:53-70</code></h3>
+<pre class="codeblock"><code>if search != &quot;&quot; &amp;&amp; !strings.Contains(sm.MeterID, search) { continue }</code></pre>
+<ul class="list"><li><code>strings.Contains</code> es <strong>case-sensitive</strong>; no se aplica <code>ToUpper</code>/<code>TrimSpace</code> a <code>search</code>.</li><li>Contraste: <code>GetByID</code> (service.go:74) <strong>sí</strong> normaliza <code>strings.ToUpper(strings.TrimSpace(id))</code>.</li><li>Inconsistencia interna + contra la doc (<code>backend/README.md:96</code>). <strong>Confirma DEF-01.</strong></li></ul>
+<h3 id="1-4-frontend-src-lib-format-ts-formatplanttime-55-58-vs-form">1.4 <code>frontend/src/lib/format.ts</code> — <code>formatPlantTime</code> (55-58) vs <code>formatPlantDate/Day</code></h3>
+<pre class="codeblock"><code>formatPlantTime  → getDate(), getHours(), getMinutes()   ← local del navegador
+formatPlantDate  → getUTCDate(), getUTCMonth()           ← UTC
+formatPlantDay   → getUTCDate(), getUTCMonth()           ← UTC</code></pre>
+<ul class="list"><li>El comentario 51-52 dice &quot;se leen las partes UTC para NO convertirla a la zona del navegador&quot;, pero <code>formatPlantTime</code> usa API local. Inconsistente con el resto del módulo y con <code>frontend/README.md:75</code>. <strong>Confirma DEF-04.</strong></li><li>Test <code>format.test.ts:17</code> verifica exactamente <code>14:00 → 14:00</code>, pero solo pasa por el <code>TZ='UTC'</code> forzado.</li></ul>
+<h3 id="1-5-analysis-classify-realseverity-classify-go-219-229-r7">1.5 <code>analysis/classify.realSeverity</code> — <code>classify.go:219-229</code> (R7)</h3>
+<pre class="codeblock"><code>p &gt;= 50 &amp;&amp; Ongoing → HIGH
+p &gt;= 20            → MEDIUM
+else               → LOW</code></pre>
+<ul class="list"><li>DOC (backend/README.md:276): &quot;<strong>supera</strong> 50%… <strong>supera</strong> 20%&quot;.</li><li>Código usa <code>&amp;gt;=</code> (inclusivo). Diferencia solo en el <strong>valor exacto</strong> 50.0 / 20.0.</li><li>Con el dataset actual ningún caso cae en el borde (M-109 +109,8% → HIGH; M-104 +47,3% → MEDIUM correcto). <strong>Observación de severidad baja</strong>; no reproducible con los datos actuales (lo reporto como inconsistencia doc↔código, no como fallo funcional).</li></ul>
+<h2 id="2-cobertura-de-caminos-de-los-módulos-de-riesgo">2. Cobertura de caminos de los módulos de riesgo</h2>
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Módulo</th><th>Caminos</th><th>Cubiertos por tests</th><th>Hueco</th></tr></thead><tbody><tr><td><code>meter.StatusOf</code></td><td>3 (nil/HIGH/otra)</td><td>nil, HIGH</td><td><strong>FALSE_POSITIVE</strong></td></tr><tr><td><code>httpx.Pagination</code></td><td>page&lt;0, =0, &gt;0</td><td>=0, &gt;0</td><td><strong>page&lt;0</strong></td></tr><tr><td><code>meter.GetAll</code> búsqueda</td><td>match/no match (exacto)</td><td>—</td><td><strong>case/trim</strong></td></tr><tr><td><code>formatPlantTime</code></td><td>UTC/local</td><td>solo UTC (TZ forzado)</td><td><strong>local ≠ planta</strong></td></tr></tbody></table></div>
+<h2 id="3-hallazgo-de-calidad-de-código-no-defecto-funcional">3. Hallazgo de calidad de código (no defecto funcional)</h2>
+<ul class="list"><li><code>summarize</code> (service.go:104) indexa <code>m.Readings[len(m.Readings)-1]</code> sin comprobar que <code>Readings</code> no esté vacío. Si un medidor llegara sin lecturas → <strong>panic index out of range</strong>. Con el dataset actual todas tienen 336 lecturas, por lo que <strong>no es reproducible</strong> hoy; se registra como <strong>riesgo de robustez</strong> (RIESGO-W1), no como defecto confirmado.</li></ul>
+<h2 id="4-conclusión">4. Conclusión</h2>
+<p>La caja blanca <strong>explica la causa raíz</strong> de los 4 defectos confirmados en caja negra (asignación directa de rama/campo faltante) y evidencia que la suite existente <strong>no los detecta</strong> por cobertura incompleta de caminos y por forzar <code>TZ=UTC</code>.</p>
+      </article>
+      <footer class="foot">
+        <span>BiaEnergy · Informe de QA · EnergIA</span>
+        <span>2026-10-21 · commit 15765d9 · <a href="index.html">Índice de informes</a></span>
+      </footer>
+    </div>
+  </main>
+</div>
+<script>
+// Resalta el enlace activo y el encabezado visible durante el scroll.
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav a[href^="#"]'));
+  var heads = links.map(function (a) { return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1))); });
+  function onScroll() {
+    var pos = window.scrollY + 140, best = -1;
+    heads.forEach(function (h, i) { if (h && h.offsetTop <= pos) best = i; });
+    links.forEach(function (a, i) { a.classList.toggle('active', i === best); });
+  }
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+</body>
+</html>

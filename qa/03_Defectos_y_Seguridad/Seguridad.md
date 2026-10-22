@@ -9,7 +9,7 @@
 - **Entorno:** Windows 11, PowerShell 5.1, Go 1.27.0, Node v25.9.0, backend `go run ./cmd/api` (:8080), frontend `pnpm dev` (:5173).
 - **Config:** `.env` copiado de `.env.example` (valores por defecto). `JWT_SECRET=dev-secret-change-me`, `AUTH_PASSWORD=admin123`.
 - **Técnicas aplicadas:** OWASP Top 10 (2021), análisis de cabeceras, forja de tokens, fuerza bruta, inyección, path traversal, validación de entrada, análisis estático (`go vet`, revisión de código) y de dependencias (`govulncheck`).
-- **Evidencias:** `qa/evidencias/seguridad-probe.txt`, `seguridad-login-enum.txt`, `seguridad-govulncheck.txt`, `forge-jwt.mjs`, `security-probe.ps1`.
+- **Evidencias:** `qa/05_Evidencias/logs/seguridad-probe.txt`, `seguridad-login-enum.txt`, `seguridad-govulncheck.txt`, `forge-jwt.mjs`, `security-probe.ps1`.
 - **Regla de compromiso:** solo lectura sobre los datos; ninguna prueba destruye información. La forja de token es no destructiva (el usuario final no existe en el sistema, que es de un solo usuario).
 
 ## 1. Resumen ejecutivo de seguridad
@@ -50,7 +50,7 @@ La advertencia aparece en el log (evidencia: `backend-server.err.log:1`) y el se
 ### Pasos para reproducir
 1. Generar un JWT HS256 con `sub` arbitrario, `iss=energyai-api` y firma con `dev-secret-change-me`:
    ```bash
-   node qa/evidencias/forge-jwt.mjs "dev-secret-change-me" "energyai-api" "attacker@evil.local"
+   node qa/05_Evidencias/herramientas/forge-jwt.mjs "dev-secret-change-me" "energyai-api" "attacker@evil.local"
    ```
 2. Usarlo contra `GET /api/v1/auth/me`:
    ```bash
@@ -113,7 +113,7 @@ AUSENTE   Strict-Transport-Security
 AUSENTE   Referrer-Policy
 AUSENTE   Permissions-Policy
 ```
-(evidencia: `qa/evidencias/seguridad-probe.txt`, §1)
+(evidencia: `qa/05_Evidencias/logs/seguridad-probe.txt`, §1)
 
 ### Impacto
 Sin `X-Content-Type-Options: nosniff` hay riesgo de *MIME sniffing*; sin `X-Frame-Options`/`frame-ancestors`, *clickjacking*; sin CSP, mayor superficie si algún día entra contenido inyectable.
@@ -144,7 +144,7 @@ Y lo mismo en `frontend/nginx.conf` (`add_header ... always;`) para el HTML/asse
 === 5. Rate limiting / fuerza bruta en /auth/login (20 intentos) ===
 statuses: 401x20  (si no hay 429, no hay rate limiting)
 ```
-(evidencia: `qa/evidencias/seguridad-probe.txt`, §5)
+(evidencia: `qa/05_Evidencias/logs/seguridad-probe.txt`, §5)
 
 ### Agravante
 El usuario y la contraseña por defecto son conocidos (`admin@energia.local` / `admin123`) y están en `.env.example`. Con fuerza bruta no hace falta siquiera adivinar.
@@ -203,7 +203,7 @@ Se combina con SEC-01 y SEC-03: un despliegue “rápido” queda con credencial
 **Severidad:** Media · **Prioridad:** P2 · **Categoría:** A06:2021 Vulnerable and Outdated Components.
 
 ### Evidencia
-`qa/evidencias/seguridad-govulncheck.txt` (resumen final):
+`qa/05_Evidencias/logs/seguridad-govulncheck.txt` (resumen final):
 ```
 Your code is affected by 10 vulnerabilities from the Go standard library.
 This scan also found 2 vulnerabilities in packages you import and 3
@@ -269,10 +269,10 @@ Ejemplos alcanzables: `GO-2026-6809` (crypto/x509), `GO-2026-6617` (HTTP/2 HPACK
 ## 4. Cómo se automatiza
 
 - `e2e/tests/security.spec.ts`: regresiones de seguridad (token forjado rechazado, `alg=none`, sin cabeceras → documented, etc.).
-- `qa/evidencias/security-probe.ps1`: batería reproducible de extremo a extremo (este reporte).
-- `e2e/../.github/workflows/e2e.yml`: puerta de CI; se propone añadir `govulncheck` y un guard de secreto.
+- `qa/05_Evidencias/herramientas/security-probe.ps1`: batería reproducible de extremo a extremo (este reporte).
+- `.github/workflows/e2e.yml`: puerta de CI; se propone añadir `govulncheck` y un guard de secreto.
 
 ---
 
 ### Nota sobre uso de IA
-La batería `security-probe.ps1` y el forjador `forge-jwt.mjs` se escribieron con asistencia de IA; **todas** las salidas aquí citadas provienen de ejecución real contra el backend local, capturadas verbatim en `qa/evidencias/`. No se incluyó ningún hallazgo no reproducido.
+La batería `security-probe.ps1` y el forjador `forge-jwt.mjs` se escribieron con asistencia de IA como acelerador; **todas** las salidas aquí citadas provienen de ejecución real contra el backend local, capturadas verbatim en `qa/05_Evidencias/`. No se incluyó ningún hallazgo no reproducido.

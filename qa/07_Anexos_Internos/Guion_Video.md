@@ -1,11 +1,11 @@
 # Guion del video de entrega
 
-Guía para grabar el video de presentación de la prueba técnica de QA de **EnergIA**.
+Guía de grabación del video de presentación de la prueba técnica de QA de **EnergIA**.
 Duración objetivo: **5-7 minutos**. Todo lo que se menciona aquí ya está en el repositorio.
 
-> Apoyo visual: abre `qa/video-entrega-qa.html` (conclusión, recorrido de los 6 bloques y mapa de entregables) junto a
-> `qa/entregables-prueba-qa.html` (mapa de entregables) y
-> `qa/arquitectura-energia.html` (cómo está construido el sistema).
+> Apoyo visual: abre `qa/06_Reportes_Interactivos/video-entrega-qa.html` (conclusión, recorrido de los 6 bloques y mapa de entregables) junto a
+> `qa/06_Reportes_Interactivos/entregables-prueba-qa.html` (mapa de entregables) y
+> `qa/06_Reportes_Interactivos/arquitectura-energia.html` (cómo está construido el sistema).
 
 ## Antes de grabar (5 min de preparación)
 
@@ -13,8 +13,8 @@ Duración objetivo: **5-7 minutos**. Todo lo que se menciona aquí ya está en e
    - Backend: `cd backend` y `go run ./cmd/api` → API en `http://localhost:8080`.
    - Frontend: `cd frontend` y `pnpm dev` → app en `http://localhost:5173`.
    - Login: `admin@energia.local` / `admin123`.
-2. **Ten abiertos** en el navegador: la app, y en el repo los archivos `qa/RESUMEN.md`,
-   `qa/video-entrega-qa.html` y `qa/05-defectos.md`.
+2. **Ten abiertos** en el navegador: la app, y en el repo los archivos `qa/00_Resumen_Ejecutivo/RESUMEN.md`,
+   `qa/06_Reportes_Interactivos/video-entrega-qa.html` y `qa/05-defectos.md`.
 3. **Ten una terminal a mano** en `e2e/` para la demo de tests (paso 4).
 4. **Cierra ruido**: notificaciones, pestañas y apps que no uses. Ventana a 1080p o más.
 
@@ -38,13 +38,13 @@ es más fácil repetir un bloque que todo el video.
 
 ## Bloque 1 — Panorama (60 s)
 
-**Muestra:** `qa/RESUMEN.md` y, si quieres, `qa/video-entrega-qa.html`.
+**Muestra:** `qa/00_Resumen_Ejecutivo/RESUMEN.md` y, si quieres, `qa/06_Reportes_Interactivos/video-entrega-qa.html`.
 
 **Di algo así:**
 > "Empecemos por el resultado. Hice pruebas de caja negra, caja blanca, automatización y
 > seguridad. Encontré **4 defectos** —dos de severidad alta— y **7 hallazgos de seguridad**,
 > uno crítico. La suite de automatización tiene **27 tests en verde**. El resumen ejecutivo
-> está en `qa/RESUMEN.md`; este explainer es una versión visual del mismo."
+> > está en `qa/01-plan-de-pruebas.md`; este explainer es una versión visual del mismo."
 
 **La idea:** que en 1 minuto el evaluador sepa el resultado y dónde profundizar.
 
@@ -53,7 +53,7 @@ es más fácil repetir un bloque que todo el video.
 ## Bloque 2 — Pruebas (90 s)
 
 **Muestra:** `qa/01-plan-de-pruebas.md`, `qa/02-smoke.md`, `qa/03-casos-caja-negra.md`,
-`qa/04-caja-blanca.md` y la carpeta `qa/evidencias/`.
+`qa/04-caja-blanca.md` y la carpeta `qa/05_Evidencias/`.
 
 **Di algo así:**
 > "Este es el plan: definí alcance, estrategia y riesgos en `01-plan-de-pruebas.md`.
@@ -61,7 +61,7 @@ es más fácil repetir un bloque que todo el video.
 > cubriendo login, listado, filtros, detalle, anomalías y orden. Después **caja blanca**:
 > revisé 4 módulos por dentro —el motor de análisis, el store, el paginado y el formateo—
 > y comparé lo que dice el código con lo que hace la interfaz. Las capturas y las
-> peticiones/respuestas están en `qa/evidencias/`."
+> peticiones/respuestas están en `qa/05_Evidencias/`."
 
 **La idea:** demostrar método (plan → smoke → caja negra → caja blanca), no improvisación.
 
@@ -69,7 +69,7 @@ es más fácil repetir un bloque que todo el video.
 
 ## Bloque 3 — Hallazgos (120 s) · el más importante
 
-**Muestra:** `qa/05-defectos.md` (defecto por defecto) y luego `qa/06-seguridad.md`.
+**Muestra:** `qa/05-defectos.md` (defecto por defecto) y luego `qa/03_Defectos_y_Seguridad/Seguridad.md`.
 Opcional: reproduce DEF-02 en la app si tienes el dato a mano.
 
 **Di algo así (recorre los 4 defectos):**
@@ -88,7 +88,7 @@ Opcional: reproduce DEF-02 en la app si tienes el dato a mano.
 >
 > En seguridad encontré **SEC-01, crítica**: si no se define `JWT_SECRET` en el entorno, el
 > backend arranca con el secreto de desarrollo, y cualquiera podría firmar un token válido.
-> Los otros hallazgos y los 17 controles que evalué están en `06-seguridad.md`."
+> Los otros hallazgos y los 17 controles que evalué están en `03_Defectos_y_Seguridad/Seguridad.md`."
 
 **La idea:** este bloque justifica el veredicto. No lo aceleres.
 
@@ -114,7 +114,7 @@ Opcional: reproduce DEF-02 en la app si tienes el dato a mano.
 
 ## Bloque 5 — Veredicto (45 s)
 
-**Muestra:** `qa/08-produccion-readiness.md` y vuelve a `qa/RESUMEN.md`.
+**Muestra:** `qa/03_Defectos_y_Seguridad/Produccion_Readiness.md` y vuelve a `qa/00_Resumen_Ejecutivo/RESUMEN.md`.
 
 **Di algo así:**
 > "Con todo esto, corrí un chequeo de preparación para producción: **42 de 100, bloqueado**.
