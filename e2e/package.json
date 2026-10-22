@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Suite de pruebas End-to-End (Playwright + TypeScript) para EnergIA",
+  "description": "End-to-End test suite (Playwright + TypeScript) for EnergIA",
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",

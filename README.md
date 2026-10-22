@@ -121,9 +121,9 @@ Documentación completa del proceso de QA en **[`qa/`](qa/)** y suite de automat
 
 ## Empezar a revisar
 
-> **Vista general interactiva:** [`qa/explainer-entrega-qa.html`](qa/explainer-entrega-qa.html) — una página que resume qué encontrarás en la entrega y dónde está cada cosa. Ábrela en el navegador.
+> **Vista general interactiva:** [`qa/video-entrega-qa.html`](qa/video-entrega-qa.html) — la página que usaremos en el video: conclusión, el recorrido de los 6 bloques, dónde está cada artefacto, los defectos y el checklist. Ábrela en el navegador.
 >
-> **Diagramas:** [Arquitectura del sistema](qa/arquitectura-energia.html) · [Mapa de entregables](qa/entregables-prueba-qa.html) · [Recorrido del video](qa/guion-video-flujo.html).
+> **Diagramas:** [Arquitectura del sistema](qa/arquitectura-energia.html) · [Mapa de entregables](qa/entregables-prueba-qa.html).
 >
 > **Guion del video:** [`qa/guion-video.md`](qa/guion-video.md) — narración y shot list paso a paso.
 

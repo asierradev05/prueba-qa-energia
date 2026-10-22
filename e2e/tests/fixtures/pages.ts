@@ -3,13 +3,6 @@ import { DispatchPage } from '../pages/DispatchPage'
 import { LoginPage } from '../pages/LoginPage'
 import { MetersPage } from '../pages/MetersPage'
 
-/**
- * Fixtures de Page Objects. Cada test recibe las páginas listas para usar,
- * evitando construir locators a mano dentro de la especificación.
- *
- * El inicio de sesión NO ocurre aquí: se reutiliza el `storageState` generado
- * por `auth.setup.ts` (login una sola vez por corrida).
- */
 type Pages = {
   loginPage: LoginPage
   dispatchPage: DispatchPage

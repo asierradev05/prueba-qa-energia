@@ -1,24 +1,20 @@
-import { API_URL, apiLogin } from './helpers/auth'
 import { expect, test } from '@playwright/test'
+import { API_URL, CREDENTIALS, apiLogin } from './helpers/auth'
 
-/**
- * Contratos de API verificados con el `request` de Playwright.
- * Complementa los flujos de UI sin depender del navegador.
- */
-test.describe('Contratos de API', () => {
-  test('rechaza credenciales inválidas con 401', async ({ request }) => {
+test.describe('API contracts', () => {
+  test('rejects invalid credentials with 401', async ({ request }) => {
     const res = await request.post(`${API_URL}/api/v1/auth/login`, {
-      data: { email: 'admin@energia.local', password: 'mal' },
+      data: { email: CREDENTIALS.email, password: 'wrong' },
     })
     expect(res.status()).toBe(401)
   })
 
-  test('la ruta protegida sin token responde 401', async ({ request }) => {
+  test('protected route without token returns 401', async ({ request }) => {
     const res = await request.post(`${API_URL}/api/v1/meter/getAll`, { data: {} })
     expect(res.status()).toBe(401)
   })
 
-  test('getById de un medidor inexistente responde 404', async ({ request }) => {
+  test('getById for unknown meter returns 404', async ({ request }) => {
     const token = await apiLogin(request)
     const res = await request.get(`${API_URL}/api/v1/meter/getById/M-999`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -26,7 +22,7 @@ test.describe('Contratos de API', () => {
     expect(res.status()).toBe(404)
   })
 
-  test('paginación con size fuera de rango responde 400', async ({ request }) => {
+  test('pagination with out-of-range size returns 400', async ({ request }) => {
     const token = await apiLogin(request)
     const res = await request.post(`${API_URL}/api/v1/meter/getAll`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -35,7 +31,7 @@ test.describe('Contratos de API', () => {
     expect(res.status()).toBe(400)
   })
 
-  test('el listado por defecto devuelve los 12 medidores', async ({ request }) => {
+  test('default listing returns 12 meters', async ({ request }) => {
     const token = await apiLogin(request)
     const res = await request.post(`${API_URL}/api/v1/meter/getAll`, {
       headers: { Authorization: `Bearer ${token}` },

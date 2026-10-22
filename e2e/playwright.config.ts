@@ -1,21 +1,14 @@
 import { defineConfig, devices } from '@playwright/test'
+import { STORAGE_STATE } from './tests/helpers/auth'
 
 /**
- * Configuración E2E de EnergIA.
+ * Prerequisites (run separately):
+ *   backend  → http://localhost:8080
+ *   frontend → http://localhost:5173
  *
- * El sistema se levanta aparte en modo dev:
- *   backend  →  http://localhost:8080   (go run ./cmd/api)
- *   frontend →  http://localhost:5173   (pnpm dev)
- *
- * Autenticación: el proyecto `setup` inicia sesión una vez y guarda el
- * `storageState`; los tests lo reutilizan (no repiten el login).
- *
- * La suite fija la zona horaria del navegador en America/Bogota (zona del
- * negocio) para que las aserciones de "hora de planta" reflejen el uso real.
+ * The `setup` project logs in once and persists storageState for the suite.
+ * Browser timezone is America/Bogota (plant/business zone).
  */
-
-const STORAGE_STATE = 'playwright/.auth/user.json'
-
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
@@ -34,12 +27,10 @@ export default defineConfig({
   },
 
   projects: [
-    // Genera el storageState con una sesión válida.
     {
       name: 'setup',
       testMatch: /auth\.setup\.ts/,
     },
-    // Suite principal: hereda la sesión guardada.
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'], storageState: STORAGE_STATE },

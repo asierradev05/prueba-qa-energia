@@ -1,11 +1,11 @@
-import { expect, type Page } from '@playwright/test'
+import { expect, type Locator, type Page } from '@playwright/test'
 
-/**
- * Pantalla de acceso (`frontend/src/features/auth/components/LoginForm.tsx`).
- * Locators por etiqueta/rol para no acoplarse al CSS.
- */
 export class LoginPage {
   constructor(private readonly page: Page) {}
+
+  get error(): Locator {
+    return this.page.getByRole('alert')
+  }
 
   async goto(): Promise<void> {
     await this.page.goto('/login')
@@ -24,10 +24,6 @@ export class LoginPage {
     await this.goto()
     await this.fillCredentials(email, password)
     await this.submit()
-  }
-
-  get error(): ReturnType<Page['getByRole']> {
-    return this.page.getByRole('alert')
   }
 
   async expectVisible(): Promise<void> {

@@ -1,8 +1,5 @@
-import { expect, type Page } from '@playwright/test'
+import { expect, type Locator, type Page } from '@playwright/test'
 
-/**
- * Libro de medidores (`/medidores`): listado, búsqueda y filtros.
- */
 export class MetersPage {
   constructor(private readonly page: Page) {}
 
@@ -11,16 +8,13 @@ export class MetersPage {
     await expect(this.page.getByRole('heading', { name: 'Libro de medidores' })).toBeVisible()
   }
 
-  /**
-   * La búsqueda se aplica al ENVIAR el formulario, no en cada pulsación de tecla
-   * (`frontend/src/features/meters/components/MeterFilters.tsx`).
-   */
+  /** Search applies on form submit, not on each keystroke. */
   async searchByMeterId(meterId: string): Promise<void> {
-    await this.page.locator('#meter-search').fill(meterId)
+    await this.page.getByLabel('Medidor').fill(meterId)
     await this.page.getByRole('button', { name: 'Buscar medidor' }).click()
   }
 
-  row(meterId: string) {
+  row(meterId: string): Locator {
     return this.page.getByRole('row', { name: new RegExp(meterId) })
   }
 }

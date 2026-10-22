@@ -1,75 +1,71 @@
-# Pruebas End-to-End · EnergIA
+# End-to-End tests · EnergIA
 
-Suite de [Playwright](https://playwright.dev) + TypeScript que cubre los flujos críticos del operador y **demuestra** los defectos confirmados en `qa/05-defectos.md`.
+[Playwright](https://playwright.dev) + TypeScript suite covering critical operator flows and confirming defects documented in `qa/05-defectos.md`.
 
-## Requisitos
+## Requirements
 
-- Node.js 18+ y pnpm.
-- El sistema levantado en modo dev (ver `README.md` de la raíz):
+- Node.js 18+ and pnpm.
+- App running in dev mode (see root `README.md`):
   - Backend: `go run ./cmd/api` → `http://localhost:8080`
   - Frontend: `pnpm dev` → `http://localhost:5173`
-- Variables de entorno opcionales: `E2E_BASE_URL`, `E2E_API_URL` (por defecto los anteriores).
+- Optional env: `E2E_BASE_URL`, `E2E_API_URL` (defaults above).
 
-## Instalación y ejecución
-
-Un solo comando tras instalar (una vez):
+## Install and run
 
 ```bash
 cd e2e
 pnpm install && pnpm exec playwright install chromium && pnpm test
 ```
 
-Si ya instalaste dependencias y navegador, basta `pnpm test`.
-
-Otros comandos:
+If dependencies and the browser are already installed: `pnpm test`.
 
 ```bash
-pnpm test:headed   # ver el navegador
-pnpm test:ui       # modo interfaz
-pnpm report        # abre el reporte HTML
+pnpm test:headed   # headed browser
+pnpm test:ui       # Playwright UI
+pnpm report        # open HTML report
 ```
 
-## Cómo está organizada
+## Layout
 
 ```
 tests/
-  auth.setup.ts        # login una vez → playwright/.auth/user.json (storageState)
-  fixtures/pages.ts    # fixtures con Page Objects
-  helpers/auth.ts      # utilidades de login por API / siembra de token
+  auth.setup.ts        # one login → playwright/.auth/user.json (storageState)
+  fixtures/pages.ts    # Page Object fixtures
+  helpers/auth.ts      # API login, token inject, shared constants
   pages/
-    LoginPage.ts       # pantalla de acceso
-    DispatchPage.ts    # despacho (órdenes priorizadas)
-    MetersPage.ts      # libro de medidores (listado, búsqueda, filtros)
-  api.spec.ts          # contratos de API con el request de Playwright
-  security.spec.ts     # regresiones de seguridad (SEC-01/02/03 y controles)
-  smoke.spec.ts        # disponibilidad y flujo mínimo
-  meters.spec.ts       # libro de medidores + API (negocio y regresión)
-  timezone.spec.ts     # hora de planta independiente de la zona (DEF-04)
+    LoginPage.ts
+    DispatchPage.ts
+    MetersPage.ts
+  api.spec.ts          # API contracts
+  security.spec.ts     # security regressions (SEC-01/02/03)
+  smoke.spec.ts        # availability and minimum happy path
+  meters.spec.ts       # meter book + API (business + regression)
+  timezone.spec.ts     # plant time independent of browser zone (DEF-04)
 ```
 
-## Convenciones
+## Conventions
 
-- **TypeScript** estricto, **locators semánticos** (`getByRole`, `getByLabel`, `getByText`), sin CSS frágil.
-- **Sin `waitForTimeout`**: se usan aserciones *web-first* (`toBeVisible`, `toContainText`, `toHaveURL`).
-- **Login reutilizable**: el proyecto `setup` inicia sesión por UI una sola vez y guarda `storageState`; el resto de tests lo heredan. Los casos de login vacían el storageState con `test.use({ storageState: { cookies: [], origins: [] } })`.
-- **Page Objects + fixtures** (`tests/pages`, `tests/fixtures/pages.ts`): los tests no construyen locators a mano.
-- La zona horaria del navegador se fija en `America/Bogota` (`playwright.config.ts`) por ser la del negocio.
-- `test.fail()` se usa **solo** cuando el fallo se explica por un defecto ya confirmado; cada uno lleva anotado su ID de defecto. Cuando el defecto se corrija, el test pasará a fallar (`test.fail` detecta el paso inesperado) y deberá quitarse la anotación.
+- Strict TypeScript; semantic locators (`getByRole`, `getByLabel`, `getByText`); no brittle CSS selectors.
+- No `waitForTimeout`; use web-first assertions (`toBeVisible`, `toContainText`, `toHaveURL`).
+- Reusable login: `setup` authenticates once via UI and saves `storageState`. Login cases clear it with `test.use({ storageState: { cookies: [], origins: [] } })`.
+- Page Objects + fixtures; specs do not build locators inline.
+- Browser timezone fixed to `America/Bogota` in `playwright.config.ts`.
+- `test.fail()` only for confirmed defects (annotated with defect ID). When fixed, remove the annotation after the unexpected pass.
 
-## Defectos cubiertos por la suite
+## Defects covered
 
-| Defecto | Test |
+| Defect | Test |
 |---|---|
-| DEF-01 (búsqueda no ignora mayúsculas) | `meters.spec.ts › búsqueda por id no ignora mayúsculas` |
-| DEF-02 (FALSE_POSITIVE mostrado como ALERT) | `meters.spec.ts › fila M-106…`, `…estado de M-106…`, `…resumen del dashboard…` |
-| DEF-03 (page negativo → 500) | `meters.spec.ts › paginación con page negativo responde 400` |
-| DEF-04 (hora de planta dependiente de la zona) | `timezone.spec.ts › el instante "Detectada" no depende de la zona` |
-| SEC-01 (forja de JWT con secreto por defecto) | `security.spec.ts › un token firmado con el secreto por defecto NO autentica` |
-| SEC-02 (sin cabeceras de seguridad) | `security.spec.ts › las respuestas incluyen cabeceras de seguridad` |
-| SEC-03 (sin rate limiting en login) | `security.spec.ts › el login aplica rate limiting` |
+| DEF-01 (case-insensitive search) | `meters.spec.ts › meter_id filter is case-insensitive` |
+| DEF-02 (FALSE_POSITIVE shown as ALERT) | `meters.spec.ts › M-106…`, `…status is NORMAL…`, `…dashboard summary…` |
+| DEF-03 (negative page → 500) | `meters.spec.ts › negative page returns 400` |
+| DEF-04 (plant time depends on timezone) | `timezone.spec.ts › "Detectada" instant…` |
+| SEC-01 (JWT forged with default secret) | `security.spec.ts › JWT signed with default secret…` |
+| SEC-02 (missing security headers) | `security.spec.ts › responses include security headers` |
+| SEC-03 (no login rate limiting) | `security.spec.ts › login applies rate limiting` |
 
-Detalle completo de seguridad en `qa/06-seguridad.md`.
+Full security detail: `qa/06-seguridad.md`.
 
-## Interpretación del resultado
+## Interpreting results
 
-Con los defectos presentes, los tests marcados con `test.fail()` **pasan** (porque se espera que fallen) y el resto pasa. Al corregir los defectos, esos tests **fallarán** a propósito, señalando que hay que retirarles la anotación `test.fail`.
+With open defects, `test.fail()` cases **pass** (failure is expected) and the rest pass. After a fix, those tests **fail** on purpose until `test.fail` is removed.

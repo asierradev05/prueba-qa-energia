@@ -3,7 +3,7 @@
 Guía para grabar el video de presentación de la prueba técnica de QA de **EnergIA**.
 Duración objetivo: **5-7 minutos**. Todo lo que se menciona aquí ya está en el repositorio.
 
-> Apoyo visual: abre `qa/guion-video-flujo.html` (los 6 bloques) junto a
+> Apoyo visual: abre `qa/video-entrega-qa.html` (conclusión, recorrido de los 6 bloques y mapa de entregables) junto a
 > `qa/entregables-prueba-qa.html` (mapa de entregables) y
 > `qa/arquitectura-energia.html` (cómo está construido el sistema).
 
@@ -14,7 +14,7 @@ Duración objetivo: **5-7 minutos**. Todo lo que se menciona aquí ya está en e
    - Frontend: `cd frontend` y `pnpm dev` → app en `http://localhost:5173`.
    - Login: `admin@energia.local` / `admin123`.
 2. **Ten abiertos** en el navegador: la app, y en el repo los archivos `qa/RESUMEN.md`,
-   `qa/explainer-entrega-qa.html` y `qa/05-defectos.md`.
+   `qa/video-entrega-qa.html` y `qa/05-defectos.md`.
 3. **Ten una terminal a mano** en `e2e/` para la demo de tests (paso 4).
 4. **Cierra ruido**: notificaciones, pestañas y apps que no uses. Ventana a 1080p o más.
 
@@ -38,7 +38,7 @@ es más fácil repetir un bloque que todo el video.
 
 ## Bloque 1 — Panorama (60 s)
 
-**Muestra:** `qa/RESUMEN.md` y, si quieres, `qa/explainer-entrega-qa.html`.
+**Muestra:** `qa/RESUMEN.md` y, si quieres, `qa/video-entrega-qa.html`.
 
 **Di algo así:**
 > "Empecemos por el resultado. Hice pruebas de caja negra, caja blanca, automatización y

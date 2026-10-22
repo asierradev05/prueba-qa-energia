@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "1d0f19fe-67cc-4ec3-9369-16c600891f8c",
+  "status": "current",
+  "command": "deliver",
+  "type": "explainer",
+  "input": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\.archify\\video-entrega-qa\\candidate.archify.md",
+  "output": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\video-entrega-qa.html",
+  "specification": {
+    "sha256": "321223c18b3bc6a849e962575891c0427e5b576da32c75290a217462e1f920b6",
+    "bytes": 5701
+  },
+  "artifact": {
+    "sha256": "61348b318944ff151485b4d8451710f9b5c7f83cea6506150b8079ea075f070c",
+    "bytes": 945428
+  },
+  "explainer": {
+    "preparedSha256": "29df9bced6d63a1512d1e4f51343b7ecc46f2ea80d3d2719af71c47f1e863a8b",
+    "dependencies": [
+      {
+        "kind": "diagram-spec",
+        "id": "recorrido-video",
+        "inline": true,
+        "sha256": "d95fc5af4ddd569c1e40b9ce49613d8d8037ac21fd95cd49bb241dc1e69c758d",
+        "bytes": 1301
+      },
+      {
+        "kind": "diagram-spec",
+        "id": "repo-entrega",
+        "inline": true,
+        "sha256": "51c400df06984e9eb8949c137073af1b0e9dd0b34b1ebd333f0599df5f2cd555",
+        "bytes": 945
+      }
+    ]
+  }
+}

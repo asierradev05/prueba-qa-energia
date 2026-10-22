@@ -1,8 +1,8 @@
 import { API_URL, apiLogin } from './helpers/auth'
 import { expect, test } from './fixtures/pages'
 
-test.describe('Libro de medidores', () => {
-  test('lista los medidores con su estado, consumo y variación', async ({ metersPage }) => {
+test.describe('Meter book', () => {
+  test('lists meters with status, consumption, and variation', async ({ metersPage }) => {
     await metersPage.goto()
 
     const row = metersPage.row('M-109')
@@ -11,14 +11,13 @@ test.describe('Libro de medidores', () => {
     await expect(row).toContainText('Crítica')
   })
 
-  test('fila M-106 se muestra como Normal y no como alerta', async ({ metersPage }) => {
-    // DEF-02 (P1): un FALSE_POSITIVE debe verse "Normal" (backend/README.md:103-108).
-    test.fail(true, 'DEF-02: M-106 (FALSE_POSITIVE) se muestra como "Alerta"; debe ser "Normal".')
+  test('M-106 row shows Normal, not alert — DEF-02', async ({ metersPage }) => {
+    test.fail(true, 'DEF-02: M-106 (FALSE_POSITIVE) shows as "Alerta"; expected "Normal".')
     await metersPage.goto()
     await expect(metersPage.row('M-106')).toContainText('Normal')
   })
 
-  test('buscar "M-109" filtra a un solo medidor', async ({ metersPage }) => {
+  test('search "M-109" filters to a single meter', async ({ metersPage }) => {
     await metersPage.goto()
     await metersPage.searchByMeterId('M-109')
     await expect(metersPage.row('M-109')).toBeVisible()
@@ -26,10 +25,9 @@ test.describe('Libro de medidores', () => {
   })
 })
 
-test.describe('API de medidores', () => {
-  test('búsqueda por id no ignora mayúsculas — DEF-01', async ({ request }) => {
-    // DEF-01: la doc promete búsqueda "sin importar mayúsculas" (backend/README.md:96).
-    test.fail(true, 'DEF-01: filter.meter_id="m-109" devuelve 0 resultados; debe encontrar M-109.')
+test.describe('Meters API', () => {
+  test('meter_id filter is case-insensitive — DEF-01', async ({ request }) => {
+    test.fail(true, 'DEF-01: filter.meter_id="m-109" returns 0; expected to match M-109.')
     const token = await apiLogin(request)
     const headers = { Authorization: `Bearer ${token}` }
 
@@ -46,9 +44,8 @@ test.describe('API de medidores', () => {
     expect((await lower.json()).count).toBe(1)
   })
 
-  test('el estado de M-106 es NORMAL en la API — DEF-02', async ({ request }) => {
-    // DEF-02: FALSE_POSITIVE → NORMAL (backend/README.md:103-108).
-    test.fail(true, 'DEF-02: getById/M-106 devuelve status=ALERT; debe ser NORMAL.')
+  test('M-106 status is NORMAL in the API — DEF-02', async ({ request }) => {
+    test.fail(true, 'DEF-02: getById/M-106 returns status=ALERT; expected NORMAL.')
     const token = await apiLogin(request)
     const res = await request.get(`${API_URL}/api/v1/meter/getById/M-106`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -57,9 +54,8 @@ test.describe('API de medidores', () => {
     expect(body.status).toBe('NORMAL')
   })
 
-  test('paginación con page negativo responde 400, no 500 — DEF-03', async ({ request }) => {
-    // DEF-03: entrada inválida debe ser 400, no 500 (panic por slice fuera de rango).
-    test.fail(true, 'DEF-03: page=-1 provoca HTTP 500; debe ser 400 de validación.')
+  test('negative page returns 400, not 500 — DEF-03', async ({ request }) => {
+    test.fail(true, 'DEF-03: page=-1 returns HTTP 500; expected 400 validation.')
     const token = await apiLogin(request)
     const res = await request.post(`${API_URL}/api/v1/meter/getAll`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -68,9 +64,8 @@ test.describe('API de medidores', () => {
     expect(res.status()).toBe(400)
   })
 
-  test('resumen del dashboard con conteos coherentes con la doc — DEF-02', async ({ request }) => {
-    // Con M-106 como NORMAL, el dashboard debe contar 9 normales y 1 alerta.
-    test.fail(true, 'DEF-02: getSummary reporta normal=8, alert=2; con la doc debe ser normal=9, alert=1.')
+  test('dashboard summary counts match expected NORMAL mapping — DEF-02', async ({ request }) => {
+    test.fail(true, 'DEF-02: getSummary reports normal=8, alert=2; expected normal=9, alert=1.')
     const token = await apiLogin(request)
     const res = await request.get(`${API_URL}/api/v1/dashboard/getSummary`, {
       headers: { Authorization: `Bearer ${token}` },
