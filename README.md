@@ -121,31 +121,31 @@ Documentación completa del proceso de QA en **[`qa/`](qa/)** y suite de automat
 
 ## Empezar a revisar
 
-> **Vista general interactiva:** [`qa/video-entrega-qa.html`](qa/video-entrega-qa.html) — la página que usaremos en el video: conclusión, el recorrido de los 6 bloques, dónde está cada artefacto, los defectos y el checklist. Ábrela en el navegador.
+> **ÍNDICE DE ENTREGA (recomendado):** [`qa/00_Resumen_Ejecutivo/INDICE_ENTREGA.md`](qa/00_Resumen_Ejecutivo/INDICE_ENTREGA.md) — recorrido ordenado por secciones para revisión eficiente.
 >
-> **Diagramas:** [Arquitectura del sistema](qa/arquitectura-energia.html) · [Mapa de entregables](qa/entregables-prueba-qa.html).
+> **Vista general interactiva:** [`qa/06_Reportes_Interactivos/video-entrega-qa.html`](qa/06_Reportes_Interactivos/video-entrega-qa.html) — página para el video: conclusión, recorrido, artefactos, defectos y checklist.
 >
-> **Guion del video:** [`qa/guion-video.md`](qa/guion-video.md) — narración y shot list paso a paso.
+> **Diagramas:** [Arquitectura del sistema](qa/06_Reportes_Interactivos/arquitectura-energia.html) · [Mapa de entregables](qa/06_Reportes_Interactivos/entregables-prueba-qa.html).
 
-1. **[`qa/RESUMEN.md`](qa/RESUMEN.md)** — resumen ejecutivo: qué se hizo, veredicto **No liberar** y riesgos abiertos.
-2. **[`qa/05-defectos.md`](qa/05-defectos.md)** — los 4 defectos confirmados (título, severidad/prioridad, pasos, evidencia, causa raíz `archivo:línea`).
-3. **[`qa/06-seguridad.md`](qa/06-seguridad.md)** — hallazgos de seguridad (SEC-01 crítica).
+1. **[`qa/00_Resumen_Ejecutivo/RESUMEN.md`](qa/00_Resumen_Ejecutivo/RESUMEN.md)** — resumen ejecutivo: qué se hizo, veredicto **No liberar** y riesgos abiertos.
+2. **[`qa/03_Defectos_y_Seguridad/Defectos.md`](qa/03_Defectos_y_Seguridad/Defectos.md)** — los 4 defectos confirmados (título, severidad/prioridad, pasos, evidencia, causa raíz `archivo:línea`).
+3. **[`qa/03_Defectos_y_Seguridad/Seguridad.md`](qa/03_Defectos_y_Seguridad/Seguridad.md)** — hallazgos de seguridad (SEC-01 crítica).
 4. **[`qa/vault/index.md`](qa/vault/index.md)** — vault de Obsidian que enlaza todo (mapa visual en `qa/vault/Mapa.canvas`).
 
 ## Entregables
 
 | Parte | Entregable | Ubicación |
 |---|---|---|
-| A · Plan | Estrategia, riesgos, técnicas, criterios | [`qa/01-plan-de-pruebas.md`](qa/01-plan-de-pruebas.md) |
-| B · Humo | 10 verificaciones mínimas (9 PASS / 1 FAIL) | [`qa/02-smoke.md`](qa/02-smoke.md) |
-| C · Caja negra | 42 casos sobre API y UI | [`qa/03-casos-caja-negra.md`](qa/03-casos-caja-negra.md) |
-| D · Caja blanca | Ramas/casos borde + análisis de tests existentes | [`qa/04-caja-blanca.md`](qa/04-caja-blanca.md) |
-| E · Defectos | 4 defectos confirmados | [`qa/05-defectos.md`](qa/05-defectos.md) |
+| A · Plan | Estrategia, riesgos, técnicas, criterios | [`qa/01_Plan_y_Estrategia/Plan_de_Pruebas.md`](qa/01_Plan_y_Estrategia/Plan_de_Pruebas.md) |
+| B · Humo | 10 verificaciones mínimas (9 PASS / 1 FAIL) | [`qa/02_Pruebas_Funcionales/01_Smoke.md`](qa/02_Pruebas_Funcionales/01_Smoke.md) |
+| C · Caja negra | 42 casos sobre API y UI | [`qa/02_Pruebas_Funcionales/02_Caja_Negra.md`](qa/02_Pruebas_Funcionales/02_Caja_Negra.md) |
+| D · Caja blanca | Ramas/casos borde + análisis de tests existentes | [`qa/02_Pruebas_Funcionales/03_Caja_Blanca.md`](qa/02_Pruebas_Funcionales/03_Caja_Blanca.md) |
+| E · Defectos | 4 defectos confirmados | [`qa/03_Defectos_y_Seguridad/Defectos.md`](qa/03_Defectos_y_Seguridad/Defectos.md) |
 | F · Playwright | Suite E2E (27 tests) | [`e2e/`](e2e/), guía en [`e2e/README.md`](e2e/README.md) |
-| Extra · Seguridad | Probing propio + `govulncheck` | [`qa/06-seguridad.md`](qa/06-seguridad.md) |
-| Extra · Readiness | Auditoría de preparación para producción | [`qa/08-produccion-readiness.md`](qa/08-produccion-readiness.md) |
-| Bitácora | Trabajo fase por fase | [`qa/07-bitacora.md`](qa/07-bitacora.md) |
-| Evidencias | Logs, capturas, request/response, runs | [`qa/evidencias/`](qa/evidencias/) |
+| Extra · Seguridad | Probing propio + `govulncheck` | [`qa/03_Defectos_y_Seguridad/Seguridad.md`](qa/03_Defectos_y_Seguridad/Seguridad.md) |
+| Extra · Readiness | Auditoría de preparación para producción | [`qa/03_Defectos_y_Seguridad/Produccion_Readiness.md`](qa/03_Defectos_y_Seguridad/Produccion_Readiness.md) |
+| Evidencias | Logs, capturas, request/response, runs | [`qa/05_Evidencias/`](qa/05_Evidencias/) |
+| Reportes Interactivos | Diagramas navegables | [`qa/06_Reportes_Interactivos/`](qa/06_Reportes_Interactivos/) |
 | CI | Workflow que levanta la app y corre la suite | [`.github/workflows/e2e.yml`](.github/workflows/e2e.yml) |
 
 ## Ejecutar la suite E2E
@@ -161,9 +161,7 @@ Requiere el backend (`:8080`) y el frontend (`:5173`) levantados. Guía completa
 
 Notas de proceso que se conservan por trazabilidad, fuera de los entregables evaluados:
 
-- [`qa/PROGRESO.md`](qa/PROGRESO.md) — avance fase por fase durante la prueba.
-- [`qa/09-verificacion-skills.md`](qa/09-verificacion-skills.md) · [`qa/10-skills-externas.md`](qa/10-skills-externas.md) — cómo se aplicaron guías de QA locales y externas.
-- [`qa/_fase1-mapa-funcional.md`](qa/_fase1-mapa-funcional.md) — mapa funcional inicial.
+- [`qa/07_Anexos_Internos/`](qa/07_Anexos_Internos/) — Bitácora, Guion del video, verificaciones de skills, progreso y mapa funcional inicial.
 
 ## Nota
 
