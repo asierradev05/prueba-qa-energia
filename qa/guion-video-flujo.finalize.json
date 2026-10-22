@@ -1,0 +1,1197 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "startedAt": "2026-10-22T05:01:41.510Z",
+  "specification": {
+    "path": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\.archify\\architecture-energia-20261021-235213\\flujo.json",
+    "sha256": "56e5551f2b08444076e750cb5cec97bcc20ddb5f6831fdd1f21e3625e5cb525c",
+    "bytes": 3212
+  },
+  "artifact": {
+    "path": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\guion-video-flujo.html",
+    "sha256": "ee90884ef069d1ecf5570dc622d7a9f79930861832ea2887971a7e3bee7d0a4b",
+    "bytes": 821198
+  },
+  "stages": {
+    "validate": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": null,
+      "execution": "embedded-in-deliver",
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\angel\\AppData\\Local\\Temp\\opencode\\archify\\archify\\bin\\archify.mjs",
+        "deliver",
+        "workflow",
+        "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\.archify\\architecture-energia-20261021-235213\\flujo.json",
+        "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\guion-video-flujo.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "C:\\Users\\angel\\Documents\\Codex\\prueba-qa",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "validate",
+        "specification": {
+          "sha256": "56e5551f2b08444076e750cb5cec97bcc20ddb5f6831fdd1f21e3625e5cb525c",
+          "bytes": 3212
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "deliver": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 954,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\angel\\AppData\\Local\\Temp\\opencode\\archify\\archify\\bin\\archify.mjs",
+        "deliver",
+        "workflow",
+        "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\.archify\\architecture-energia-20261021-235213\\flujo.json",
+        "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\guion-video-flujo.html",
+        "--quality",
+        "showcase",
+        "--repo-root",
+        "C:\\Users\\angel\\Documents\\Codex\\prueba-qa",
+        "--json"
+      ],
+      "receipt": {
+        "schemaVersion": 1,
+        "receiptId": "96325ba8-1217-44f3-b606-cc08c73d19f5",
+        "ok": true,
+        "command": "deliver",
+        "type": "workflow",
+        "input": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\.archify\\architecture-energia-20261021-235213\\flujo.json",
+        "output": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\guion-video-flujo.html",
+        "specification": {
+          "sha256": "56e5551f2b08444076e750cb5cec97bcc20ddb5f6831fdd1f21e3625e5cb525c",
+          "bytes": 3212
+        },
+        "artifact": {
+          "sha256": "ee90884ef069d1ecf5570dc622d7a9f79930861832ea2887971a7e3bee7d0a4b",
+          "bytes": 821198
+        },
+        "validation": {
+          "checksPassed": 9,
+          "checkCount": 9,
+          "compositionProfile": "showcase",
+          "compositionStatus": "pass",
+          "errors": 0,
+          "warnings": 0
+        },
+        "update": {
+          "status": "unavailable",
+          "installedVersion": null,
+          "availableVersion": null,
+          "releaseNotes": null,
+          "checkedAt": null,
+          "source": null,
+          "noticeRequired": false,
+          "noticeText": null,
+          "reason": "disabled"
+        }
+      }
+    },
+    "check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 289,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\angel\\AppData\\Local\\Temp\\opencode\\archify\\archify\\bin\\archify.mjs",
+        "check",
+        "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\guion-video-flujo.html",
+        "--require-provenance"
+      ],
+      "receipt": {
+        "ok": true,
+        "file": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\guion-video-flujo.html",
+        "artifact": {
+          "sha256": "ee90884ef069d1ecf5570dc622d7a9f79930861832ea2887971a7e3bee7d0a4b",
+          "bytes": 821198
+        },
+        "checks": [
+          {
+            "name": "single_svg",
+            "ok": true,
+            "details": [
+              "found 1 <svg> block(s)"
+            ]
+          },
+          {
+            "name": "finite_svg",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "orthogonal_arrows",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "label_route_clearance",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_crossings",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "relationship_corridors",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "container_border_runs",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "route_rhythm",
+            "ok": true,
+            "details": []
+          },
+          {
+            "name": "legend_clearance",
+            "ok": true,
+            "details": []
+          }
+        ],
+        "composition": {
+          "schemaVersion": 1,
+          "profile": "showcase",
+          "status": "pass",
+          "summary": {
+            "errors": 0,
+            "warnings": 0
+          },
+          "metrics": {
+            "properCrossings": 0,
+            "resolvedCrossovers": 0,
+            "ambiguousCorridors": 0,
+            "arrowheadCollisions": 0,
+            "containerBorderRuns": 0,
+            "labelRouteClearanceIssues": 0,
+            "labelCanvasOverflowIssues": 0,
+            "minLabelRouteClearance": 96.2,
+            "desktopReadabilityIssues": 0,
+            "viewportHeightIssues": 0,
+            "minProjectedNodeTextPx": 6.18804243008679,
+            "maxBends": 0,
+            "routesOverSuggestedBends": 0,
+            "maxStretch": 1,
+            "routesOverSuggestedStretch": 0,
+            "minSegmentPx": 56.4,
+            "minInteriorSegmentPx": null,
+            "shortSegmentCount": 0,
+            "shortEndpointSegmentCount": 0,
+            "shortInteriorSegmentCount": 0,
+            "microSegmentCount": 0
+          },
+          "suggestedLimits": {
+            "bendsPerRelationship": 2,
+            "stretch": 1.35,
+            "segmentPx": 16,
+            "microSegmentPx": 8
+          },
+          "routeReview": {
+            "crossings": [],
+            "detours": []
+          },
+          "leadingSpace": {
+            "measured": false,
+            "reviewSuggested": false
+          },
+          "desktopReadability": {
+            "budgetBasis": "legacy-930",
+            "readerContract": "declared-wide-v1",
+            "availableDiagramWidth": 930,
+            "actualBudgetPx": 930,
+            "limit": "legacy",
+            "requestedTargetPx": null,
+            "requestedTargetMet": null,
+            "hardFloorPx": 6,
+            "hardFloorMet": true,
+            "minimumOwner": {
+              "kind": "node",
+              "id": "pruebas"
+            },
+            "minimumSourceTextPx": 6.9,
+            "minimumProjectedTextPx": 6.18804243008679,
+            "semanticTextCount": 17
+          },
+          "issues": []
+        },
+        "provenance": "current",
+        "deliveryReceiptId": "96325ba8-1217-44f3-b606-cc08c73d19f5"
+      }
+    },
+    "browser-check": {
+      "status": "pass",
+      "exitCode": 0,
+      "durationMs": 2163,
+      "command": [
+        "C:\\Program Files\\nodejs\\node.exe",
+        "C:\\Users\\angel\\AppData\\Local\\Temp\\opencode\\archify\\archify\\bin\\archify.mjs",
+        "browser-check",
+        "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\guion-video-flujo.html",
+        "--json",
+        "--require-provenance"
+      ],
+      "execution": "in-process",
+      "receipt": {
+        "schemaVersion": 1,
+        "ok": true,
+        "command": "browser-check",
+        "evidenceKind": "automated-browser",
+        "status": "pass",
+        "visualReview": "not-requested",
+        "provenance": "current",
+        "deliveryReceiptId": "96325ba8-1217-44f3-b606-cc08c73d19f5",
+        "artifact": {
+          "path": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\guion-video-flujo.html",
+          "sha256": "ee90884ef069d1ecf5570dc622d7a9f79930861832ea2887971a7e3bee7d0a4b",
+          "bytes": 821198
+        },
+        "state": {
+          "detail": "read",
+          "motion": "still"
+        },
+        "chrome": {
+          "status": "available",
+          "executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+        },
+        "diagnostics": [],
+        "containment": {
+          "status": "pass",
+          "policy": "fit-or-reader-declared-readable-vertical-scroll",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 900,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": null,
+              "ok": true,
+              "readerWidth": 1376,
+              "diagramWidth": 1346,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 78,
+                "diagramChromePx": 78,
+                "svgPx": 366,
+                "cardsPx": 0,
+                "viewBoxHeight": 282
+              },
+              "viewBoxWidth": 1037,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 138,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "intro",
+                    "panorama",
+                    "pruebas",
+                    "hallazgos",
+                    "automatizacion",
+                    "veredicto"
+                  ],
+                  "nodeSpanPx": 88,
+                  "spaceAboveNodesPx": 44,
+                  "spaceBelowNodesPx": 5
+                }
+              ],
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "90s · caja negra/blanca",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "pruebas"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1000,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": null,
+              "ok": true,
+              "readerWidth": 1536,
+              "diagramWidth": 1506,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 86,
+                "diagramChromePx": 84,
+                "svgPx": 410,
+                "cardsPx": 0,
+                "viewBoxHeight": 282
+              },
+              "viewBoxWidth": 1037,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 154,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "intro",
+                    "panorama",
+                    "pruebas",
+                    "hallazgos",
+                    "automatizacion",
+                    "veredicto"
+                  ],
+                  "nodeSpanPx": 99,
+                  "spaceAboveNodesPx": 49,
+                  "spaceBelowNodesPx": 6
+                }
+              ],
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "90s · caja negra/blanca",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "pruebas"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1080,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": null,
+              "ok": true,
+              "readerWidth": 1856,
+              "diagramWidth": 1826,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 86,
+                "diagramChromePx": 84,
+                "svgPx": 497,
+                "cardsPx": 0,
+                "viewBoxHeight": 282
+              },
+              "viewBoxWidth": 1037,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 187,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "intro",
+                    "panorama",
+                    "pruebas",
+                    "hallazgos",
+                    "automatizacion",
+                    "veredicto"
+                  ],
+                  "nodeSpanPx": 120,
+                  "spaceAboveNodesPx": 60,
+                  "spaceBelowNodesPx": 7
+                }
+              ],
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "90s · caja negra/blanca",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "pruebas"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1320,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": null,
+              "ok": true,
+              "readerWidth": 1920,
+              "diagramWidth": 1870,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 94,
+                "diagramChromePx": 94,
+                "svgPx": 509,
+                "cardsPx": 0,
+                "viewBoxHeight": 282
+              },
+              "viewBoxWidth": 1037,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 191,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "intro",
+                    "panorama",
+                    "pruebas",
+                    "hallazgos",
+                    "automatizacion",
+                    "veredicto"
+                  ],
+                  "nodeSpanPx": 123,
+                  "spaceAboveNodesPx": 61,
+                  "spaceBelowNodesPx": 7
+                }
+              ],
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "90s · caja negra/blanca",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "pruebas"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "themeStates": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "light",
+              "resolvedTheme": "light",
+              "ok": true
+            },
+            {
+              "width": 1440,
+              "height": 900,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "requestedTheme": "dark",
+              "resolvedTheme": "dark",
+              "ok": true
+            }
+          ]
+        },
+        "readability": {
+          "status": "pass",
+          "minimumProjectedNodeTextPx": 6,
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 900,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": null,
+              "ok": true,
+              "readerWidth": 1376,
+              "diagramWidth": 1346,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 78,
+                "diagramChromePx": 78,
+                "svgPx": 366,
+                "cardsPx": 0,
+                "viewBoxHeight": 282
+              },
+              "viewBoxWidth": 1037,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 138,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "intro",
+                    "panorama",
+                    "pruebas",
+                    "hallazgos",
+                    "automatizacion",
+                    "veredicto"
+                  ],
+                  "nodeSpanPx": 88,
+                  "spaceAboveNodesPx": 44,
+                  "spaceBelowNodesPx": 5
+                }
+              ],
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "90s · caja negra/blanca",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "pruebas"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1000,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": null,
+              "ok": true,
+              "readerWidth": 1536,
+              "diagramWidth": 1506,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 86,
+                "diagramChromePx": 84,
+                "svgPx": 410,
+                "cardsPx": 0,
+                "viewBoxHeight": 282
+              },
+              "viewBoxWidth": 1037,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 154,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "intro",
+                    "panorama",
+                    "pruebas",
+                    "hallazgos",
+                    "automatizacion",
+                    "veredicto"
+                  ],
+                  "nodeSpanPx": 99,
+                  "spaceAboveNodesPx": 49,
+                  "spaceBelowNodesPx": 6
+                }
+              ],
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "90s · caja negra/blanca",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "pruebas"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1080,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": null,
+              "ok": true,
+              "readerWidth": 1856,
+              "diagramWidth": 1826,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 86,
+                "diagramChromePx": 84,
+                "svgPx": 497,
+                "cardsPx": 0,
+                "viewBoxHeight": 282
+              },
+              "viewBoxWidth": 1037,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 187,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "intro",
+                    "panorama",
+                    "pruebas",
+                    "hallazgos",
+                    "automatizacion",
+                    "veredicto"
+                  ],
+                  "nodeSpanPx": 120,
+                  "spaceAboveNodesPx": 60,
+                  "spaceBelowNodesPx": 7
+                }
+              ],
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "90s · caja negra/blanca",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "pruebas"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1320,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": null,
+              "ok": true,
+              "readerWidth": 1920,
+              "diagramWidth": 1870,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 94,
+                "diagramChromePx": 94,
+                "svgPx": 509,
+                "cardsPx": 0,
+                "viewBoxHeight": 282
+              },
+              "viewBoxWidth": 1037,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 191,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "intro",
+                    "panorama",
+                    "pruebas",
+                    "hallazgos",
+                    "automatizacion",
+                    "veredicto"
+                  ],
+                  "nodeSpanPx": 123,
+                  "spaceAboveNodesPx": 61,
+                  "spaceBelowNodesPx": 7
+                }
+              ],
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "90s · caja negra/blanca",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "pruebas"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "viewerChrome": {
+          "status": "pass",
+          "viewports": [
+            {
+              "width": 1440,
+              "height": 900,
+              "theme": "light",
+              "innerWidth": 1440,
+              "innerHeight": 900,
+              "scrollWidth": 1440,
+              "scrollHeight": 900,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": null,
+              "ok": true,
+              "readerWidth": 1376,
+              "diagramWidth": 1346,
+              "pageComposition": {
+                "bodyPaddingPx": 12,
+                "headerPx": 78,
+                "diagramChromePx": 78,
+                "svgPx": 366,
+                "cardsPx": 0,
+                "viewBoxHeight": 282
+              },
+              "viewBoxWidth": 1037,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 138,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "intro",
+                    "panorama",
+                    "pruebas",
+                    "hallazgos",
+                    "automatizacion",
+                    "veredicto"
+                  ],
+                  "nodeSpanPx": 88,
+                  "spaceAboveNodesPx": 44,
+                  "spaceBelowNodesPx": 5
+                }
+              ],
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "90s · caja negra/blanca",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "pruebas"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1600,
+              "height": 1000,
+              "theme": "light",
+              "innerWidth": 1600,
+              "innerHeight": 1000,
+              "scrollWidth": 1600,
+              "scrollHeight": 1000,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": null,
+              "ok": true,
+              "readerWidth": 1536,
+              "diagramWidth": 1506,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 86,
+                "diagramChromePx": 84,
+                "svgPx": 410,
+                "cardsPx": 0,
+                "viewBoxHeight": 282
+              },
+              "viewBoxWidth": 1037,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 154,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "intro",
+                    "panorama",
+                    "pruebas",
+                    "hallazgos",
+                    "automatizacion",
+                    "veredicto"
+                  ],
+                  "nodeSpanPx": 99,
+                  "spaceAboveNodesPx": 49,
+                  "spaceBelowNodesPx": 6
+                }
+              ],
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "90s · caja negra/blanca",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "pruebas"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 1920,
+              "height": 1080,
+              "theme": "light",
+              "innerWidth": 1920,
+              "innerHeight": 1080,
+              "scrollWidth": 1920,
+              "scrollHeight": 1080,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": null,
+              "ok": true,
+              "readerWidth": 1856,
+              "diagramWidth": 1826,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 86,
+                "diagramChromePx": 84,
+                "svgPx": 497,
+                "cardsPx": 0,
+                "viewBoxHeight": 282
+              },
+              "viewBoxWidth": 1037,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 187,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "intro",
+                    "panorama",
+                    "pruebas",
+                    "hallazgos",
+                    "automatizacion",
+                    "veredicto"
+                  ],
+                  "nodeSpanPx": 120,
+                  "spaceAboveNodesPx": 60,
+                  "spaceBelowNodesPx": 7
+                }
+              ],
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "90s · caja negra/blanca",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "pruebas"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 54,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            },
+            {
+              "width": 2048,
+              "height": 1320,
+              "theme": "light",
+              "innerWidth": 2048,
+              "innerHeight": 1320,
+              "scrollWidth": 2048,
+              "scrollHeight": 1320,
+              "overflowX": false,
+              "overflowY": false,
+              "verticalScrollAccepted": false,
+              "overflowDisposition": "contained",
+              "readerLayout": "adaptive",
+              "readerOverflow": null,
+              "readerFit": null,
+              "ok": true,
+              "readerWidth": 1920,
+              "diagramWidth": 1870,
+              "pageComposition": {
+                "bodyPaddingPx": 64,
+                "headerPx": 94,
+                "diagramChromePx": 94,
+                "svgPx": 509,
+                "cardsPx": 0,
+                "viewBoxHeight": 282
+              },
+              "viewBoxWidth": 1037,
+              "workflowLanes": [
+                {
+                  "frameId": "lane-0",
+                  "heightPx": 191,
+                  "nodeCount": 6,
+                  "nodeIds": [
+                    "intro",
+                    "panorama",
+                    "pruebas",
+                    "hallazgos",
+                    "automatizacion",
+                    "veredicto"
+                  ],
+                  "nodeSpanPx": 123,
+                  "spaceAboveNodesPx": 61,
+                  "spaceBelowNodesPx": 7
+                }
+              ],
+              "minimumProjectedNodeTextPx": 6.9,
+              "minimumProjectedNonEdgeTextPx": 6.9,
+              "minimumProjectedEdgeTextPx": 8,
+              "minimumProjectedNodeText": "90s · caja negra/blanca",
+              "minimumProjectedNodeTextDetail": "context",
+              "minimumProjectedNodeTextOwner": {
+                "kind": "node",
+                "id": "pruebas"
+              },
+              "minimumRequiredNodeTextPx": 6,
+              "readabilityOk": true,
+              "hasLegend": true,
+              "hasNavigationDock": true,
+              "legendDockIntersectionArea": 0,
+              "dockStageIntersectionArea": 0,
+              "dockStageGap": 10,
+              "requiredDockStageGap": 10,
+              "viewerChromeStageOk": true,
+              "viewerChromeReserve": 44,
+              "viewerChromeActive": true,
+              "viewerChromeOk": true,
+              "resolvedTheme": "light"
+            }
+          ]
+        },
+        "captures": {
+          "status": "not-requested",
+          "screenshots": [],
+          "contactSheet": null
+        },
+        "sidecars": {
+          "receipt": "guion-video-flujo.browser-check.json",
+          "files": []
+        }
+      }
+    }
+  },
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  },
+  "diagnostics": [],
+  "evidence": {
+    "receipt": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\guion-video-flujo.finalize.json",
+    "summaryReceipt": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\guion-video-flujo.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\guion-video-flujo.browser-check.json"
+  },
+  "visualReview": "not-requested",
+  "finishedAt": "2026-10-22T05:01:46.160Z",
+  "durationMs": 4649,
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-22T04:52:45.323Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  }
+}

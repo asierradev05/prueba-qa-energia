@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "96325ba8-1217-44f3-b606-cc08c73d19f5",
+  "status": "current",
+  "command": "deliver",
+  "type": "workflow",
+  "input": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\.archify\\architecture-energia-20261021-235213\\flujo.json",
+  "output": "C:\\Users\\angel\\Documents\\Codex\\prueba-qa\\qa\\guion-video-flujo.html",
+  "specification": {
+    "sha256": "56e5551f2b08444076e750cb5cec97bcc20ddb5f6831fdd1f21e3625e5cb525c",
+    "bytes": 3212
+  },
+  "artifact": {
+    "sha256": "ee90884ef069d1ecf5570dc622d7a9f79930861832ea2887971a7e3bee7d0a4b",
+    "bytes": 821198
+  }
+}
