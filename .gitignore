@@ -14,3 +14,6 @@ frontend/.impeccable/questions
 
 # Obsidian (config local del vault de la entrega)
 qa/vault/.obsidian/
+
+# Archify: borradores y recibos locales (el HTML final sí se versiona en qa/)
+.archify/

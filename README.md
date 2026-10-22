@@ -121,6 +121,8 @@ Documentación completa del proceso de QA en **[`qa/`](qa/)** y suite de automat
 
 ## Empezar a revisar
 
+> **Vista general interactiva:** [`qa/explainer-entrega-qa.html`](qa/explainer-entrega-qa.html) — una página que resume qué encontrarás en la entrega y dónde está cada cosa. Ábrela en el navegador.
+
 1. **[`qa/RESUMEN.md`](qa/RESUMEN.md)** — resumen ejecutivo: qué se hizo, veredicto **No liberar** y riesgos abiertos.
 2. **[`qa/05-defectos.md`](qa/05-defectos.md)** — los 4 defectos confirmados (título, severidad/prioridad, pasos, evidencia, causa raíz `archivo:línea`).
 3. **[`qa/06-seguridad.md`](qa/06-seguridad.md)** — hallazgos de seguridad (SEC-01 crítica).
