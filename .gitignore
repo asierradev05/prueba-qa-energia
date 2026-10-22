@@ -17,3 +17,7 @@ qa/vault/.obsidian/
 
 # Archify: borradores y recibos locales (el HTML final sí se versiona en qa/)
 .archify/
+qa/*.delivery.json
+qa/*.finalize.json
+qa/*.finalize-summary.json
+qa/*.browser-check.json

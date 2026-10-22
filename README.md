@@ -144,8 +144,7 @@ Documentación completa del proceso de QA en **[`qa/`](qa/)** y suite de automat
 | F · Playwright | Suite E2E (27 tests) | [`e2e/`](e2e/), guía en [`e2e/README.md`](e2e/README.md) |
 | Extra · Seguridad | Probing propio + `govulncheck` | [`qa/06-seguridad.md`](qa/06-seguridad.md) |
 | Extra · Readiness | Auditoría de preparación para producción | [`qa/08-produccion-readiness.md`](qa/08-produccion-readiness.md) |
-| Extra · Verificación | Gate con skills de QA (locales + externas) | [`qa/09-verificacion-skills.md`](qa/09-verificacion-skills.md), [`qa/10-skills-externas.md`](qa/10-skills-externas.md) |
-| Bitácora | Trabajo fase por fase | [`qa/07-bitacora.md`](qa/07-bitacora.md), [`qa/PROGRESO.md`](qa/PROGRESO.md) |
+| Bitácora | Trabajo fase por fase | [`qa/07-bitacora.md`](qa/07-bitacora.md) |
 | Evidencias | Logs, capturas, request/response, runs | [`qa/evidencias/`](qa/evidencias/) |
 | CI | Workflow que levanta la app y corre la suite | [`.github/workflows/e2e.yml`](.github/workflows/e2e.yml) |
 
@@ -157,6 +156,14 @@ pnpm install && pnpm exec playwright install chromium && pnpm test
 ```
 
 Requiere el backend (`:8080`) y el frontend (`:5173`) levantados. Guía completa en [`e2e/README.md`](e2e/README.md).
+
+## Material de trabajo interno (no es entregable)
+
+Notas de proceso que se conservan por trazabilidad, fuera de los entregables evaluados:
+
+- [`qa/PROGRESO.md`](qa/PROGRESO.md) — avance fase por fase durante la prueba.
+- [`qa/09-verificacion-skills.md`](qa/09-verificacion-skills.md) · [`qa/10-skills-externas.md`](qa/10-skills-externas.md) — cómo se aplicaron guías de QA locales y externas.
+- [`qa/_fase1-mapa-funcional.md`](qa/_fase1-mapa-funcional.md) — mapa funcional inicial.
 
 ## Nota
 
